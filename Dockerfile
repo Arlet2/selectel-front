@@ -2,16 +2,16 @@ FROM node:21-alpine3.18 as build
 
 COPY . .
 
-CMD npm install
-CMD npm run build
+RUN npm install
+RUN npm run build
 
 COPY . out
 
-FROM nginx:alpine
+FROM nginx:alpine as run
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /out /usr/share/nginx/html
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY --from=build ./nginx.conf /etc/nginx/nginx.conf
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
