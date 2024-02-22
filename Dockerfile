@@ -5,9 +5,11 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-COPY out out/
+COPY out .
 
 FROM nginx:alpine as run
+
+WORKDIR .
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build out /usr/share/nginx/html
