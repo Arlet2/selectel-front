@@ -5,7 +5,7 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-COPY out out
+COPY copy copy/
 
 FROM nginx:alpine as run
 
