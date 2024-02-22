@@ -5,8 +5,6 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-COPY out /out
-
 FROM nginx:alpine as run
 
 WORKDIR /
