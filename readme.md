@@ -1,3 +1,4 @@
+[![ci](https://github.com/Arlet2/selectel-front/actions/workflows/main.yml/badge.svg)](https://github.com/Arlet2/selectel-front/actions/workflows/main.yml)
 # Шаблон проекта на Next.js
 
 Икслючительно моя интерпретация того, как надо настраивать своей проект на next.js. Удалены лишние файлы, добавлено:
