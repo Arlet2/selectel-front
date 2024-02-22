@@ -1,0 +1,35 @@
+.wrapper{
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+@media only screen and (min-width: 920px) {
+    /* для десктопа ширина главного контента фиксированная */
+    .wrapper {    
+        min-inline-size: 1200px;
+        max-inline-size: 1260px;
+        margin-block: 0;
+        margin-inline: auto;
+        padding-block: 0;
+        padding-inline: 20px;
+    }
+}
+
+@media only screen and (max-width: 920px) {
+    /* для мобильного устройства ширина главного контента занимает все место */
+    .wrapper{
+        inline-size: 100%;
+        margin-inline: 16px;
+    }
+}
+
+.container{
+    /* высота контента всегда занимает минимум видимую зону */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+    
