@@ -1,0 +1,179 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 40px 0 40px 50px;
+}
+
+.signupContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 500px;
+    row-gap: 50px;
+    z-index: 10;
+
+}
+
+.headerContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 50px;
+}
+
+.header{
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-xl);
+}
+
+.subtitleContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    column-gap: 20px;
+}
+
+.divider{
+    border-bottom: solid 3px var(--main-color-font);
+    width: 80px;
+    height: 15px;
+}
+
+.subtitle{
+    color: var(--main-color-contrast);
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-m);
+}
+
+.socialMediaContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    column-gap: 20px;
+}
+
+.socialMediaButton{
+    height: 48px;
+    width: 245px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+}
+
+.icon{
+    height: 24px;
+    width: 24px;
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 20px;
+    font-family: var(--font-family-contrast);
+}
+
+.topContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    column-gap: 15px;
+}
+
+.placeholder{
+    font-size: var(--font-size-l);
+    font-weight: var(--font-weight-xl);
+    align-self: center;
+}
+
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 20px;
+}
+
+.input{
+    background-color: var(--input-color);
+    height: 48px;
+    width: 245px;
+    border-radius: var(--border-radius);
+    border: var(--border);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-self: center;
+    padding: 5px 15px;
+}
+
+.inputPassword{
+    width: 500px;
+}
+
+.input::placeholder{
+    color: var(--placeholder-color);
+    font-size: var(--font-size-sm);
+}
+
+.label{
+    margin-left: 5px;
+    font-size: var(--font-size-sm);
+}
+
+.checkboxContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.checkbox {
+    height: 22px;
+    width: 22px;
+    font-size: var(--font-size-sm);
+}
+
+.labelCheckbox{
+    font-size: var(--font-size-sm);
+    margin-left: 15px;
+}
+
+.submit{
+    margin-top: 30px;
+}
+
+.loginContainer{
+    font-size: var(--font-size-m);
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    column-gap: 15px;
+}
+
+.backgroundContainer{
+    align-self: flex-end;
+    margin-right: -50px;
+}
+
+.backgroundImage{
+    object-fit: contain;
+    position: fixed;
+    width: 769px;
+    z-index: 1;
+    right: 0;
+    top: 100px;
+}

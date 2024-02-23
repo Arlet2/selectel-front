@@ -1,14 +1,41 @@
 /* общие стили для всего проекта */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 :root {
   /* переменные: цвета, шрифт, отступы */
   /* чтобы в случае чего сменить значение здесь и оно поменяется во всем проекте */
 
   --main-color: white;
+  --main-color-font: black;
+  --main-color-contrast: #FB73C4;
+  --main-color-contrast-hover: #f78ccc;
+  --blue-color: #456EFF;
+  --blue-color-hover: #2d54df;
+  --border-color: #E8E8E8;
+  --placeholder-color: rgba(0,0,0,0.6);
+  --input-color: #FAFDFF;
+  --gradient: radial-gradient(circle, rgba(255,255,255,1) 63%, rgba(218,236,246,1) 100%);
 
   /* цвета для скелетонов - двуцветный градиент */
   --skeleton-dark: hsl(204, 7%, 86%);
   --skeleton-light: hsl(200, 20%, 95%);
+
+  /* шрифты */
+  --font-family-contrast: "IBM Plex Mono", monospace;
+  --font-family: "IBM Plex Sans", Sans;
+  --font-size-xl: 48px;
+  --font-weight-xl: 800;
+  --font-size-l: 20px;
+  --font-size-m: 16px;
+  --font-weight-m: 600;
+  --font-size-sm: 14px;
+  --font-size-s: 12px;
+  --font-weight-s: 400;
+
+  --border-radius: 10px;
+  --border-radius-button: 35px;
+  --border: 1px solid var(--border-color);
 }
 
 /* сбрасываем правила css */
@@ -17,6 +44,14 @@
   padding: 0px;
   margin: 0px;
   border: none;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--main-color-font);
+
+  background: var(--main-color);
+  background: var(--gradient);
 }
 
 *,
@@ -38,7 +73,7 @@ aside, nav, footer, header, section, main {
 }
 
 h1, h2, h3, h4, h5, h6, p {
-    font-size: inherit;
+  font-size: inherit;
 	font-weight: inherit;
 }
 
@@ -115,3 +150,52 @@ legend {
   width: 30px;
   border-radius: 50%;
 }
+
+h1, h2, h3, h4, button {
+  font-family: var(--font-family-contrast);
+}
+
+button {
+  border: solid 1px var(--border-color);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-s);
+}
+
+.input{
+  background-color: var(--input-color);
+  height: 48px;
+  width: 245px;
+  border-radius: var(--border-radius);
+  border: var(--border);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-self: center;
+  padding: 5px 15px;
+}
+
+.submitButton{
+  background-color: var(--main-color-contrast);
+  border: none;
+  border-radius: var(--border-radius-button);
+  box-shadow: 3px 3px 20px var(--main-color-contrast);
+  height: 80px;
+  width: 80px;
+  transition: 0.2s ease-in-out;
+}
+
+.submitButton:hover{
+  background-color: var(--main-color-contrast-hover);
+}
+
+.linkBlue{
+  color: var(--blue-color);
+  font-size: var(--font-size-m);
+  font-weight: 500;
+  transition: 0.2s ease-in-out;
+}
+
+.linkBlue:hover{
+  color: var(--blue-color-hover);
+}
+
