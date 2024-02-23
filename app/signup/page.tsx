@@ -60,6 +60,10 @@ export default function Page() {
             <div className={styles.signupContainer}>
                 <div className={styles.headerContainer}>
                     <h1 className='header'>Регистрация</h1>
+                    <div className={styles.loginContainer}>
+                        Уже есть аккаунт?
+                        <Link href='/signin' className='linkBlue'>Войти</Link>
+                    </div>
                     <div className={styles.subtitleContainer}>
                         <div className={styles.divider}></div>
                         <h2 className={styles.subtitle}>Войти с помощью</h2>
@@ -100,10 +104,6 @@ export default function Page() {
                     <button className={cn(styles.submit, 'submitButton')} type='submit'>
                         <Image className={styles.icon} src={arrowIcon} alt='Arrow icon'/>
                     </button>
-                    <div className={styles.loginContainer}>
-                        Уже есть аккаунт?
-                        <Link href='/signin' className='linkBlue'>Войти</Link>
-                    </div>
                 </form>
             </div>
             <div className={styles.backgroundContainer}>
