@@ -113,7 +113,7 @@ function Modal() {
                     </div>
                 </div>
             </div>
-            <div className={styles.vaccinationList}>
+            <div className={vaccinations.length > 0 ? styles.vaccinationList : styles.displayNone}>
                 {vaccinations.map((vaccination, index) => (
                     <div key={index} className={styles.vaccinationContainer}>
                         <div className={styles.inputContainer}>

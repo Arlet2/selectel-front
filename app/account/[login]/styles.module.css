@@ -180,3 +180,7 @@
     overflow-x: hidden;
     max-height: 200px;
 }
+
+.displayNone{
+    display: none;
+}

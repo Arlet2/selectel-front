@@ -92,7 +92,7 @@ export default function Page() {
                     </div>
                     <div className={styles.checkboxContainer}>
                         <input className={styles.checkbox} required type='checkbox' checked={isChecked} onChange={() => setIsChecked(!isChecked)}/>
-                        <label className={styles.labelCheckbox} onClick={() => {setIsChecked(!isChecked)}}>Я прочитал политику конфиденциальности и со всем согласен :)</label>
+                        <label className={styles.labelCheckbox} onClick={() => {setIsChecked(!isChecked)}}>Я прочитал(а) политику конфиденциальности и со всем согласен :)</label>
                     </div>
                     <button className={cn(styles.submit, 'submitButton')} type='submit'>
                         <Image className={styles.icon} src={arrowIcon} alt='Arrow icon'/>
