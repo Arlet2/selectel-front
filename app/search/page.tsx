@@ -4,17 +4,7 @@ import { useState } from "react";
 import styles from './styles.module.css';
 import cn from 'classnames';
 
-const {
-    CitySelect,
-    CountrySelect,
-    StateSelect,
-} = require('react-country-state-city');
-
-const COUNTRY_ID = 182;
-
 function Modal() {
-    const [ state, setState ] = useState();
-
     return (
         <form className={styles.modal}>
             <h1>Данные для поиска</h1>
