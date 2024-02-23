@@ -153,7 +153,7 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: flex-start;
-    column-gap: 20px;
+    column-gap: 15px;
 }
 
 .socialMediaButton{

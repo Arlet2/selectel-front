@@ -112,11 +112,13 @@ export default function Page({ params: { login } }: IPageProps) {
                     </div>
                     <div className='dividerThin'></div>
                     <label className={styles.label}>Социальные сети</label>
-                    <div className={styles.socialMediaContainer}>
-                        <button className={styles.socialMediaButton}>
-                            <Image className={styles.icon} src={vkIcon} alt='VK icon'/>
-                            Добавить ВКонтакте
-                        </button>
+                    <div className={styles.topContainer}>
+                        <div className={styles.inputContainer}>
+                            <input className='input' type='text' placeholder='Телеграм'/>
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <input className='input' type='text' placeholder='Ссылка на ВКонтакте'/>
+                        </div>
                     </div>
                     <div className={styles.checkboxContainer}>
                         <input className={styles.checkbox} type='checkbox'/>
