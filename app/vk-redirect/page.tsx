@@ -3,8 +3,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./page.module.css";
 import { useGetSomethingByNameQuery } from "@redux/services/api";
-import { setId } from "@redux/someData/reducer";
-import { someDataSelector } from "@redux/someData/selector";
+import { setId } from "@/app/redux/token/reducer";
+import { someDataSelector } from "@/app/redux/token/selector";
 import { Skeleton } from "@components/Skeleton";
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react'

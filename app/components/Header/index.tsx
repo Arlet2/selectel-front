@@ -23,7 +23,7 @@ export const Header = () => {
                     <Image className={styles.icon} src={geoIcon} alt='Geo location icon'/>
                     Все регионы
                 </div>
-                <Link href='/signup' className={styles.buttonLogin}>Войти</Link>
+                <Link href='/signin' className={styles.buttonLogin}>Войти</Link>
             </div>
         </div>
     )
