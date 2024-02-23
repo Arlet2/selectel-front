@@ -3,6 +3,7 @@ FROM node:20-alpine3.18 as build
 COPY . .
 
 RUN npm install
+RUN rm -rf .next out; exit 0
 RUN npm run build
 
 FROM nginx:alpine as run
