@@ -11,6 +11,7 @@ import Link from 'next/link';
 import * as VKID from '@vkid/sdk';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { register } from '@/app/redux/services/api';
 
 //TODO: добавить проброс логина в урл
 
@@ -33,7 +34,11 @@ export default function Page() {
 
     const handleSubmitClick = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        router.push(`/account/${login}/settings`);
+        (async () => {
+            const token = await register({ login, password, email });
+            console.log(token);
+        })()
+        // router.push(`/account/${login}/settings`);
     }
 
     function useVK() {

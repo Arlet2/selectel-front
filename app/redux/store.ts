@@ -1,4 +1,4 @@
-import { exampleApi } from '@/app/redux/services/api';
+import { api } from '@/app/redux/services/api';
 import { configureStore } from '@reduxjs/toolkit';
 
 import { someSlice } from '@redux/someData/reducer';
@@ -8,11 +8,11 @@ import { logger } from '@redux/middlewares/logger';
 export const store = configureStore({
     reducer: {
         /* здесь хранятся редьюсеры, чтобы брать информацию из стора */
-        [exampleApi.reducerPath]: exampleApi.reducer,
+        [api.reducerPath]: api.reducer,
         something: someSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => 
-        getDefaultMiddleware().concat([exampleApi.middleware, logger]),
+        getDefaultMiddleware().concat([api.middleware, logger]),
     devTools: process.env.NODE_ENV !== 'production',
 });
 
