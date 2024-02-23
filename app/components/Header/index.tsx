@@ -19,10 +19,6 @@ export const Header = () => {
                 <Link className={styles.headerLink} href='/search'>Поиск донора</Link>
             </div>
             <div className={styles.infoContainer}>
-                <div className={styles.geolocation}>
-                    <Image className={styles.icon} src={geoIcon} alt='Geo location icon'/>
-                    Все регионы
-                </div>
                 <Link href='/signin' className={styles.buttonLogin}>Войти</Link>
             </div>
         </div>
