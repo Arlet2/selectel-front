@@ -62,7 +62,8 @@ function Modal() {
 export default function Page() {
     const [ modalVisible, setModalVisible ] = useState(false)
     
-    return (
+    return (<>
+        <title>Поиск донора - petdonor.ru</title>
         <div className={styles.container}>
             { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> }
             { modalVisible && <Modal/> }
@@ -93,5 +94,5 @@ export default function Page() {
                 <button className={cn('button', styles.button)} onClick={() => setModalVisible(true)}>Cоздать заявку</button>
             </div>
         </div>
-    )
+    </>)
 }

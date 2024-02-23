@@ -29,7 +29,8 @@ export default function Page({ params: { login } }: IPageProps) {
     
     const [ state, setState ] = useState();
 
-    return (
+    return (<>
+        <title>Настройки профиля - petdonor.ru</title>
         <div className={styles.container}>
             <div className={styles.settingsContainer}>
                 <div className={styles.headerContainer}>
@@ -135,5 +136,5 @@ export default function Page({ params: { login } }: IPageProps) {
                 <Image className={styles.backgroundImage} src={dogImage} alt='Dog image'/>
             </div>
         </div>
-    )
+    </>)
 }

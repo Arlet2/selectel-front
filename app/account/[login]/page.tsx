@@ -15,7 +15,8 @@ interface IPageProps{
 export default function Page({ params: { login } }: IPageProps){
     const [count, setCount] = useState(0);
     const [ isAnyPets, setIsAnyPets ] = useState(false);
-    return (
+    return (<>
+        <title>Профиль - petdonor.ru</title>
         <div className={styles.container}>
             <div className={styles.leftContainer}>
                 <h1 className='header'>
@@ -41,5 +42,5 @@ export default function Page({ params: { login } }: IPageProps){
             )}
             
         </div>
-    )
+    </>)
 }

@@ -12,11 +12,12 @@ function VkRedirectInner() {
 
   console.log(payload);
 
-  return (
+  return (<>
+    <title>Перенаправление - petdonor.ru</title>
     <main className={styles.main}>
       алё гараж
     </main>
-  );
+  </>);
 }
 
 export default function VkRedirect() {

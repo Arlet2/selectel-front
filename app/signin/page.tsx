@@ -39,7 +39,8 @@ export default function Page() {
         VKID.Auth.login()
     }
 
-    return (
+    return (<>
+        <title>Вход - petdonor.ru</title>
         <div className={styles.container}>
             <div className={styles.signupContainer}>
                 <div className={styles.headerContainer}>
@@ -86,5 +87,5 @@ export default function Page() {
                 <Image className={styles.backgroundImage} src={dogImage} alt='Dog image'/>
             </div>
         </div>
-    )
+    </>)
 }

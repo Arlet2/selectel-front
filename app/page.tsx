@@ -9,7 +9,8 @@ import { Skeleton } from "@components/Skeleton";
 
 export default function Home() {
 
-  return (
+  return (<>
+    <title>Главная - petdonor.ru</title>
     <main className={styles.main}>
       first page content here
       <Skeleton view='logo'/>
@@ -18,5 +19,5 @@ export default function Home() {
       <Skeleton view='text'/>
       
     </main>
-  );
+  </>);
 }
