@@ -14,11 +14,6 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 250px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
-}
-
-.footerText {
-    /* Centering text content horizontally in the container */
-    /* No specific flex property needed here as the text is centered by the container's justify-content */
+    width: 250px;
+    height: auto; 
 }

@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import cn from 'classnames';
-import tgIcon from '@icons/tg.svg';
 import vkIcon from '@icons/vk.svg';
 import arrowIcon from '@icons/arrow.svg';
 import dogImage from '@images/dog.png';
@@ -66,18 +65,10 @@ export default function Page() {
                         Уже есть аккаунт?
                         <Link href='/signin' className='linkBlue'>Войти</Link>
                     </div>
-                    <div className={styles.subtitleContainer}>
-                        <div className='divider'></div>
-                        <h2 className={styles.subtitle}>Войти с помощью</h2>
-                    </div>
                     <div className={styles.socialMediaContainer}>
                         <button className={styles.socialMediaButton} onClick={useVK}>
                             <Image className={styles.icon} src={vkIcon} alt='VK icon'/>
-                            Продолжить с ВКонтакте
-                        </button>
-                        <button className={styles.socialMediaButton}>
-                            <Image className={styles.icon} src={tgIcon} alt='Telegram icon'/>
-                            Продолжить с TG
+                            Продолжить с ВК.ID
                         </button>
                     </div>
                 </div>

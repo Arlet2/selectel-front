@@ -6,7 +6,6 @@ import Image from 'next/image';
 import arrowIcon from '@icons/arrow.svg';
 import avatarIcon from '@icons/avatar.svg';
 import vkIcon from '@icons/vk.svg';
-import tgIcon from '@icons/tg.svg';
 import dogImage from '@images/dog.png';
 import styles from './styles.module.css';
 import cn from 'classnames';
