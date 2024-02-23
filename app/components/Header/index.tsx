@@ -21,7 +21,7 @@ export const Header = () => {
                 <Image src={selectelLogo} alt='Logo Selectel'/>
             </Link>
             <div className={styles.navContainer}>
-                <Link className={cn(styles.headerLink, url === '/' && styles.selected)} href='/' onClick={() => setMock(1)}>О сайте</Link>
+                <Link className={cn(styles.headerLink, url === '/' && styles.selected)} href='/' onClick={() => setMock(1)}>О проекте</Link>
                 <Link className={cn(styles.headerLink, url === '/search' && styles.selected)} href='/search' onClick={() => setMock(2)}>Поиск донора</Link>
                 <Link className={cn(styles.headerLink, url === '/applications' && styles.selected)} href='/applications' onClick={() => setMock(3)}>Заявки на донацию</Link>
                 <Link className={cn(styles.headerLink, url === '/available-donors' && styles.selected)} href='/available-donors' onClick={() => setMock(4)}>Доступные доноры</Link>
