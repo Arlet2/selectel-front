@@ -117,10 +117,6 @@ export default function Page({ params: { login } }: IPageProps) {
                             <Image className={styles.icon} src={vkIcon} alt='VK icon'/>
                             Добавить ВКонтакте
                         </button>
-                        <button className={styles.socialMediaButton}>
-                            <Image className={styles.icon} src={tgIcon} alt='Telegram icon'/>
-                            Добавить TG
-                        </button>
                     </div>
                     <div className={styles.checkboxContainer}>
                         <input className={styles.checkbox} type='checkbox'/>
