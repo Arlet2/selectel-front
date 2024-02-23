@@ -7,14 +7,10 @@ import selectelLogo from '@icons/selectel.svg'
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export const Header = () => {
-    const [url, setUrl] = useState(window.location.pathname);
-    const [ mock, setMock ] = useState('');
-
-    useEffect(() => {
-        setUrl(window.location.pathname);
-    }, [window.location.pathname, mock]);
+    const url = usePathname();
 
     return (
         <div className={styles.container}>
