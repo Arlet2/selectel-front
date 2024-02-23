@@ -24,7 +24,7 @@ export const Header = () => {
     let login = ""
     if (isClient && typeof localStorage !== 'undefined' && localStorage.getItem("accessToken") ) {
         isSigned = true;
-        login = localStorage.getItem("login");
+        login = localStorage.getItem("login") || "";
     }
 
     return (

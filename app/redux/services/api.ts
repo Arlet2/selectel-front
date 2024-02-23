@@ -40,9 +40,9 @@ export const api = createApi({
 })
 
 async function postData(url: string, data: object): Promise<object> {
-  let headers = {
+  let headers: Record<string, string> = {
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   };
   let accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
@@ -68,7 +68,7 @@ export async function login(credentials: ILoginCredentials): Promise<IApiToken> 
 }
 
 export async function logout(): Promise<void> {
-  await postData("auth/logout") as IApiToken;
+  await postData("auth/logout", {}) as IApiToken;
 }
 
 /* хуки, которые потом используем в компонентах, генерируются автоматически */
