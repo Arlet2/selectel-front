@@ -80,6 +80,7 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
+    z-index: 100;
 }
 
 .modal {
@@ -93,6 +94,7 @@
     padding: 32px;
     border-radius: 8px;
     background: var(--main-color);
+    z-index: 200;
 }
 
 .modal h1 {

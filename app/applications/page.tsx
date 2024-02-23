@@ -8,7 +8,7 @@ import cn from 'classnames';
 export default function Applications() {
   return (<>
     <title>Заявки на донацию - petdonor.ru</title>
-    <main>
+    <main className={styles.main}>
       <h1 className='header'>Заявки на донацию</h1>
       <div className={styles.selector}>
         <div className={cn(styles.selected, styles.selectorItem)}>Мои заявки</div>
