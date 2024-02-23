@@ -49,7 +49,7 @@ export default function Page() {
                         <Link href='/signup' className='linkPink'>Зарегистрироваться</Link>
                     </div>
                     <div className={styles.subtitleContainer}>
-                        <div className={styles.divider}></div>
+                        <div className='divider'></div>
                         <h2 className={styles.subtitle}>Войти с помощью</h2>
                     </div>
                     <div className={styles.socialMediaContainer}>
