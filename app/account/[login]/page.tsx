@@ -48,46 +48,95 @@ const pets: IPet[] = [
     }
 ]
 
+interface IVaccination{
+    name: string;
+    date: string;
+    [key: string]: string;
+}
+
 function Modal() {
+    const [vaccinations, setVaccinations] = useState<IVaccination[]>([]);
+
+    // Функция для добавления новой группы полей для прививки
+    const addVaccination = () => {
+        setVaccinations([...vaccinations, { name: '', date: '' }]);
+    };
+
+    // Функция для обновления данных прививки по индексу
+    const updateVaccination = (index: number, field: string, value: string) => {
+        const newVaccinations = [...vaccinations];
+        newVaccinations[index][field] = value;
+        setVaccinations(newVaccinations);
+    };
     return (
         <form className={styles.modal}>
             <h1>Добавление питомца</h1>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Тип животного</label>
-                <select className="input">
-                    <option>Кошка</option>
-                    <option>Собака</option>
-                </select>
+            <div className={styles.inputContainerModal}>
+                <div className={styles.leftContainerModal}>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Аватар</label>
+                        <button className={cn(styles.avatar, styles.avatarPet)}>
+                            <Image src={avatarIcon} alt='Avatar icon'/>
+                        </button>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Тип животного</label>
+                        <select className="input">
+                            <option>Кошка</option>
+                            <option>Собака</option>
+                        </select>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Кличка</label>
+                        <input type="text" className="input" placeholder="Умка"/>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Порода</label>
+                        <input type="number" className="input" placeholder="Самая красивая в мире"/>
+                    </div>
+                </div>
+                <div className={styles.rightContainerModal}>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Дата рождения</label>
+                        <input required type="date" className="input"/>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Группа крови</label>
+                        <select className="input">
+                            <option>1+</option>
+                            <option>2-</option>
+                        </select>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Вес (кг)</label>
+                        <input type="number" className="input" placeholder="0"/>
+                    </div>
+                </div>
             </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Аватар</label>
-                <button className={cn(styles.avatar, styles.avatarPet)}>
-                    <Image src={avatarIcon} alt='Avatar icon'/>
-                </button>
-            </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Кличка</label>
-                <input type="text" className="input" placeholder="Умка"/>
-            </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Порода</label>
-                <input type="number" className="input" placeholder="Самая красивая в мире"/>
-            </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Дата рождения</label>
-                <input required type="date" className="input"/>
-            </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Группа крови</label>
-                <select className="input">
-                    <option>1+</option>
-                    <option>2-</option>
-                </select>
-            </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Вес (кг)</label>
-                <input type="number" className="input" placeholder="0"/>
-            </div>
+            {vaccinations.map((vaccination, index) => (
+                <div key={index} className={styles.vaccinationContainer}>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Название прививки #{index + 1}</label>
+                        <input
+                            type="text"
+                            className="input"
+                            placeholder="Название прививки"
+                            value={vaccination.name}
+                            onChange={(e) => updateVaccination(index, 'name', e.target.value)}
+                        />
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Дата вакцинации</label>
+                        <input
+                            type="date"
+                            className="input"
+                            value={vaccination.date}
+                            onChange={(e) => updateVaccination(index, 'date', e.target.value)}
+                        />
+                    </div>
+                </div>
+            ))}
+            <button className={cn("linkPink", styles.pinkLinkButton)} onClick={addVaccination}>Добавить прививки</button>
             <button className={cn("button", styles.modalButton)} type='submit'>Создать заявку</button>
         </form>
     )

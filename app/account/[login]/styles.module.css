@@ -108,15 +108,17 @@
     row-gap: 10px;
 }
 
-.inputContainer input, .inputContainer select {
+/* .inputContainer input, .inputContainer select {
     width: 100%;
-}
+} */
 
 .label{
     font-size: var(--font-size-m);
+    margin-left: 3px;
 }
 
 .modalButton {
+    align-self: center;
     height: 52px;
     width: 350px;
     margin-top: 15px;
@@ -125,4 +127,38 @@
 .avatarPet{
     height: 100px;
     width: 100px;
+}
+
+.inputContainerModal{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: self-end;
+    justify-content: flex-end;
+    column-gap: 20px;
+}
+
+.leftContainerModal, .rightContainerModal{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    row-gap: 10px;
+}
+
+.rightContainerModal{
+    height: 100%;
+}
+
+.pinkLinkButton{
+    border: none;
+    margin-bottom: -15px;
+}
+
+.vaccinationContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    column-gap: 20px;
 }
