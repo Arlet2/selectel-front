@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import cn from 'classnames';
 import tgIcon from '@icons/tg.svg';
@@ -6,8 +8,13 @@ import arrowIcon from '@icons/arrow.svg';
 import dogImage from '@images/dog.png';
 import styles from './styles.module.css';
 import Link from 'next/link';
+import * as VKID from '@vkid/sdk';
 
 export default function Page() {
+    function useVK() {
+        VKID.Auth.login()       
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.signupContainer}>
@@ -18,7 +25,7 @@ export default function Page() {
                         <h2 className={styles.subtitle}>Войти с помощью</h2>
                     </div>
                     <div className={styles.socialMediaContainer}>
-                        <button className={styles.socialMediaButton}>
+                        <button className={styles.socialMediaButton} onClick={useVK}>
                             <Image className={styles.icon} src={vkIcon} alt='VK icon'/>
                             Продолжить с ВКонтакте
                         </button>
