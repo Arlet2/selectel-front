@@ -7,3 +7,14 @@
     justify-content: flex-start;
     row-gap: 10px;
 }
+
+.notfound {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 10px;
+    padding-bottom: 100px;
+}
+
+.notfound h2 {
+    font-size: 60px;
+}

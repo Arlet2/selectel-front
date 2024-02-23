@@ -18,7 +18,7 @@ import toast from 'react-hot-toast';
 
 export default function Page() {
     const router = useRouter();
-    const [ login, setLogin ] = useState('abc');
+    const [ login, setLogin ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ email, setEmail ] = useState('');
     const [ isChecked, setIsChecked ] = useState(false);
