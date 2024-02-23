@@ -52,11 +52,11 @@ async function postData(url: string, data: object): Promise<object> {
 }
 
 export async function register(credentials: IRegisterCredentials): Promise<IApiToken> {
-  return await postData("auth/register", { registerEntity: credentials }) as IApiToken;
+  return await postData("auth/register", credentials) as IApiToken;
 }
 
 export async function login(credentials: ILoginCredentials): Promise<IApiToken> {
-  return await postData("auth/login", { registerEntity: credentials }) as IApiToken;
+  return await postData("auth/login", credentials) as IApiToken;
 }
 
 /* хуки, которые потом используем в компонентах, генерируются автоматически */

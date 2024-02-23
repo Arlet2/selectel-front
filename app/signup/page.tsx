@@ -36,9 +36,10 @@ export default function Page() {
         event.preventDefault();
         (async () => {
             const token = await register({ login, password, email });
-            console.log(token);
+            localStorage.setItem("accessToken", token.accessToken);
+            localStorage.setItem("refreshToken", token.refreshToken);
+            router.push(`/account/${login}/settings`);
         })()
-        // router.push(`/account/${login}/settings`);
     }
 
     function useVK() {
