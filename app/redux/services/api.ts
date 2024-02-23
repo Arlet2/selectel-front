@@ -48,7 +48,10 @@ async function postData(url: string, data: object): Promise<object> {
     method: "POST",
     body: JSON.stringify(data)
   });
-  return await response.json();
+  const body = await response.json();
+  if (!response.ok)
+    throw body.error;
+  return body;
 }
 
 export async function register(credentials: IRegisterCredentials): Promise<IApiToken> {

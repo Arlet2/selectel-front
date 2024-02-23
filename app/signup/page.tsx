@@ -12,6 +12,7 @@ import * as VKID from '@vkid/sdk';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register } from '@/app/redux/services/api';
+import toast from 'react-hot-toast';
 
 //TODO: добавить проброс логина в урл
 
@@ -35,10 +36,14 @@ export default function Page() {
     const handleSubmitClick = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         (async () => {
-            const token = await register({ login, password, email });
-            localStorage.setItem("accessToken", token.accessToken);
-            localStorage.setItem("refreshToken", token.refreshToken);
-            router.push(`/account/${login}/settings`);
+            try {
+                const token = await register({ login, password, email });
+                localStorage.setItem("accessToken", token.accessToken);
+                localStorage.setItem("refreshToken", token.refreshToken);
+                router.push(`/account/${login}/settings`);
+            } catch (e) {
+                toast.error(e as string);
+            }
         })()
     }
 
@@ -75,21 +80,21 @@ export default function Page() {
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Логин</label>
-                            <input className='input' type='text' placeholder='Ваш логин' value={login} onChange={handleLoginChange}/>
+                            <input className='input' type='text' placeholder='Ваш логин' required value={login} onChange={handleLoginChange}/>
                         </div>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Почта</label>
-                            <input className='input' type='email' placeholder='mymail@mail.ru' value={email} onChange={handleEmailChange}/>
+                            <input className='input' type='email' placeholder='mymail@mail.ru' required value={email} onChange={handleEmailChange}/>
                         </div>
                     </div>
                     <div className={styles.bottomContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Пароль</label>
-                            <input className={cn('inputLong', 'input')} type='password' value={password} placeholder='********' onChange={handlePasswordChange}/>
+                            <input className={cn('inputLong', 'input')} type='password' required value={password} placeholder='********' onChange={handlePasswordChange}/>
                         </div>
                     </div>
                     <div className={styles.checkboxContainer}>
-                        <input className={styles.checkbox} type='checkbox' checked={isChecked} onChange={() => setIsChecked(!isChecked)}/>
+                        <input className={styles.checkbox} required type='checkbox' checked={isChecked} onChange={() => setIsChecked(!isChecked)}/>
                         <label className={styles.labelCheckbox} onClick={() => {setIsChecked(!isChecked)}}>Я прочитал политику конфиденциальности и со всем согласен :)</label>
                     </div>
                     <button className={cn(styles.submit, 'submitButton')} type='submit'>
