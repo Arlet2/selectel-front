@@ -11,12 +11,11 @@ import dogImage from '@images/dog.png';
 import styles from './styles.module.css';
 import cn from 'classnames';
 
-import {
+const {
     CitySelect,
     CountrySelect,
     StateSelect,
-} from 'react-country-state-city';
-
+} = require('react-country-state-city');
 
 interface IPageProps{
     params: {
