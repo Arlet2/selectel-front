@@ -1,6 +1,24 @@
 .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    text-align: center;
+    height: 150px;
     font-family: var(--font-family-contrast);
     padding: 30px 100px;
+    position: relative;
+    text-align: center;
+}
+
+.footerGif {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 250px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.footerText {
+    /* Centering text content horizontally in the container */
+    /* No specific flex property needed here as the text is centered by the container's justify-content */
 }
