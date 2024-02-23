@@ -52,9 +52,9 @@ RUN mkdir .next
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-EXPOSE 8080
+EXPOSE 80
 
-ENV PORT 8080
+ENV PORT 80
 # set hostname to localhost
 ENV HOSTNAME "0.0.0.0"
 
