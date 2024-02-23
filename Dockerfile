@@ -4,6 +4,7 @@ COPY . .
 
 RUN npm install
 RUN rm -rf .next out; exit 0
+RUN env
 RUN npm run build
 
 FROM nginx:alpine as run
