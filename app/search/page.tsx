@@ -54,7 +54,7 @@ function Modal() {
                 <label className={styles.label}>Дата окончания поиска</label>
                 <input required type="date" className="input"/>
             </div>
-            <button className={cn("buttonLogin", styles.modalButton)} type='submit'>Создать заявку</button>
+            <button className={cn("button", styles.modalButton)} type='submit'>Создать заявку</button>
         </form>
     )
 }
