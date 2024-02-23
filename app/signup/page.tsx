@@ -11,15 +11,10 @@ import Link from 'next/link';
 import * as VKID from '@vkid/sdk';
 
 export default function Page() {
-    const {
-        publicRuntimeConfig: { VK_APP_ID, VK_REDIRECT_URL},
-        ..
-    } = getConfig()
-
     function useVK() {
         VKID.Config.set({
-            app: VK_APP_ID,
-            redirectUrl: VK_REDIRECT_URL,
+            app: process.env.NEXT_PUBLIC_VK_APP_ID,
+            redirectUrl: process.env.NEXT_PUBLIC_VK_REDIRECT_URL,
         });
         VKID.Auth.login()       
     }
