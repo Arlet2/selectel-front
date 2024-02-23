@@ -113,29 +113,31 @@ function Modal() {
                     </div>
                 </div>
             </div>
-            {vaccinations.map((vaccination, index) => (
-                <div key={index} className={styles.vaccinationContainer}>
-                    <div className={styles.inputContainer}>
-                        <label className={styles.label}>Название прививки #{index + 1}</label>
-                        <input
-                            type="text"
-                            className="input"
-                            placeholder="Название прививки"
-                            value={vaccination.name}
-                            onChange={(e) => updateVaccination(index, 'name', e.target.value)}
-                        />
+            <div className={styles.vaccinationList}>
+                {vaccinations.map((vaccination, index) => (
+                    <div key={index} className={styles.vaccinationContainer}>
+                        <div className={styles.inputContainer}>
+                            <label className={styles.label}>Название прививки #{index + 1}</label>
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="Название прививки"
+                                value={vaccination.name}
+                                onChange={(e) => updateVaccination(index, 'name', e.target.value)}
+                            />
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <label className={styles.label}>Дата вакцинации</label>
+                            <input
+                                type="date"
+                                className="input"
+                                value={vaccination.date}
+                                onChange={(e) => updateVaccination(index, 'date', e.target.value)}
+                            />
+                        </div>
                     </div>
-                    <div className={styles.inputContainer}>
-                        <label className={styles.label}>Дата вакцинации</label>
-                        <input
-                            type="date"
-                            className="input"
-                            value={vaccination.date}
-                            onChange={(e) => updateVaccination(index, 'date', e.target.value)}
-                        />
-                    </div>
-                </div>
-            ))}
+                ))}
+            </div>
             <button className={cn("linkPink", styles.pinkLinkButton)} onClick={addVaccination}>Добавить прививки</button>
             <button className={cn("button", styles.modalButton)} type='submit'>Создать заявку</button>
         </form>
