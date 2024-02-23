@@ -13,6 +13,7 @@
   --blue-color-hover: #2d54df;
   --border-color: #E8E8E8;
   --placeholder-color: rgba(0,0,0,0.6);
+  --placeholder-color-light: rgba(0,0,0,0.4);
   --input-color: #FAFDFF;
   --gradient: linear-gradient(37deg, rgba(255,255,255,1) 49%, rgba(218,236,246,1) 100%);
 
@@ -192,7 +193,7 @@ button {
   background-color: var(--main-color-contrast-hover);
 }
 
-.buttonLogin{
+.button{
   background-color: var(--blue-color);
   color: var(--main-color);
   font-size: var(--font-size-m);
@@ -206,7 +207,7 @@ button {
   justify-content: center;
 }
 
-.buttonLogin:hover{
+.button:hover{
   background-color: var(--blue-color-hover);
 }
 

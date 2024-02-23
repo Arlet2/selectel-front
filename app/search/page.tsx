@@ -28,7 +28,7 @@ export default function Page() {
                 </p>
             </div>  
             <div className={styles.buttonContainer}>
-                <button className={cn('buttonLogin', styles.button)}>Cоздать заявку</button>
+                <button className={cn('button', styles.button)}>Cоздать заявку</button>
             </div>
         </div>
     )
