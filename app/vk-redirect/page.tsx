@@ -7,8 +7,9 @@ import { setId } from "@redux/someData/reducer";
 import { someDataSelector } from "@redux/someData/selector";
 import { Skeleton } from "@components/Skeleton";
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react'
 
-export default function VkRedirect() {
+function VkRedirectInner() {
   const searchParams = useSearchParams()
   const payload = searchParams.get('payload')
 
@@ -18,5 +19,13 @@ export default function VkRedirect() {
     <main className={styles.main}>
       алё гараж
     </main>
+  );
+}
+
+export default function VkRedirect() {
+  return (
+    <Suspense>
+      <VkRedirectInner/>
+    </Suspense>
   );
 }
