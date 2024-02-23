@@ -10,10 +10,10 @@ import Link from 'next/link';
 export const Header = () => {
     return (
         <div className={styles.container}>
-            <div className={styles.logoContainer}>
+            <Link className={styles.logoContainer} href="/">
                 <Image src={donorSearchLogo} alt='Logo Selectel'/>
                 <Image src={selectelLogo} alt='Logo Selectel'/>
-            </div>
+            </Link>
             <div className={styles.navContainer}>
                 <Link className={styles.headerLink} href='/about'>О сайте</Link>
                 <Link className={styles.headerLink} href='/search'>Поиск донора</Link>
@@ -23,7 +23,7 @@ export const Header = () => {
                     <Image className={styles.icon} src={geoIcon} alt='Geo location icon'/>
                     Все регионы
                 </div>
-                <button className={styles.buttonLogin}>Войти</button>
+                <Link href='/signup' className={styles.buttonLogin}>Войти</Link>
             </div>
         </div>
     )

@@ -15,7 +15,7 @@
   --border-color: #E8E8E8;
   --placeholder-color: rgba(0,0,0,0.6);
   --input-color: #FAFDFF;
-  --gradient: radial-gradient(circle, rgba(255,255,255,1) 63%, rgba(218,236,246,1) 100%);
+  --gradient: linear-gradient(37deg, rgba(255,255,255,1) 49%, rgba(218,236,246,1) 100%);
 
   /* цвета для скелетонов - двуцветный градиент */
   --skeleton-dark: hsl(204, 7%, 86%);
@@ -51,7 +51,8 @@ body {
   color: var(--main-color-font);
 
   background: var(--main-color);
-  background: var(--gradient);
+  background: 100% var(--gradient);
+
 }
 
 *,
@@ -174,6 +175,10 @@ button {
   padding: 5px 15px;
 }
 
+.inputLong{
+  width: 500px;
+}
+
 .submitButton{
   background-color: var(--main-color-contrast);
   border: none;
@@ -199,3 +204,121 @@ button {
   color: var(--blue-color-hover);
 }
 
+.header{
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-xl);
+}
+
+.divider{
+  border-bottom: solid 3px var(--main-color-font);
+  width: 80px;
+  height: 15px;
+}
+
+.dividerThin{
+  border-bottom: solid 1px var(--main-color-font);
+  width: 80px;
+  height: 15px;
+}
+
+/* стили для дропдауна */
+
+.stdropdown-container {
+  text-align: left;
+  border: 1px solid #E8E8E8;
+  position: relative;
+  border-radius: var(--border-radius);
+  background-color: var(--input-color);
+  height: 48px;
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.stdropdown-menu::-webkit-scrollbar {
+  width: 2px;
+}
+
+.stdropdown-menu::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.stdropdown-menu::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.stdropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.stdropdown-input {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  width: 100%;
+}
+
+.stdropdown-menu {
+  position: absolute;
+  transform: translateY(130px);
+  width: 100%;
+  border: 1px solid #E8E8E8;
+  border-radius: var(--border-radius);
+  overflow: auto;
+  max-height: 200px;
+  padding: 5px 10px;
+  background-color: #FAFDFF;
+  z-index: 99;
+}
+
+.stdropdown-item {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.stdropdown-item:hover {
+  background-color: rgba(159, 195, 248, 0.4392156863);
+}
+
+.stdropdown-item.selected {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+.stdropdown-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.stdropdown-tag-item {
+  background-color: #ddd;
+  padding: 2px 4px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.stdropdown-tag-close {
+  display: flex;
+  align-items: center;
+}
+
+.stsearch-box {
+  padding: 5px;
+  background-color: transparent;
+}
+
+.stsearch-box input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.stdropdown-tools{
+  margin-top: 4px;
+}

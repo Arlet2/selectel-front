@@ -6,7 +6,7 @@
     margin: 40px 0 40px 50px;
 }
 
-.signupContainer{
+.settingsContainer{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -25,48 +25,10 @@
     row-gap: 50px;
 }
 
-.subtitleContainer{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    column-gap: 20px;
-}
-
 .divider{
     border-bottom: solid 3px var(--main-color-font);
     width: 80px;
     height: 15px;
-}
-
-.subtitle{
-    color: var(--main-color-contrast);
-    font-size: var(--font-size-m);
-    font-weight: var(--font-weight-m);
-}
-
-.socialMediaContainer{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    column-gap: 20px;
-}
-
-.socialMediaButton{
-    height: 48px;
-    width: 245px;
-    display: flex;
-    flex-direction: row;
-    column-gap: 15px;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--border-radius);
-}
-
-.icon{
-    height: 24px;
-    width: 24px;
 }
 
 .formContainer{
@@ -113,6 +75,10 @@
     padding: 5px 15px;
 }
 
+.inputPassword{
+    width: 500px;
+}
+
 .input::placeholder{
     color: var(--placeholder-color);
     font-size: var(--font-size-sm);
@@ -126,7 +92,7 @@
 .checkboxContainer{
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
 }
 
@@ -143,6 +109,11 @@
 
 .submit{
     margin-top: 30px;
+    width: 210px;
+    height: 50px;
+    color: var(--main-color);
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-s);
 }
 
 .loginContainer{
@@ -167,4 +138,36 @@
     z-index: 1;
     bottom: 150px;
     top: 0;
+}
+
+.avatar{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: var(--input-color);
+}
+
+
+.socialMediaContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    column-gap: 20px;
+}
+
+.socialMediaButton{
+    height: 48px;
+    width: 245px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+}
+
+.icon{
+    height: 24px;
+    width: 24px;
 }

@@ -9,21 +9,46 @@ import dogImage from '@images/dog.png';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import * as VKID from '@vkid/sdk';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+//TODO: добавить проброс логина в урл
 
 export default function Page() {
+    const router = useRouter();
+    const [ login, setLogin ] = useState('abc');
+    const [ password, setPassword ] = useState();
+    const [ email, setEmail ] = useState();
+    const [ isChecked, setIsChecked ] = useState(false);
+
+    const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLogin(event.target.value);
+    }
+    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value);
+    }
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
+    }
+
+    const handleSubmitClick = (event) => {
+        event.preventDefault();
+        router.push(`/account/${login}/settings`);
+    }
+
     function useVK() {
         VKID.Config.set({
             app: Number(process.env.NEXT_PUBLIC_VK_APP_ID),
             redirectUrl: process.env.NEXT_PUBLIC_VK_REDIRECT_URL,
         });
-        VKID.Auth.login()       
+        VKID.Auth.login()
     }
 
     return (
         <div className={styles.container}>
             <div className={styles.signupContainer}>
                 <div className={styles.headerContainer}>
-                    <h1 className={styles.header}>Регистрация</h1>
+                    <h1 className='header'>Регистрация</h1>
                     <div className={styles.subtitleContainer}>
                         <div className={styles.divider}></div>
                         <h2 className={styles.subtitle}>Войти с помощью</h2>
@@ -40,27 +65,27 @@ export default function Page() {
                     </div>
                 </div>
                 <div className={styles.placeholder}>или</div>
-                <form className={styles.formContainer}>
+                <form className={styles.formContainer} onSubmit={handleSubmitClick}>
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Логин</label>
-                            <input className='input' type='text' placeholder='Ваш логин'/>
+                            <input className='input' type='text' placeholder='Ваш логин' value={login} onChange={handleLoginChange}/>
                         </div>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Почта</label>
-                            <input className='input' type='email' placeholder='mymail@mail.ru'/>
+                            <input className='input' type='email' placeholder='mymail@mail.ru' value={email} onChange={handleEmailChange}/>
                         </div>
                     </div>
                     <div className={styles.bottomContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Пароль</label>
-                            <input className={cn(styles.inputPassword, 'input')} type='password' placeholder='********'/>
+                            <input className={cn('inputLong', 'input')} type='password' value={password} placeholder='********' onChange={handlePasswordChange}/>
                         </div>
                     </div>
                     <div className={styles.checkboxContainer}>
-                        <input className={styles.checkbox} type='checkbox'/>
+                        <input className={styles.checkbox} type='checkbox' checked={isChecked} onChange={() => setIsChecked(!isChecked)}/>
                         <label className={styles.labelCheckbox}>Я прочитал политику конфиденциальности и со всем согласен :)</label>
-                    </div> 
+                    </div>
                     <button className={cn(styles.submit, 'submitButton')} type='submit'>
                         <Image className={styles.icon} src={arrowIcon} alt='Arrow icon'/>
                     </button>
