@@ -13,7 +13,7 @@ import * as VKID from '@vkid/sdk';
 export default function Page() {
     function useVK() {
         VKID.Config.set({
-            app: process.env.NEXT_PUBLIC_VK_APP_ID,
+            app: Number(process.env.NEXT_PUBLIC_VK_APP_ID),
             redirectUrl: process.env.NEXT_PUBLIC_VK_REDIRECT_URL,
         });
         VKID.Auth.login()       
