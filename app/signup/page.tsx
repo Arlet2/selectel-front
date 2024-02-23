@@ -17,8 +17,8 @@ import { useRouter } from 'next/navigation';
 export default function Page() {
     const router = useRouter();
     const [ login, setLogin ] = useState('abc');
-    const [ password, setPassword ] = useState();
-    const [ email, setEmail ] = useState();
+    const [ password, setPassword ] = useState('');
+    const [ email, setEmail ] = useState('');
     const [ isChecked, setIsChecked ] = useState(false);
 
     const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ export default function Page() {
         setEmail(event.target.value);
     }
 
-    const handleSubmitClick = (event) => {
+    const handleSubmitClick = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         router.push(`/account/${login}/settings`);
     }

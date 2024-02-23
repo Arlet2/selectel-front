@@ -93,7 +93,7 @@ export default function Page({ params: { login } }: IPageProps) {
                             <label className={styles.label}>Регион</label>
                             <StateSelect
                                 countryid={COUNTRY_ID}
-                                onChange={(e) => {
+                                onChange={(e: any) => {
                                     setState(e.id);
                                 }}
                                 placeHolder="Выберите из списка"
