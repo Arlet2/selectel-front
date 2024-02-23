@@ -11,6 +11,8 @@ import Link from 'next/link';
 import * as VKID from '@vkid/sdk';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { login as doLogin } from '@/app/redux/services/api';
+import toast from 'react-hot-toast';
 
 //TODO: добавить проброс логина в урл
 
@@ -28,7 +30,17 @@ export default function Page() {
 
     const handleSubmitClick = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        router.push(`/account/${login}/settings`);
+        (async () => {
+            try {
+                const token = await doLogin({ login, password });
+                localStorage.setItem("accessToken", token.accessToken);
+                localStorage.setItem("refreshToken", token.refreshToken);
+                localStorage.setItem("login", login);
+                router.push(`/`);
+            } catch (e) {
+                toast.error(e as string);
+            }
+        })()
     }
 
     function useVK() {

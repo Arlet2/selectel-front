@@ -15,10 +15,10 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL,
     prepareHeaders: (headers, { getState }) => {
-      let authToken = localStorage.getItem("authToken");
+      let accessToken = localStorage.getItem("accessToken");
 
-      if (authToken) {
-        headers.set('authorization', `Bearer ${authToken}`)
+      if (accessToken) {
+        headers.set('authorization', `Bearer ${accessToken}`)
       }
 
       return headers
@@ -40,11 +40,16 @@ export const api = createApi({
 })
 
 async function postData(url: string, data: object): Promise<object> {
+  let headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  };
+  let accessToken = localStorage.getItem("accessToken");
+  if (accessToken) {
+    headers['authorization'] = `Bearer ${accessToken}`
+  }
   const response = await fetch(API_URL + url, {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
+    headers,
     method: "POST",
     body: JSON.stringify(data)
   });
@@ -60,6 +65,10 @@ export async function register(credentials: IRegisterCredentials): Promise<IApiT
 
 export async function login(credentials: ILoginCredentials): Promise<IApiToken> {
   return await postData("auth/login", credentials) as IApiToken;
+}
+
+export async function logout(): Promise<void> {
+  await postData("auth/logout") as IApiToken;
 }
 
 /* хуки, которые потом используем в компонентах, генерируются автоматически */

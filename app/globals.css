@@ -219,6 +219,7 @@ button {
   font-size: var(--font-size-m);
   font-weight: 500;
   transition: 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .linkBlue:hover{
@@ -230,6 +231,7 @@ button {
   font-size: var(--font-size-m);
   font-weight: 500;
   transition: 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .linkPink:hover{

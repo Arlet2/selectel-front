@@ -40,6 +40,7 @@ export default function Page() {
                 const token = await register({ login, password, email });
                 localStorage.setItem("accessToken", token.accessToken);
                 localStorage.setItem("refreshToken", token.refreshToken);
+                localStorage.setItem("login", login);
                 router.push(`/account/${login}/settings`);
             } catch (e) {
                 toast.error(e as string);

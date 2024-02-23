@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import cn from 'classnames';
 import { PetCard } from '@/app/components/PetCard';
+import * as api from '@/app/redux/services/api';
+import { useRouter } from 'next/navigation';
 
 interface IPageProps{
     params: {
@@ -95,6 +97,15 @@ export default function Page({ params: { login } }: IPageProps){
     const [ modalVisible, setModalVisible ] = useState(false)
     const [count, setCount] = useState(0);
     const [ isAnyPets, setIsAnyPets ] = useState(true);
+    const router = useRouter();
+
+    function logout() {
+        api.logout()
+        localStorage.removeItem("login")
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("refreshToken")
+        router.push(`/`);
+    }
     return (<>
         <title>Профиль - petdonor.ru</title>
         <div className={styles.container}>
@@ -112,6 +123,7 @@ export default function Page({ params: { login } }: IPageProps){
                     <h2 className='subtitle'>Вероника Собачкина</h2>
                     <div className={styles.counter}>{count} донаций</div>
                     <Link className='linkPink' href={`/account/${login}/settings`}>Редактировать</Link>
+                    <div className='linkBlue' onClick={logout}>Выход</div>
                 </div>
             </div>
             <div className={cn(styles.rightContainer, isAnyPets ? '' : styles.empty)}>

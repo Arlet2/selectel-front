@@ -14,6 +14,19 @@ import { usePathname } from 'next/navigation';
 export const Header = () => {
     const url = usePathname();
 
+    const [isClient, setIsClient] = useState(false)
+ 
+      useEffect(() => {
+        setIsClient(true)
+      }, [])
+
+    let isSigned = false;
+    let login = ""
+    if (isClient && typeof localStorage !== 'undefined' && localStorage.getItem("accessToken") ) {
+        isSigned = true;
+        login = localStorage.getItem("login");
+    }
+
     return (
         <div className={styles.container}>
             <Link className={styles.logoContainer} href="/">
@@ -27,7 +40,8 @@ export const Header = () => {
                 <Link className={cn(styles.headerLink, url === '/available-donors' && styles.selected)} href='/available-donors'>Доступные доноры</Link>
             </div>
             <div className={styles.infoContainer}>
-                <Link href='/signin' className={cn(styles.button, 'button')}>Войти</Link>
+                {!isSigned && <Link href='/signin' className={cn(styles.button, 'button')}>Войти</Link>}
+                {isSigned && <Link href={`/account/${login}`} className={cn(styles.button, 'button')}>Профиль</Link>}
             </div>
         </div>
     )
