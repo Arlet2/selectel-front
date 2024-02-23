@@ -171,9 +171,9 @@
 
 .backgroundImage{
     object-fit: contain;
-    position: fixed;
+    position: relative;
     width: 769px;
     z-index: 1;
-    right: 0;
-    top: 100px;
+    right: -200px;
+    top: 0;
 }
