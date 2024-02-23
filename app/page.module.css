@@ -13,6 +13,9 @@
     flex-flow: column nowrap;
     gap: 10px;
     padding-bottom: 100px;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
 }
 
 .notfound h2 {
