@@ -64,6 +64,18 @@ function Modal() {
                 </button>
             </div>
             <div className={styles.inputContainer}>
+                <label className={styles.label}>Кличка</label>
+                <input type="text" className="input" placeholder="Умка"/>
+            </div>
+            <div className={styles.inputContainer}>
+                <label className={styles.label}>Порода</label>
+                <input type="number" className="input" placeholder="Самая красивая в мире"/>
+            </div>
+            <div className={styles.inputContainer}>
+                <label className={styles.label}>Дата рождения</label>
+                <input required type="date" className="input"/>
+            </div>
+            <div className={styles.inputContainer}>
                 <label className={styles.label}>Группа крови</label>
                 <select className="input">
                     <option>1+</option>
@@ -71,26 +83,8 @@ function Modal() {
                 </select>
             </div>
             <div className={styles.inputContainer}>
-                <label className={styles.label}>Город</label>
-                <select className="input">
-                    <option>Санкт-Петербург</option>
-                    <option>Москва</option>
-                </select>
-            </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Район</label>
-                <select className="input">
-                    <option>Шушары</option>
-                    <option>Нижний Тагил</option>
-                </select>
-            </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Количество крови (мл)</label>
+                <label className={styles.label}>Вес (кг)</label>
                 <input type="number" className="input" placeholder="0"/>
-            </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Дата окончания поиска</label>
-                <input required type="date" className="input"/>
             </div>
             <button className={cn("button", styles.modalButton)} type='submit'>Создать заявку</button>
         </form>
