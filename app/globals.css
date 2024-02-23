@@ -8,12 +8,15 @@
   --main-color: white;
   --main-color-font: black;
   --main-color-contrast: #FB73C4;
+  --main-color-contrast-link-hover: #ea52ad;
   --main-color-contrast-hover: #f78ccc;
   --blue-color: #456EFF;
+  --blue-color-light: #a6b8fa;
   --blue-color-hover: #2d54df;
   --border-color: #E8E8E8;
   --placeholder-color: rgba(0,0,0,0.6);
   --placeholder-color-light: rgba(0,0,0,0.4);
+  --box-shadow-color-light: rgba(0,0,0,0.2);
   --input-color: #FAFDFF;
   --gradient: linear-gradient(37deg, rgba(255,255,255,1) 49%, rgba(218,236,246,1) 100%);
 
@@ -230,7 +233,7 @@ button {
 }
 
 .linkPink:hover{
-  color: var(--main-color-contrast-hover);
+  color: var(--main-color-contrast-link-hover);
 }
 
 .header{

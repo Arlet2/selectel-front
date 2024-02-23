@@ -1,0 +1,44 @@
+.container{
+    height: 250px;
+    width: 200px;
+    box-shadow: 0px 3px 5px 1px var(--box-shadow-color-light);
+    border: solid 1px var(--border-color);
+    background-color: var(--main-color);
+    border-radius: var(--border-radius);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    row-gap: 10px;
+    padding: 20px 10px;
+}
+
+.avatar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--main-color);
+    box-shadow: 0px 3px 5px 1px var(--box-shadow-color-light);
+    height: 90px;
+    width: 90px;
+}
+
+.name{
+    font-size: var(--font-size-l);
+    font-weight: var(--font-weight-m);
+}
+
+.buttonContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 5px;
+}
+
+.button{
+    border: none;
+}
