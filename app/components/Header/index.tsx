@@ -8,24 +8,14 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { getLogin } from '@/app/redux/services/api'
 
 //TODO: подсвечивание раздела где мы на данный момент
 
 export const Header = () => {
     const url = usePathname();
-
-    const [isClient, setIsClient] = useState(false)
- 
-      useEffect(() => {
-        setIsClient(true)
-      }, [])
-
-    let isSigned = false;
-    let login = ""
-    if (isClient && typeof localStorage !== 'undefined' && localStorage.getItem("accessToken") ) {
-        isSigned = true;
-        login = localStorage.getItem("login") || "";
-    }
+    const login = getLogin();
+    const isSigned = login !== undefined;
 
     return (
         <div className={styles.container}>

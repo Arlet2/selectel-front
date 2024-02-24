@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { IApiToken, ILoginCredentials, IRegisterCredentials } from '@/app/types'
 
@@ -97,4 +98,18 @@ export async function login(credentials: ILoginCredentials): Promise<IApiToken> 
 
 export async function logout(): Promise<void> {
   await postData("auth/logout", {}) as IApiToken;
+}
+
+export function getLogin(): string | undefined {
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  let isSigned = false;
+  let login = ""
+  if (isClient && typeof localStorage !== 'undefined' && localStorage.getItem("accessToken") ) {
+    return localStorage.getItem("login") || "";
+  }
 }

@@ -170,7 +170,7 @@ function Modal() {
 }
 
 export default function Page({ params: { login } }: IPageProps){
-    const [ isPersonLogged, setIsPersonLogged ] = useState(false); // заменить на что-то адекватное, чтобы из списка можно было попасть в профиль донора
+    const isPersonLogged = api.getLogin() === login;
     const [ modalVisible, setModalVisible ] = useState(false)
     const [count, setCount] = useState(0);
     const [ isAnyPets, setIsAnyPets ] = useState(true);
