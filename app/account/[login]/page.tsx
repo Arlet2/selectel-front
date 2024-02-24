@@ -11,7 +11,7 @@ import { PetCard } from '@/app/components/PetCard';
 import * as api from '@/app/redux/services/api';
 import { useRouter } from 'next/navigation';
 import { PetTypeSelector, BloodTypeSelector, BreedTypeSelector } from '@components/Selector';
-import { City, District, useAddPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets } from '@/app/redux/services/api';
+import { useAddPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets, useAddVaccinationMutation } from '@/app/redux/services/api';
 import toast from 'react-hot-toast';
 
 interface IPageProps{
@@ -33,6 +33,7 @@ function Modal({onClose}: any) {
     const [breed, setBreed] = useState('');
     const [birthday, setBirthday] = useState('');
     const [weight, setWeight] = useState<number | undefined>()
+    const [vaccinations, setVaccinations] = useState<IVaccination[]>([]);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
@@ -52,6 +53,7 @@ function Modal({onClose}: any) {
     };
 
     const [addPetInfo, { isLoading }] = useAddPetMutation();
+    const [addVaccinationMutation] = useAddVaccinationMutation();
 
     const handleSave = async (e: any) => {
         e.preventDefault()
@@ -68,7 +70,18 @@ function Modal({onClose}: any) {
         };
 
         try {
-            await addPetInfo(petInfo);
+            const result: any = await addPetInfo(petInfo);
+            let idPet = 1;
+            if ('data' in result) {
+                const { id } = result.data;
+                idPet = id;
+                console.log(id);
+            }
+            vaccinations.map(async (item) => {
+                await addVaccinationMutation({id: idPet, vaccination: {name: item.name, vaccinationDate: item.date}});
+                console.log({id: idPet, vaccination: {name: item.name, vaccinationDate: item.date}});
+                toast.success('Вакцинация успешно добавлена.');
+            })
             toast.success('Питомец успешно добавлен.')
             onClose()
         } catch (error) {
@@ -77,8 +90,6 @@ function Modal({onClose}: any) {
         }
     };
     
-    const [vaccinations, setVaccinations] = useState<IVaccination[]>([]);
-
     const addVaccination = () => {
         setVaccinations([...vaccinations, { name: '', date: '' }]);
     };
@@ -165,7 +176,7 @@ function Modal({onClose}: any) {
                     </div>
                 ))}
             </div>
-            <button className={cn("linkPink", styles.pinkLinkButton)} onClick={addVaccination}>Добавить прививки</button>
+            <button className={cn("linkPink", styles.pinkLinkButton)} onClick={(e) => { e.preventDefault(); addVaccination(); }}>Добавить прививки</button>
             <button className={cn("button", styles.modalButton)} type='submit'>Добавить питомца</button>
         </form>
     )

@@ -113,6 +113,23 @@ export interface ChangePassword {
   newPassword: string
 }
 
+export interface IVaccination {
+  name: string,
+  vaccinationDate: string,
+  description?: string,
+}
+
+export interface IVaccinationInfoQuery{
+  id: number,
+  vaccination: IVaccination,
+}
+
+export interface IVaccinationReturn{
+  data: {
+    id: number;
+  }
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -228,19 +245,25 @@ export const api = createApi({
         url: `users/unavailable_dates/`,
         method: 'POST',
         body,
-      }),
-      invalidatesTags: ['UnavailableDates'],
+      })
     }),
     getUnavailableDates: builder.query<IUnavailableDates, void>({
       query: () => `users/unavailable_dates/`,
       providesTags: ['UnavailableDates'],
     }),
-  changePassword: builder.mutation<void, ChangePassword>({
-      query: (body) => ({
-        url: `users/change_password`,
-        method: 'POST',
-        body,
+    changePassword: builder.mutation<void, ChangePassword>({
+        query: (body) => ({
+          url: `users/change_password`,
+          method: 'POST',
+          body,
+        }),
       }),
+    addVaccination: builder.mutation<IVaccinationReturn, IVaccinationInfoQuery>({
+      query: ({id, vaccination}) => ({
+        url: `pets/${id}/vaccination`,
+        method: 'POST',
+        body: vaccination,
+      })
     }),
   }),
 })
@@ -251,7 +274,7 @@ export const {
   useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
   useDeleteDonorRequestMutation, useDeletePetMutation, useAddUnavailableDatesMutation, useGetUnavailableDatesQuery,
-  useGetPetsForUserQuery, useGetPetsQuery, useChangePasswordMutation
+  useGetPetsForUserQuery, useGetPetsQuery, useChangePasswordMutation, useAddVaccinationMutation
 } = api
 
 async function postData(url: string, data: object): Promise<object> {
