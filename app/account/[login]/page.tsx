@@ -11,7 +11,7 @@ import { PetCard } from '@/app/components/PetCard';
 import * as api from '@/app/redux/services/api';
 import { useRouter } from 'next/navigation';
 import { PetTypeSelector, BloodTypeSelector, BreedTypeSelector } from '@components/Selector';
-import { City, District, useAddPetMutation, IAddedPet, useGetUserInfoQuery } from '@/app/redux/services/api';
+import { City, District, useAddPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets } from '@/app/redux/services/api';
 import toast from 'react-hot-toast';
 
 interface IPageProps{
@@ -94,8 +94,8 @@ export interface IVaccination{
 }
 
 function Modal() {
-    const [ petType, setPetType ] = useState({id: 0, type: "Кошка"});
-    const [ bloodType, setBloodType ] = useState(0);
+    const [ petType, setPetType ] = useState({id: 1, type: "Кошка"});
+    const [ bloodType, setBloodType ] = useState(11);
     const [name, setName] = useState('');
     const [breed, setBreed] = useState('');
     const [birthday, setBirthday] = useState('');
@@ -128,7 +128,6 @@ function Modal() {
 
         try {
             await addPetInfo(petInfo).unwrap();
-            console.log(petInfo);
             toast.success('Питомец добавлен успешно!');
         } catch (error) {
             console.error('Ошибка добавления питомца:', error);
@@ -232,7 +231,7 @@ function Modal() {
 
 export default function Page({ params: { login } }: IPageProps){
     const isPersonLogged = api.getLogin() === login;
-    const [ pets, setPets ] = useState(myPets);
+    const [ pets, setPets ] = useState<IUserPets[]>([]);
     const [ modalVisible, setModalVisible ] = useState(false)
     const [count, setCount] = useState(5);
     const [ isAnyPets, setIsAnyPets ] = useState(true);
@@ -251,6 +250,7 @@ export default function Page({ params: { login } }: IPageProps){
     const [district, setDistrict] = useState<District>();
 
     const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(login);
+    const { data: petsInfo, isLoading: isPetsInfoLoading } = useGetPetsForUserQuery(login);
     
     useEffect(() => {
         if (!isUserInfoLoading && userInfo) {
@@ -265,6 +265,13 @@ export default function Page({ params: { login } }: IPageProps){
             setEmail(userInfo.email);
         }
     }, [isUserInfoLoading, userInfo]);
+
+    useEffect(() => {
+        if (!isPetsInfoLoading && petsInfo) {
+            setPets(petsInfo);
+            console.log(petsInfo);
+        }
+    }, [isPetsInfoLoading, petsInfo]);
 
     function logout() {
         api.logout()

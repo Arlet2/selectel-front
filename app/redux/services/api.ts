@@ -86,6 +86,7 @@ export interface GetDonorRequest {
 }
 
 export interface IUserPets {
+  id: number;
   owner: IUser,
   petType: PetType,
   bloodType: BloodType,
@@ -178,7 +179,7 @@ export const api = createApi({
       }),
     addPet: builder.mutation<void, IAddedPet>({
       query: (body) => ({
-        url: `users/`,
+        url: `pets/`,
         method: 'POST',
         body,
       }),
