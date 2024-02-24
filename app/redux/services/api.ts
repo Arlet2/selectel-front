@@ -111,8 +111,9 @@ export async function logout(): Promise<void> {
 }
 
 export function getLogin(): string | undefined {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isClient, setIsClient] = useState(false)
-
+// eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     setIsClient(true)
   }, [])

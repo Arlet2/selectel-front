@@ -40,7 +40,7 @@ function Modal() {
                     </div>
                     <div className={styles.inputContainer}>
                         <div className={styles.inputContainer}>
-                            <label className={styles.label}>Новый пароль</label>
+                            <label className={styles.modaLabel}>Новый пароль</label>
                             <input className='input' type='password' required placeholder='***'/>
                         </div>
                     </div>
@@ -56,7 +56,7 @@ export default function Page({ params: { login } }: IPageProps) {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
-    const updateEndDate = (newEndDate) => {
+    const updateEndDate = (newEndDate: string) => {
         if (newEndDate >= startDate) {
             setEndDate(newEndDate);
         } else {
