@@ -204,8 +204,12 @@ export const api = createApi({
       }),
       invalidatesTags: ['Pet'],
     }),
-    getPets: builder.query<IUserPets[], void>({
-      query: () => `pets/`,
+    getPets: builder.query<IUserPets[], object>({
+      query: (params) => ({
+        url: `pets/`,
+        method: 'GET',
+        params
+      }),
       providesTags: ['Pet'],
     }),
     getPetsForUser: builder.query<IUserPets[], string>({

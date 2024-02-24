@@ -87,5 +87,7 @@
 
 .button{
   height: 48px;
-  width: 250px;
+  width: 100%;
+  margin-top: 20px;
+  box-shadow: none;
 }
