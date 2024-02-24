@@ -72,8 +72,10 @@ export default function Page({ params: { login } }: IPageProps) {
             setShowEmail(userInfo.emailVisibility);
             setShowPhone(userInfo.phoneVisibility);
             setEmail(userInfo.email);
-            setCity({ id: userInfo.location.id, city: userInfo.location.city })
-            setDistrict(userInfo.location)
+            if (userInfo.location) {
+                setCity({ id: userInfo.location.id, city: userInfo.location.city })
+                setDistrict(userInfo.location)
+            }
         }
     }, [isUserInfoLoading, userInfo]);
 
