@@ -11,7 +11,7 @@ import { PetCard } from '@/app/components/PetCard';
 import * as api from '@/app/redux/services/api';
 import { useRouter } from 'next/navigation';
 import { PetTypeSelector, BloodTypeSelector, BreedTypeSelector } from '@components/Selector';
-import { useAddPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets, useAddVaccinationMutation } from '@/app/redux/services/api';
+import { useAddPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets, useAddVaccinationMutation, useGetUnavailableDatesQuery, IUnavailableDatesForUser, IUnavailableDates } from '@/app/redux/services/api';
 import toast from 'react-hot-toast';
 
 interface IPageProps{
@@ -179,6 +179,14 @@ function Modal({onClose}: any) {
     )
 }
 
+function convertDateFormat(dateString: string) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() +  1; // Месяцы начинаются с  0
+    const year = date.getFullYear();
+    return `${day}.${month <  10 ? '0' + month : month}.${year}`;
+}
+
 export default function Page({ params: { login } }: IPageProps){
     const isPersonLogged = api.getLogin() === login;
     const [ pets, setPets ] = useState<IUserPets[]>([]);
@@ -197,9 +205,11 @@ export default function Page({ params: { login } }: IPageProps){
     const [tg, setTg] = useState('');
     const [city, setCity] = useState('');
     const [district, setDistrict] = useState('');
+    const [unavailableDates, setUnavailableDates] = useState<IUnavailableDates>();
 
     const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(login);
     const { data: petsInfo, isLoading: isPetsInfoLoading } = useGetPetsForUserQuery(login);
+    const { data: unavailableDatesInfo, isLoading: isUnavailableDatesLoading } = useGetUnavailableDatesQuery();
 
     let fullName = `${name || ''} ${surname || ''} ${lastName || ''}`
     if (fullName.trim().length == 0) fullName= "Имя не указано"
@@ -228,6 +238,12 @@ export default function Page({ params: { login } }: IPageProps){
         }
     }, [isPetsInfoLoading, petsInfo]);
 
+    useEffect(() => {
+        if (!isUnavailableDatesLoading && unavailableDatesInfo){
+            setUnavailableDates(unavailableDatesInfo);
+        }
+    })
+
     function logout() {
         api.logout()
         localStorage.removeItem("login")
@@ -235,6 +251,7 @@ export default function Page({ params: { login } }: IPageProps){
         localStorage.removeItem("refreshToken")
         router.push(`/`);
     }
+
     return (<>
         <title>Профиль - petdonor.ru</title>
         <div className={styles.container}>
@@ -283,6 +300,10 @@ export default function Page({ params: { login } }: IPageProps){
                         <p>Телеграм</p>
                         <p className='semibold'>{tg ? tg : 'не указано'}</p>
                     </div>
+                    {unavailableDates && <div className={cn(styles.contactContainer, styles.unavailableContainer)}>
+                        <p className={styles.pinkHeaderContact}>Даты недоступности</p>
+                        <p className='semibold'>с {convertDateFormat(unavailableDates.startDate)} по {convertDateFormat(unavailableDates.endDate)}</p>
+                    </div>}
                 </div>
                 <div className={cn(styles.petsContainer, pets.length > 0 ? '' : styles.empty)}>
                     <h2 className={styles.title}>Питомцы</h2>
