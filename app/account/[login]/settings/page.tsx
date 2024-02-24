@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useId, useEffect, useState, useRef } from 'react';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -90,7 +90,11 @@ export default function Page({ params: { login } }: IPageProps) {
     const { data: unavailableDatesInfo, isLoading: isUnavailableDatesLoading } = useGetUnavailableDatesQuery();
     const [updateUserInfo, { isLoading }] = useUpdateUserInfoMutation();
     const [addUnavailableDates] = useAddUnavailableDatesMutation();
-    
+    const [addAvatar] = api.useAddAvatarMutation();
+
+    const avatarId = useId()    
+    const imageRef = useRef()
+
     useEffect(() => {
         if (!isUserInfoLoading && userInfo) {
             setPhone(userInfo.phone);
@@ -126,6 +130,11 @@ export default function Page({ params: { login } }: IPageProps) {
     };
 
     const handleSave = async () => {
+        if (imageRef && imageRef.current && imageRef.current.files[0]) {
+            let file = imageRef.current.files[0];
+            addAvatar(file)
+        }
+
         const userInfo: Partial<IUpdateUser> = {
             email,
             phone,
@@ -228,9 +237,12 @@ export default function Page({ params: { login } }: IPageProps) {
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Аватар</label>
-                            <button className={styles.avatar}>
-                                <Image src={avatarIcon} alt='Avatar icon'/>
-                            </button>
+                            <label htmlFor={avatarId}>
+                                <button className={styles.avatar}>
+                                    <Image src={avatarIcon} alt='Avatar icon'/>
+                                </button>
+                                <input className={styles.fileInput} type="file" id={avatarId} accept=".jpg, .jpeg, .png" ref={imageRef} />
+                            </label>
                         </div>
                     </div>
                     <div className={styles.topContainer}>

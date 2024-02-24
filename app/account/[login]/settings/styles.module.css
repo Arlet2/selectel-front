@@ -145,6 +145,7 @@
     width: 100px;
     border-radius: 50%;
     background-color: var(--input-color);
+    pointer-events: none;
 }
 
 
@@ -232,4 +233,8 @@
     height: 35px;    
     width: 35px;
     border: 1px solid var(--border-color);
+}
+
+.fileInput {
+    display: none;
 }

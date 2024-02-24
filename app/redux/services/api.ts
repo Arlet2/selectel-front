@@ -268,6 +268,21 @@ export const api = createApi({
         body: vaccination,
       })
     }),
+    addAvatar: builder.mutation<void, any>({
+      query: (file) => {
+        let bodyFormData = new FormData();
+        bodyFormData.append('file', file);
+        return {
+          url: `users/avatar`,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'multipart/form-data;'
+          },
+          body: bodyFormData,
+          formData: true
+        }
+      }
+    }),
   }),
 })
 
@@ -277,7 +292,8 @@ export const {
   useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
   useDeleteDonorRequestMutation, useDeletePetMutation, useAddUnavailableDatesMutation, useGetUnavailableDatesQuery,
-  useGetPetsForUserQuery, useGetPetsQuery, useChangePasswordMutation, useAddVaccinationMutation
+  useGetPetsForUserQuery, useGetPetsQuery, useChangePasswordMutation, useAddVaccinationMutation,
+  useAddAvatarMutation,
 } = api
 
 async function postData(url: string, data: object): Promise<object> {
