@@ -1,0 +1,91 @@
+.card {
+  box-shadow: 0px 3px 5px 1px var(--box-shadow-color-light);
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  max-width: 300px;
+}
+
+.avatarContainer {
+  margin-bottom: 10px;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: solid 1px var(--border-color);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-s);
+  background-color: var(--input-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+    object-fit: contain;
+}
+
+.avatarPet {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: solid 1px var(--border-color);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-s);
+  background-color: var(--input-color);
+}
+
+.username {
+  font-size: 1.2em;
+  color: #333;
+}
+
+.city {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.petInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  width: 200px;
+  gap: 30px;
+  padding-top: 20px;
+}
+
+
+.petTextInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.petName {
+  font-weight: bold;
+}
+
+.petDetails {
+  font-size: 0.8em;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: start;
+}
+
+.additionalPets {
+  font-size: 0.8em;
+  color: var(--placeholder-color-light);
+  margin-bottom: 20px;
+}
+
+.button{
+  height: 48px;
+  width: 250px;
+}

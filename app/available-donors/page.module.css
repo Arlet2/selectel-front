@@ -1,0 +1,60 @@
+.main {
+  margin: 50px 0;
+}
+
+.selector {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 16px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  justify-content: space-around;
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.selectorItem {
+  font-size: var(--font-size-l);
+  cursor: pointer;
+}
+
+.selected {
+  color: var(--main-color-contrast);
+  font-weight: 600;
+}
+
+.filtersHeader {
+  color: var(--placeholder-color);
+  margin-top: 60px;
+}
+
+.filters {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 8px;
+  flex: 1 0 auto;
+  flex: 1;
+}
+
+.inputContainer select {
+  width: 100%;
+}
+
+.inputContainer input {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 20px;
+  row-gap: 40px;
+  margin-top: 40px;
+}
