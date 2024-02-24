@@ -4,17 +4,42 @@ import { useState } from "react";
 import styles from './styles.module.css';
 import cn from 'classnames';
 import { CitySelector, DistrictSelector, PetTypeSelector, BloodTypeSelector } from '@components/Selector';
+import * as api from '@/app/redux/services/api';
+import { useRouter } from 'next/navigation';
 
 function Modal() {
+    const router = useRouter();
+    const [ description, setDescription ] = useState("");
+    const [ vetAddress, setVetAddress ] = useState("");
     const [ petType, setPetType ] = useState({id: 0, type: "Кошка"});
     const [ bloodType, setBloodType ] = useState(0);
+    const [ bloodAmountMl, setBloodAmountMl ] = useState(0);
+    const [ availableUntil, setAvailableUntil ] = useState("");
 
-    const [ city, setCity ] = useState({id: 0, city: "Санкт-Петербург"});
-    const [ district, setDistrict ] = useState(0);
+    const [ addDonorRequest, result ] = api.useAddDonorRequestMutation()
+
+    function submit(e) {
+        e.preventDefault()
+
+        addDonorRequest({
+            description,
+            vetAddress,
+            petTypeID: petType.id,
+            bloodTypeID: bloodType,
+            bloodAmountMl,
+            availableUntil
+        })
+
+        router.push(`/applications`);
+    }
 
     return (
-        <form className={styles.modal}>
+        <form className={styles.modal} onSubmit={submit}>
             <h1>Данные для поиска</h1>
+            <div className={styles.inputContainer}>
+                <label className={styles.label}>Причина </label>
+                <textarea required className="input textarea" placeholder="..." value={description} onChange={e => setDescription(e.target.value)}/>
+            </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Тип животного</label>
                 <PetTypeSelector value={petType} onChange={(v) => setPetType(v)}/>
@@ -24,20 +49,16 @@ function Modal() {
                 <BloodTypeSelector petType={petType} value={bloodType} onChange={(v) => setBloodType(v)}/>
             </div>
             <div className={styles.inputContainer}>
-                <label className={styles.label}>Город</label>
-                <CitySelector value={city} onChange={(v) => setCity(v)}/>
-            </div>
-            <div className={styles.inputContainer}>
-                <label className={styles.label}>Район</label>
-                <DistrictSelector city={city} value={district} onChange={(v) => setDistrict(v)}/>
+                <label className={styles.label}>Адрес вет. клиники</label>
+                <input required type="text" className="input" placeholder="ул.Пушкина, д.Колотушкина" value={vetAddress} onChange={e => setVetAddress(e.target.value)}/>
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Количество крови (мл)</label>
-                <input type="number" className="input" placeholder="0"/>
+                <input required type="number" className="input" placeholder="0" value={bloodAmountMl} onChange={e => setBloodAmountMl(e.target.value) }/>
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Дата окончания поиска</label>
-                <input required type="date" className="input"/>
+                <input required type="date" className="input" value={availableUntil} onChange={e => setAvailableUntil(e.target.value)}/>
             </div>
             <button className={cn("button", styles.modalButton)} type='submit'>Создать заявку</button>
         </form>

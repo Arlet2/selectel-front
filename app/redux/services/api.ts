@@ -31,6 +31,15 @@ interface BloodType {
   bloodType: string;
 }
 
+interface DonorRequests {
+  description: string;
+  vetAddress: string;
+  petTypeID: number;
+  bloodTypeID: number;
+  bloodAmountMl: number;
+  availableUntil: string;
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -39,6 +48,7 @@ export const api = createApi({
       let accessToken = localStorage.getItem("accessToken");
 
       if (accessToken) {
+        console.log(accessToken)
         headers.set('authorization', `Bearer ${accessToken}`)
       }
 
@@ -65,18 +75,18 @@ export const api = createApi({
         params: { typeName: petType }
       })
     }),
-    addSomething: builder.mutation<ISomeType, Partial<ISomeType>>({
-        query: (body) => ({
-          url: `something/create`,
-          method: 'POST',
-          body,
-        }),
+    addDonorRequest: builder.mutation<void, DonorRequest>({
+      query: (body) => ({
+        url: `donor_requests/`,
+        method: 'POST',
+        body,
       }),
+    }),
   }),
 })
 
 /* хуки, которые потом используем в компонентах, генерируются автоматически */
-export const { useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery } = api
+export const { useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery, useAddDonorRequestMutation } = api
 
 async function postData(url: string, data: object): Promise<object> {
   let headers: Record<string, string> = {
@@ -85,7 +95,7 @@ async function postData(url: string, data: object): Promise<object> {
   };
   let accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
-    headers['authorization'] = `Bearer ${accessToken}`
+    headers['Authorization'] = `Bearer ${accessToken}`
   }
   const response = await fetch(API_URL + url, {
     headers,
