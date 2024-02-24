@@ -159,8 +159,11 @@ export const api = createApi({
     getPetTypes: builder.query<PetType[], void>({
       query: () => `pets/types`,
     }),
-    getBreedTypes: builder.query<PetType[], void>({
-      query: () => `pets/types`,
+    getBreedTypes: builder.query<PetType[], string>({
+      query: (typeName) => ({
+        url: `pets/breeds`,
+        params: { typeName}
+      })
     }),
     getBloodTypes: builder.query<BloodType[], string>({
       query: (petType) => ({

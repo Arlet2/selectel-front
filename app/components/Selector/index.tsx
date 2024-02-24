@@ -120,8 +120,8 @@ interface BreedSelectorProps {
   onChange: (v: string) => void
 }
 
-export const BreedTypeSelector = ({value, onChange}: BreedSelectorProps) => {
-  const { data, isLoading } = api.useGetBreedTypesQuery();
+export const BreedTypeSelector = ({petType, value, onChange}: BreedSelectorProps) => {
+  const { data, isLoading } = api.useGetBreedTypesQuery(petType.type);
 
   if (data && !value) {
     onChange(data[0].breed)
@@ -129,14 +129,9 @@ export const BreedTypeSelector = ({value, onChange}: BreedSelectorProps) => {
   
   return (
     <select className="input" value={value} onChange={(e) => {
-      if (data) {
-        let v = data.find(v => v.id == Number(e.target.value));
-        if (v) {
-          onChange(v.breed)
-        }
-      }
+        onChange(e.target.value)
     }}>
-      {data && data.map((v, i) => <option value={v.id} key={i}>{v.breed}</option>)}
+      {data && data.slice(1).map((v, i) => <option value={v.breed} key={i}>{v.breed}</option>)}
     </select>
   )
 }

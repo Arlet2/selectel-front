@@ -126,8 +126,7 @@ function Modal({onClose}: any) {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Порода</label>
-                        <input type="text" className="input" placeholder="Самая лучшая порода" value={breed} onChange={handleBreedChange}/>
-                        {/* <BreedTypeSelector petType={petType} value={breed} onChange={(v) => setBreed(v)}/> */}
+                        <BreedTypeSelector petType={petType} value={breed} onChange={(v) => setBreed(v)}/>
                     </div>
                 </div>
                 <div className={styles.rightContainerModal}>
