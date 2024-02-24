@@ -24,13 +24,38 @@ interface IPageProps{
 
 const COUNTRY_ID = 182;
 
+function Modal() {
+    return (
+        <form className={styles.modal}>
+            <h1>Изменение пароля</h1>
+            <div className={styles.inputContainerModal}>
+                    <div className={styles.inputContainer}>
+                        <div className={styles.inputContainer}>
+                            <label className={styles.modaLabel}>Старый пароль</label>
+                            <input className='input' type='password' required placeholder='***'/>
+                        </div>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <div className={styles.inputContainer}>
+                            <label className={styles.label}>Новый пароль</label>
+                            <input className='input' type='password' required placeholder='***'/>
+                        </div>
+                    </div>
+            </div>
+            <button className={cn("button", styles.modalButton)} type='submit'>Сохранить</button>
+        </form>
+    )
+}
+
 export default function Page({ params: { login } }: IPageProps) {
-    
+    const [ modalVisible, setModalVisible ] = useState(false)
     const [ state, setState ] = useState();
 
     return (<>
         <title>Настройки профиля - petdonor.ru</title>
         <div className={styles.container}>
+            { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> }
+            { modalVisible && <Modal/> }
             <div className={styles.settingsContainer}>
                 <div className={styles.headerContainer}>
                     <h1 className='header'>Настройка профиля</h1>
@@ -57,6 +82,16 @@ export default function Page({ params: { login } }: IPageProps) {
                         <input className={styles.checkbox} type='checkbox'/>
                         <label className={styles.labelCheckbox}>Показывать телефон в профиле</label>
                     </div>
+                    <button
+                        type='button' // Change the type to 'button' to prevent it from submitting the form
+                        className={cn('linkPink', styles.linkPink)}
+                        onClick={(e) => {
+                            e.preventDefault(); // Prevent the default form submit action
+                            setModalVisible(true);
+                        }}
+                    >
+                        Сменить пароль
+                    </button>
                     <div className='dividerThin'></div>
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>

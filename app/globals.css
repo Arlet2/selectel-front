@@ -167,6 +167,7 @@ button {
 }
 
 .input{
+  z-index: 1;
   background-color: var(--input-color);
   height: 48px;
   width: 245px;
@@ -230,6 +231,7 @@ button {
 .linkPink{
   color: var(--main-color-contrast);
   font-size: var(--font-size-m);
+  border: none;
   font-weight: 500;
   transition: 0.2s ease-in-out;
   cursor: pointer;
