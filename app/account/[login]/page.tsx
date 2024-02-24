@@ -129,7 +129,7 @@ function Modal() {
         try {
             await addPetInfo(petInfo).unwrap();
             console.log(petInfo);
-            toast.success('Питомец добавлен успешно!')
+            toast.success('Питомец добавлен успешно!');
         } catch (error) {
             console.error('Ошибка добавления питомца:', error);
             toast.error('Ошибка добавления питомца. Пожалуйста, попробуйте снова.')
@@ -300,14 +300,14 @@ export default function Page({ params: { login } }: IPageProps){
                         <p>Город</p>
                         <p className='semibold'>{city ? city.city : 'Город не указан'}</p>
                     </div>
-                    <div className={styles.contactContainer}>
+                    {showEmail && <div className={styles.contactContainer}>
                         <p>Почта</p>
                         <p className='semibold'>{email ? email : 'Почта не указана'}</p>
-                    </div>
-                    <div className={styles.contactContainer}>
+                    </div>}
+                    {showPhone && <div className={styles.contactContainer}>
                         <p>Номер телефона</p>
                         <p className='semibold'>{phone ? phone : 'Телефон не указан'}</p>
-                    </div>
+                    </div>}
                     <div className={styles.socialMediaHeader}>Социальные сети</div>
                     <div className={styles.contactContainer}>
                         <p>Вконтакте</p>
