@@ -7,16 +7,16 @@ import Image from 'next/image';
 import cn from 'classnames';
 
 
-export const DonorCard = () => {
+export const DonorCard = ({data}: any) => {
   return (
     <div className={styles.card}>
       <div className={styles.avatarContainer}>
-        <Image src={personIcon} alt='Avatar icon' className={styles.avatar}/>
-      </div>
-      <h1 className='subtitle'>Вероника Собачкина</h1>
-      <p className={styles.city}>Санкт-Петербург</p>
-      <div className={styles.petInfo}>
         <Image src={dogAvatar} alt='Pet icon' className={styles.avatarPet}/>
+      </div>
+      <h1 className='subtitle'>{data.name}</h1>
+      <p className={styles.city}>{data.owner.location.city}</p>
+      <div className={styles.petInfo}>
+        <Image src={personIcon} alt='Avatar icon' className={styles.avatar}/>
         <div className={styles.petTextInfo}>
           <p className={styles.petName}>Тузик</p>
           <p className={styles.petDetails}>вислоухий той<br/>5 лет</p>

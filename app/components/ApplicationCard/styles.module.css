@@ -98,3 +98,7 @@
   margin-bottom: 16px;
   width: 300px;
 }
+
+.stretcher {
+  flex: 1 0 auto;
+}

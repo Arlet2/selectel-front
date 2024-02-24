@@ -53,6 +53,7 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
         <div className={styles.label}>Актуально до</div>
         <div className={styles.value}>{data.availableUntil.join("-")}</div>
       </div>
+      <div className={styles.stretcher}></div>
       {isMe && <div className={cn("linkBlue", styles.button)} onClick={() => setModalVisible(true)}>Редактировать</div>}
       {isMe && <div className={cn("linkPink", styles.button)} onClick={() => handleDelete()}>Удалить</div>}
       {!isMe && <div className={cn("linkBlue", styles.button)} onClick={() => setRespondModalVisible(true)}>Откликнуться</div>}
@@ -85,7 +86,6 @@ function EditModal({data}: any) {
               bloodAmountMl,
               availableUntil
           })
-          window.location.reload();
         })()
     }
 

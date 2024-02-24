@@ -196,6 +196,9 @@ export const api = createApi({
         body,
       }),
     }),
+    getPets: builder.query<IUserPets[], void>({
+      query: () => `pets/`
+    }),
     getPetsForUser: builder.query<IUserPets[], string>({
       query: (login) => `users/${login}/pets`
     }),
@@ -230,7 +233,9 @@ export const {
   useAddDonorRequestMutation, useGetDonorRequestsQuery,
   useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
-  useDeleteDonorRequestMutation, useGetPetsForUserQuery, useDeletePetMutation, useAddUnavailableDatesMutation, useUpdateUnavailableDatesMutation, useGetUnavailableDatesQuery
+  useDeleteDonorRequestMutation, useDeletePetMutation, useAddUnavailableDatesMutation,
+  useUpdateUnavailableDatesMutation, useGetUnavailableDatesQuery,
+  useGetPetsForUserQuery, useGetPetsQuery,
 } = api
 
 async function postData(url: string, data: object): Promise<object> {

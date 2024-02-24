@@ -24,8 +24,8 @@ export default function Applications() {
     pet_type_id: petType ? petType.id : undefined,
     city: city ? city.city : undefined,
     location_id: district ? district.id : undefined,
-    date_after: dateAfter.trim().length > 0 ? dateAfter : "1970-01-01",
-    date_before: dateBefore.trim().length > 0 ? dateBefore : "9999-01-01",
+    date_after: dateAfter.trim().length > 0 ? dateAfter : undefined,
+    date_before: dateBefore.trim().length > 0 ? dateBefore : undefined,
   });
 
   return (<>

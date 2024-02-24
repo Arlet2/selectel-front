@@ -132,7 +132,6 @@ export default function Page({ params: { login } }: IPageProps) {
                 console.error('Ошибка обновления дат недоступности:', error);
                 toast.error('Ошибка обновления дат недоступности. Пожалуйста, попробуйте снова.')
             }
-            window.location.reload();
             toast.success('Информация обновлена успешно!')
         } catch (error) {
             console.error('Ошибка обновления информации:', error);

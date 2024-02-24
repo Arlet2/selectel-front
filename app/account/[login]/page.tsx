@@ -60,8 +60,7 @@ function Modal() {
         };
 
         try {
-            await addPetInfo(petInfo).unwrap();
-            window.location.reload();
+            await addPetInfo(petInfo);
         } catch (error) {
             console.error('Ошибка добавления питомца:', error);
             toast.error('Ошибка добавления питомца. Пожалуйста, попробуйте снова.')
@@ -195,8 +194,10 @@ export default function Page({ params: { login } }: IPageProps){
             setShowEmail(userInfo.emailVisibility);
             setShowPhone(userInfo.phoneVisibility);
             setEmail(userInfo.email);
-            setCity(userInfo.location.city);
-            setDistrict(userInfo.location.district);
+            if (userInfo.location) {
+                setCity(userInfo.location.city);
+                setDistrict(userInfo.location.district);
+            }
         }
     }, [isUserInfoLoading, userInfo]);
 

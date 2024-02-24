@@ -4,18 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { DonorCard } from "@components/DonorCard";
 import styles from "./page.module.css";
 import cn from 'classnames';
+import * as api from '@/app/redux/services/api';
 
 export default function Applications() {
-  const userInfo = {
-    username: 'Вероника Собачкина',
-    city: 'Санкт-Петербург',
-    pet: {
-      name: 'Тузик',
-      breed: 'вислоухий той',
-      age: 5,
-    },
-    additionalPetsCount: 3,
-  };
+  const { data } = api.useGetPetsQuery()
 
   return (<>
     <title>Доступные доноры - petdonor.ru</title>
@@ -49,14 +41,7 @@ export default function Applications() {
         </div>
       </div>
       <div className={styles.grid}>
-      <DonorCard/>
-      <DonorCard/>
-      <DonorCard/>
-      <DonorCard/>
-      <DonorCard/>
-      <DonorCard/>
-      <DonorCard/>
-      <DonorCard/>
+      {data && data.map((v, i) => <DonorCard key={i} data={v}/>)}
       </div>
     </main>
   </>);
