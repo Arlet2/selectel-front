@@ -3,10 +3,12 @@
 import { useState } from "react";
 import styles from './styles.module.css';
 import cn from 'classnames';
-import { CitySelector, DistrictSelector, PetTypeSelector } from '@components/Selector';
+import { CitySelector, DistrictSelector, PetTypeSelector, BloodTypeSelector } from '@components/Selector';
 
 function Modal() {
-    const [ petType, setPetType ] = useState("Санкт-Петербург");
+    const [ petType, setPetType ] = useState("Кошка");
+    const [ bloodType, setBloodType ] = useState(0);
+
     const [ city, setCity ] = useState("Санкт-Петербург");
     const [ district, setDistrict ] = useState(0);
 
@@ -19,10 +21,7 @@ function Modal() {
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Группа крови</label>
-                <select className="input">
-                    <option>1+</option>
-                    <option>2-</option>
-                </select>
+                <BloodTypeSelector petType={petType} value={bloodType} onChange={(v) => setBloodType(v)}/>
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Город</label>

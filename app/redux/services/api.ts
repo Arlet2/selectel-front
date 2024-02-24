@@ -15,6 +15,11 @@ interface District {
   district: string;
 }
 
+interface BloodType {
+  id: number;
+  bloodType: string;
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -43,6 +48,12 @@ export const api = createApi({
     getPetTypes: builder.query<string[], void>({
       query: () => `pets/types`,
     }),
+    getBloodTypes: builder.query<BloodType[], string>({
+      query: (petType) => ({
+        url: `pets/blood_types`,
+        params: { typeName: petType }
+      })
+    }),
     addSomething: builder.mutation<ISomeType, Partial<ISomeType>>({
         query: (body) => ({
           url: `something/create`,
@@ -54,7 +65,7 @@ export const api = createApi({
 })
 
 /* хуки, которые потом используем в компонентах, генерируются автоматически */
-export const { useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery } = api
+export const { useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery } = api
 
 async function postData(url: string, data: object): Promise<object> {
   let headers: Record<string, string> = {

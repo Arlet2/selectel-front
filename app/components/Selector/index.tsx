@@ -45,3 +45,19 @@ export const PetTypeSelector = ({value, onChange}: PetTypeSelectorProps) => {
     </select>
   )
 }
+
+interface BloodTypeSelectorProps {
+  petType: string
+  value: number
+  onChange: (v: number) => void
+}
+
+export const BloodTypeSelector = ({petType, value, onChange}: BloodTypeSelectorProps) => {
+  const { data, isLoading } = api.useGetBloodTypesQuery(petType);
+  
+  return (
+    <select className="input" value={String(value)} onChange={(e) => onChange(Number(e.target.value))}>
+      {data && data.map((v, i) => <option value={String(v.id)} key={i}>{v.bloodType == "default" ? "Не важна" : v.bloodType}</option>)}
+    </select>
+  )
+}
