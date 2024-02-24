@@ -44,7 +44,7 @@ function Modal() {
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Тип животного</label>
-                <PetTypeSelector value={petType} onChange={(v) => setPetType(v)}/>
+                <PetTypeSelector value={petType} onChange={(v) => {setPetType(v); setBloodType(0)}}/>
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Группа крови</label>

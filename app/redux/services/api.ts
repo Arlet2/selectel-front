@@ -70,6 +70,10 @@ export interface IUpdateUser {
   phoneVisibility: boolean
 }
 
+export interface GetDonorRequest {
+   me: boolean
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -104,6 +108,12 @@ export const api = createApi({
         params: { typeName: petType }
       })
     }),
+    getDonorRequests: builder.query<object[], GetDonorRequests>({
+      query: (params) => ({
+        url: `donor_requests/`,
+        params
+      })
+    }),
     addDonorRequest: builder.mutation<void, DonorRequest>({
       query: (body) => ({
         url: `donor_requests/`,
@@ -127,9 +137,11 @@ export const api = createApi({
     }),
   })
 
-/* хуки, которые потом используем в компонентах, генерируются автоматически */
-export const { useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery, useAddDonorRequestMutation, useUpdateUserInfoMutation, useGetUserInfoQuery } = api
-
+export const {
+  useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery,
+  useAddDonorRequestMutation, useGetDonorRequestsQuery,
+  useUpdateUserInfoMutation, useGetUserInfoQuery
+} = api
 
 async function postData(url: string, data: object): Promise<object> {
   let headers: Record<string, string> = {

@@ -4,8 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { ApplicationCard } from "@components/ApplicationCard"
 import styles from "./page.module.css";
 import cn from 'classnames';
+import * as api from '@/app/redux/services/api';
 
 export default function Applications() {
+  const { data } = api.useGetDonorRequestsQuery({ me: true });
+
   return (<>
     <title>Заявки на донацию - petdonor.ru</title>
     <main className={styles.main}>
@@ -50,22 +53,7 @@ export default function Applications() {
         </div>
       </div>
       <div className={styles.grid}>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
-        <ApplicationCard/>
+        {data && data.map((v, i) => <ApplicationCard key={i} data={v}/>)}
       </div>
     </main>
   </>);
