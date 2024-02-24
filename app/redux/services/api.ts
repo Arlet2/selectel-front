@@ -122,7 +122,7 @@ export const api = createApi({
       return headers
     },
   }),
-  tagTypes: ['DonorRequest'],
+  tagTypes: ['DonorRequest', 'Pet', 'UserInfo', 'UnavailableDates'],
   endpoints: (builder) => ({
     /* в дженерике первым аргументом передается тип, который мы получаем, вторым аргументом - тип, который передается в кверю*/
     getCities: builder.query<City[], void>({
@@ -180,7 +180,8 @@ export const api = createApi({
       query: (login) => ({
         url: `users/`,
         params: { login }
-      })
+      }),
+      providesTags: ['UserInfo'],
     }),
     updateUserInfo: builder.mutation<void, Partial<IUpdateUser>>({
         query: (body) => ({
@@ -188,6 +189,7 @@ export const api = createApi({
           method: 'PATCH',
           body,
         }),
+        invalidatesTags: ['UserInfo'],
       }),
     addPet: builder.mutation<void, IAddedPet>({
       query: (body) => ({
@@ -195,18 +197,22 @@ export const api = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Pet'],
     }),
     getPets: builder.query<IUserPets[], void>({
-      query: () => `pets/`
+      query: () => `pets/`,
+      providesTags: ['Pet'],
     }),
     getPetsForUser: builder.query<IUserPets[], string>({
-      query: (login) => `users/${login}/pets`
+      query: (login) => `users/${login}/pets`,
+      providesTags: ['Pet'],
     }),
     deletePet: builder.mutation<void, number>({
       query: (id) => ({
         url: `pets/${id}`,
         method: 'DELETE',
-      })
+      }),
+      invalidatesTags: ['Pet'],
     }),
     updateUnavailableDates: builder.mutation<void, IUnavailableDates>({
       query: (body) => ({
@@ -214,16 +220,19 @@ export const api = createApi({
         method: 'PATCH',
         body,
       }),
+      invalidatesTags: ['UnavailableDates'],
     }),
     addUnavailableDates: builder.mutation<void, IUnavailableDates>({
       query: (body) => ({
         url: `users/unavailable_dates/`,
         method: 'POST',
         body,
-      })
+      }),
+      invalidatesTags: ['UnavailableDates'],
     }),
     getUnavailableDates: builder.query<IUnavailableDates, void>({
-      query: () => `users/unavailable_dates/`
+      query: () => `users/unavailable_dates/`,
+      providesTags: ['UnavailableDates'],
     }),
   })
 })

@@ -26,7 +26,7 @@ export interface IVaccination{
     [key: string]: string;
 }
 
-function Modal() {
+function Modal({onClose}: any) {
     const [ petType, setPetType ] = useState({id: 1, type: "Кошка"});
     const [ bloodType, setBloodType ] = useState(11);
     const [name, setName] = useState('');
@@ -49,7 +49,9 @@ function Modal() {
 
     const [addPetInfo, { isLoading }] = useAddPetMutation();
 
-    const handleSave = async () => {
+    const handleSave = async (e) => {
+        e.preventDefault()
+        
         const petInfo: IAddedPet = {
             name,
             description: breed,
@@ -61,6 +63,8 @@ function Modal() {
 
         try {
             await addPetInfo(petInfo);
+            toast.success('Питомец успешно добавлен.')
+            onClose()
         } catch (error) {
             console.error('Ошибка добавления питомца:', error);
             toast.error('Ошибка добавления питомца. Пожалуйста, попробуйте снова.')
@@ -85,7 +89,7 @@ function Modal() {
     }
 
     return (
-        <form className={styles.modal}>
+        <form className={styles.modal}onSubmit={handleSave}>
             <h1>Добавление питомца</h1>
             <div className={styles.inputContainerModal}>
                 <div className={styles.leftContainerModal}>
@@ -156,7 +160,7 @@ function Modal() {
                 ))}
             </div>
             <button className={cn("linkPink", styles.pinkLinkButton)} onClick={addVaccination}>Добавить прививки</button>
-            <button className={cn("button", styles.modalButton)} type='submit' onClick={handleSave}>Добавить питомца</button>
+            <button className={cn("button", styles.modalButton)} type='submit'>Добавить питомца</button>
         </form>
     )
 }
@@ -218,7 +222,7 @@ export default function Page({ params: { login } }: IPageProps){
         <title>Профиль - petdonor.ru</title>
         <div className={styles.container}>
             { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> }
-            { modalVisible && <Modal/> }
+            { modalVisible && <Modal onClose={() => setModalVisible(false)}/> }
             <div className={styles.leftContainer}>
                 <h1 className='header'>
                     {isPersonLogged ? 'Личный кабинет' : 'Профиль донора'}
