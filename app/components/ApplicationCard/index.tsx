@@ -12,6 +12,11 @@ interface ApplicationCardProps {
 
 export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
   const [ modalVisible, setModalVisible ] = useState(false)
+  const [ deleteDonorRequest ] = api.useDeleteDonorRequestMutation()
+
+  function handleDelete() {
+    deleteDonorRequest(data.id)
+  }
 
   return (
     <div className={styles.card}>
@@ -46,7 +51,7 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
         <div className={styles.value}>{data.availableUntil.join("-")}</div>
       </div>
       {isMe && <div className={cn("linkBlue", styles.button)} onClick={() => setModalVisible(true)}>Редактировать</div>}
-      {isMe && <div className={cn("linkPink", styles.button)}>Удалить</div>}
+      {isMe && <div className={cn("linkPink", styles.button)} onClick={() => handleDelete()}>Удалить</div>}
       {!isMe && <div className={cn("linkBlue", styles.button)}>Откликнуться</div>}
     </div> 
   )

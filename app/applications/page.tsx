@@ -56,6 +56,7 @@ export default function Applications() {
       </div>
       <div className={styles.grid}>
         {data && data.map((v, i) => <ApplicationCard key={i} isMe={isMe} data={v}/>)}
+        {!data || data.length == 0 && <div className={styles.unluck}>На данный момент заявок нет. Котики спят.</div>}
       </div>
     </main>
   </>);

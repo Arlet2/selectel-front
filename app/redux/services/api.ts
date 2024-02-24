@@ -146,6 +146,13 @@ export const api = createApi({
       }),
       invalidatesTags: ['DonorRequest'],
     }),
+    deleteDonorRequest: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `donor_requests/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['DonorRequest'],
+    }),
     getUserInfo: builder.query<IUser, string>({
       query: (login) => ({
         url: `users/`,
@@ -174,6 +181,7 @@ export const {
   useAddDonorRequestMutation, useGetDonorRequestsQuery,
   useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
+  useDeleteDonorRequestMutation,
 } = api
 
 async function postData(url: string, data: object): Promise<object> {
