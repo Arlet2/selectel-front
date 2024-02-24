@@ -70,6 +70,14 @@ export interface IUpdateUser {
   phoneVisibility: boolean
 }
 
+export interface IPet{
+  petTypeId: number,
+  bloodTypeId: number,
+  name: string,
+  birthday: string,
+  weight: number, 
+}
+
 export interface GetDonorRequest {
    me: boolean
 }
@@ -108,7 +116,7 @@ export const api = createApi({
         params: { typeName: petType }
       })
     }),
-    getDonorRequests: builder.query<object[], GetDonorRequests>({
+    getDonorRequests: builder.query<object[], GetDonorRequest>({
       query: (params) => ({
         url: `donor_requests/`,
         params
@@ -134,13 +142,20 @@ export const api = createApi({
           body,
         }),
       }),
+    addPet: builder.mutation<void, IPet>({
+      query: (body) => ({
+        url: `users/`,
+        method: 'POST',
+        body,
+      }),
     }),
+  }),
   })
 
 export const {
   useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery,
   useAddDonorRequestMutation, useGetDonorRequestsQuery,
-  useUpdateUserInfoMutation, useGetUserInfoQuery
+  useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation
 } = api
 
 async function postData(url: string, data: object): Promise<object> {
