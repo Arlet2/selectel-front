@@ -18,55 +18,74 @@ interface IPageProps{
     }
 }
 
-interface IPet {
+export interface IPet {
     type: 'cat' | 'dog';
     name: string;
     breed?: string;
     age?: number;
+    birthday?: string;
+    weight?: number;
+    bloodType?: string;
 }
 
-const pets: IPet[] = [
+const myPets: IPet[] = [
     {
         type: 'cat',
         name: 'Белла',
         breed: 'Сиамский',
-        age: 5
+        age: 5,
+        birthday: '2000-04-02',
+        weight: 45,
+        bloodType: '+1'
     },
     {
         type: 'dog',
         name: 'Тузик',
         breed: 'Бульдог',
-        age: 45
+        age: 45,
+        birthday: '2000-04-02',
+        weight: 45,
+        bloodType: '+1'
     },
     {
         type: 'cat',
         name: 'Ума',
         breed: 'Сфинкс',
-        age: 1
-
+        age: 1,
+        birthday: '2000-04-02',
+        weight: 45,
+        bloodType: '+1'
     },
     {
         type: 'cat',
         name: 'Белла',
         breed: 'Вислоухий',        
-        age: 0.5
+        age: 0.5,        
+        birthday: '2000-04-02',
+        weight: 45,
+        bloodType: '+1'
     },
     {
         type: 'dog',
         name: 'Тузик',
         breed: 'Такса',
-        age: 23
-
+        age: 23,
+        birthday: '2000-04-02',
+        weight: 45,
+        bloodType: '+1'
     },
     {
         type: 'cat',
         name: 'Ума',
         breed: 'Сфинкс',
-        age: 5
+        age: 5,
+        birthday: '2000-04-02',
+        weight: 45,
+        bloodType: '+1'
     }
 ]
 
-interface IVaccination{
+export interface IVaccination{
     name: string;
     date: string;
     [key: string]: string;
@@ -171,6 +190,7 @@ function Modal() {
 
 export default function Page({ params: { login } }: IPageProps){
     const isPersonLogged = api.getLogin() === login;
+    const [ pets, setPets ] = useState(myPets);
     const [ modalVisible, setModalVisible ] = useState(false)
     const [count, setCount] = useState(0);
     const [ isAnyPets, setIsAnyPets ] = useState(true);
@@ -233,7 +253,7 @@ export default function Page({ params: { login } }: IPageProps){
                     {isAnyPets ? (
                         <div className={styles.petContainer}>
                             {pets.map((pet, key) => {
-                                return <PetCard key={key} type={pet.type} name={pet.name} isPersonOwner={isPersonLogged} breed={pet.breed} age={pet.age}/>
+                                return <PetCard key={key} pet={pet} isPersonOwner={isPersonLogged}/>
                             })}
                         </div>
                     ) : (

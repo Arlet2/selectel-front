@@ -54,3 +54,114 @@
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-s);
 }
+
+
+.darkness {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.modal {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 16px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 32px;
+    border-radius: 8px;
+    background: var(--main-color);
+    z-index: 200;
+}
+
+.modal h1 {
+    font-size: var(--font-size-l);
+    font-weight: bold;
+    margin-bottom: 16px;
+    align-self: center;
+}
+
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: 10px;
+}
+
+.label{
+    font-size: var(--font-size-m);
+    margin-left: 3px;
+}
+
+.modalButton {
+    align-self: center;
+    height: 52px;
+    width: 350px;
+    margin-top: 15px;
+}
+
+.avatarPet{
+    align-self: center;
+    height: 200px;
+    width: 200px;
+}
+
+
+.infoContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.blueHeader{
+    color: var(--blue-color);
+    align-self: center;
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-m);
+}
+
+.vaccinationList{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 20px;
+}
+
+.vaccinationItem{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 5px;
+}
+
+.vaccinationNumber{
+    color: var(--placeholder-color);
+}
+
+.vaccinationsScroll{
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 20px;
+}
