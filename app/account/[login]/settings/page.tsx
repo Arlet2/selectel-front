@@ -93,7 +93,7 @@ export default function Page({ params: { login } }: IPageProps) {
     const [addAvatar] = api.useAddAvatarMutation();
 
     const avatarId = useId()    
-    const imageRef = useRef()
+    const imageRef = useRef<HTMLInputElement | null>(null)
 
     useEffect(() => {
         if (!isUserInfoLoading && userInfo) {
@@ -130,8 +130,8 @@ export default function Page({ params: { login } }: IPageProps) {
     };
 
     const handleSave = async () => {
-        if (imageRef && imageRef.current && imageRef.current.files[0]) {
-            let file = imageRef.current.files[0];
+        if (imageRef && imageRef.current && (imageRef.current as any).files[0]) {
+            let file = (imageRef.current as any).files[0];
             addAvatar(file)
         }
 
