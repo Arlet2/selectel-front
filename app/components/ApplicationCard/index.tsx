@@ -82,7 +82,7 @@ function EditModal({data}: any) {
               description,
               vetAddress,
               petTypeID: petType.id,
-              bloodTypeID: bloodType,
+              bloodTypeID: bloodType.id,
               bloodAmountMl,
               availableUntil
           })
