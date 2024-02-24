@@ -10,7 +10,7 @@ import { PetCard } from '@/app/components/PetCard';
 import * as api from '@/app/redux/services/api';
 import { useRouter } from 'next/navigation';
 import { PetTypeSelector, BloodTypeSelector, BreedTypeSelector } from '@components/Selector';
-import { useAddPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets, useAddVaccinationMutation, useGetUnavailableDatesQuery, IUnavailableDatesForUser, IUnavailableDates } from '@/app/redux/services/api';
+import { useAddPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets, useAddVaccinationMutation, useGetUnavailableDatesQuery, IUnavailableDates } from '@/app/redux/services/api';
 import toast from 'react-hot-toast';
 import { convertDateFormat } from '@/app/utils/convertDate';
 
