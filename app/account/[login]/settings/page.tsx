@@ -13,6 +13,7 @@ import styles from './styles.module.css';
 import cn from 'classnames';
 import { IUpdateUser, useUpdateUserInfoMutation, City, District, useGetUserInfoQuery, useGetUnavailableDatesQuery, useAddUnavailableDatesMutation, IUnavailableDates, useUpdateUnavailableDatesMutation } from '@/app/redux/services/api';
 import { CitySelector, DistrictSelector } from '@/app/components/Selector';
+import * as api from '@/app/redux/services/api';
 
 interface IPageProps{
     params: {
@@ -21,20 +22,46 @@ interface IPageProps{
 }
 
 function Modal() {
+    const [ oldPassword, setOldPassword ] = useState("");
+    const [ newPassword, setNewPassword ] = useState("");
+
+    const [ changePassword, result ] = api.useChangePasswordMutation();
+
+    async function submit(e: any) {
+        e.preventDefault()
+
+        if (oldPassword == "" || newPassword == "") return;
+
+        changePassword({
+            oldPassword,
+            newPassword
+        })
+        try {
+            await changePassword({
+                oldPassword,
+                newPassword
+            });
+            toast.success('Пароль обновлен')
+        } catch (error) {
+            console.error('Ошибка обновления паролия:', error);
+            toast.error('Старый пароль неверный.')
+        }
+    }
+
     return (
-        <form className={styles.modal}>
+        <form className={styles.modal} onSubmit={submit}>
             <h1>Изменение пароля</h1>
             <div className={styles.inputContainerModal}>
                     <div className={styles.inputContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.modaLabel}>Старый пароль</label>
-                            <input className='input' type='password' required placeholder='***'/>
+                            <input className='input' type='password' required placeholder='*****' value={oldPassword} onChange={e => setOldPassword(e.target.value)} />
                         </div>
                     </div>
                     <div className={styles.inputContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.modaLabel}>Новый пароль</label>
-                            <input className='input' type='password' required placeholder='***'/>
+                            <input className='input' type='password' required placeholder='*****' value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
                         </div>
                     </div>
             </div>

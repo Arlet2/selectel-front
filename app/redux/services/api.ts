@@ -108,6 +108,11 @@ export interface IUnavailableDates{
   endDate: string;
 }
 
+export interface ChangePassword {
+  oldPassword: string,
+  newPassword: string
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -234,7 +239,14 @@ export const api = createApi({
       query: () => `users/unavailable_dates/`,
       providesTags: ['UnavailableDates'],
     }),
-  })
+  changePassword: builder.mutation<void, ChangePassword>({
+      query: (body) => ({
+        url: `users/change_password`,
+        method: 'POST',
+        body,
+      }),
+    }),
+  }),
 })
 
 export const {
@@ -244,7 +256,7 @@ export const {
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
   useDeleteDonorRequestMutation, useDeletePetMutation, useAddUnavailableDatesMutation,
   useUpdateUnavailableDatesMutation, useGetUnavailableDatesQuery,
-  useGetPetsForUserQuery, useGetPetsQuery,
+  useGetPetsForUserQuery, useGetPetsQuery, useChangePasswordMutation
 } = api
 
 async function postData(url: string, data: object): Promise<object> {
