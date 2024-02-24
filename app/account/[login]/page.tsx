@@ -178,8 +178,8 @@ export default function Page({ params: { login } }: IPageProps){
     const [showPhone, setShowPhone] = useState(false);
     const [vk, setVk] = useState('');
     const [tg, setTg] = useState('');
-    const [city, setCity] = useState<City>();
-    const [district, setDistrict] = useState<District>();
+    const [city, setCity] = useState('');
+    const [district, setDistrict] = useState('');
 
     const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(login);
     const { data: petsInfo, isLoading: isPetsInfoLoading } = useGetPetsForUserQuery(login);
@@ -195,6 +195,8 @@ export default function Page({ params: { login } }: IPageProps){
             setShowEmail(userInfo.emailVisibility);
             setShowPhone(userInfo.phoneVisibility);
             setEmail(userInfo.email);
+            setCity(userInfo.location.city);
+            setDistrict(userInfo.location.district);
         }
     }, [isUserInfoLoading, userInfo]);
 
@@ -236,7 +238,11 @@ export default function Page({ params: { login } }: IPageProps){
                     <h2 className={styles.title}>Контактная информация</h2>
                     <div className={styles.contactContainer}>
                         <p>Город</p>
-                        <p className='semibold'>{city ? city.city : 'Город не указан'}</p>
+                        <p className='semibold'>{city ? city : 'Город не указан'}</p>
+                    </div>
+                    <div className={styles.contactContainer}>
+                        <p>Район</p>
+                        <p className='semibold'>{district ? district : 'Район не указан'}</p>
                     </div>
                     {showEmail && <div className={styles.contactContainer}>
                         <p>Почта</p>
