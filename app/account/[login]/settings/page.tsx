@@ -11,7 +11,7 @@ import avatarIcon from '@icons/avatar.svg';
 import dogImage from '@images/dog.png';
 import styles from './styles.module.css';
 import cn from 'classnames';
-import { IUpdateUser, useUpdateUserInfoMutation, City, District, useGetUserInfoQuery, useGetUnavailableDatesQuery, useAddUnavailableDatesMutation, IUnavailableDates, useUpdateUnavailableDatesMutation } from '@/app/redux/services/api';
+import { IUpdateUser, useUpdateUserInfoMutation, City, District, useGetUserInfoQuery, useGetUnavailableDatesQuery, useAddUnavailableDatesMutation, IUnavailableDates } from '@/app/redux/services/api';
 import { CitySelector, DistrictSelector } from '@/app/components/Selector';
 import * as api from '@/app/redux/services/api';
 
@@ -90,7 +90,6 @@ export default function Page({ params: { login } }: IPageProps) {
     const { data: unavailableDatesInfo, isLoading: isUnavailableDatesLoading } = useGetUnavailableDatesQuery();
     const [updateUserInfo, { isLoading }] = useUpdateUserInfoMutation();
     const [addUnavailableDates] = useAddUnavailableDatesMutation();
-    const [updateUnavailableDates] = useUpdateUnavailableDatesMutation();
     
     useEffect(() => {
         if (!isUserInfoLoading && userInfo) {
@@ -114,6 +113,7 @@ export default function Page({ params: { login } }: IPageProps) {
         if (!isUnavailableDatesLoading && unavailableDatesInfo){
             setStartDate(unavailableDatesInfo.startDate);
             setEndDate(unavailableDatesInfo.endDate);
+            console.log(unavailableDatesInfo);
         }
     }, [unavailableDatesInfo, isUnavailableDatesLoading]);
 
@@ -147,12 +147,7 @@ export default function Page({ params: { login } }: IPageProps) {
         try {
             await updateUserInfo(userInfo).unwrap();
             try {
-                if (unavailableDatesInfo){
-                    await updateUnavailableDates(unavailableDatesFromUser).unwrap();
-                }
-                else {
-                    await addUnavailableDates(unavailableDatesFromUser).unwrap();
-                }
+                await addUnavailableDates(unavailableDatesFromUser).unwrap();
                 toast.success('Информация дат недоступности обновлена!')
             }
             catch (error) {

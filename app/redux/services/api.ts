@@ -219,14 +219,6 @@ export const api = createApi({
       }),
       invalidatesTags: ['Pet'],
     }),
-    updateUnavailableDates: builder.mutation<void, IUnavailableDates>({
-      query: (body) => ({
-        url: `users/unavailable_dates/`,
-        method: 'PATCH',
-        body,
-      }),
-      invalidatesTags: ['UnavailableDates'],
-    }),
     addUnavailableDates: builder.mutation<void, IUnavailableDates>({
       query: (body) => ({
         url: `users/unavailable_dates/`,
@@ -254,8 +246,7 @@ export const {
   useAddDonorRequestMutation, useGetDonorRequestsQuery,
   useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
-  useDeleteDonorRequestMutation, useDeletePetMutation, useAddUnavailableDatesMutation,
-  useUpdateUnavailableDatesMutation, useGetUnavailableDatesQuery,
+  useDeleteDonorRequestMutation, useDeletePetMutation, useAddUnavailableDatesMutation, useGetUnavailableDatesQuery,
   useGetPetsForUserQuery, useGetPetsQuery, useChangePasswordMutation
 } = api
 
