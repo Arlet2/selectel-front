@@ -49,7 +49,7 @@ function Modal({onClose}: any) {
 
     const [addPetInfo, { isLoading }] = useAddPetMutation();
 
-    const handleSave = async (e) => {
+    const handleSave = async (e: any) => {
         e.preventDefault()
         
         const petInfo: IAddedPet = {
