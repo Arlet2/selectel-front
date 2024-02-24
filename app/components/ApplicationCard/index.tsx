@@ -14,6 +14,7 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
   const [ modalVisible, setModalVisible ] = useState(false)
   const [ respondModalVisible, setRespondModalVisible ] = useState(false)
   const [ deleteDonorRequest ] = api.useDeleteDonorRequestMutation()
+  console.log(data);
 
   function handleDelete() {
     deleteDonorRequest(data.id)
@@ -123,7 +124,10 @@ function EditModal({data}: any) {
 
 
 function RespondModal({data, onClose}: any) {
-    const { data: userData } = api.useGetUserInfoQuery(data.login)
+    const { data: userData } = api.useGetUserInfoQuery(data.userLogin)
+    if (userData) {
+      console.log(data);
+    }
 
     return (
         <div className={styles.modal}>
