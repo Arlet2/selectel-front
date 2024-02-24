@@ -19,6 +19,7 @@ export interface District {
 export interface PetType {
   id: number;
   type: string;
+  breed: string;
 }
 
 export interface BloodType {
@@ -71,10 +72,11 @@ export interface IUpdateUser {
   phoneVisibility: boolean
 }
 
-export interface IPet{
+export interface IAddedPet{
   petTypeId: number,
   bloodTypeId: number,
   name: string,
+  description: string,
   birthday: string,
   weight: number, 
 }
@@ -109,6 +111,9 @@ export const api = createApi({
       })
     }),
     getPetTypes: builder.query<PetType[], void>({
+      query: () => `pets/types`,
+    }),
+    getBreedTypes: builder.query<PetType[], void>({
       query: () => `pets/types`,
     }),
     getBloodTypes: builder.query<BloodType[], string>({
@@ -164,7 +169,7 @@ export const {
   useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery,
   useAddDonorRequestMutation, useGetDonorRequestsQuery,
   useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
-  useChangeDonorRequestMutation,
+  useChangeDonorRequestMutation, useGetBreedTypesQuery
 } = api
 
 async function postData(url: string, data: object): Promise<object> {

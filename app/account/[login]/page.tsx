@@ -10,8 +10,9 @@ import cn from 'classnames';
 import { PetCard } from '@/app/components/PetCard';
 import * as api from '@/app/redux/services/api';
 import { useRouter } from 'next/navigation';
-import { PetTypeSelector, BloodTypeSelector } from '@components/Selector';
-import { City, District, useGetUserInfoQuery } from '@/app/redux/services/api';
+import { PetTypeSelector, BloodTypeSelector, BreedTypeSelector } from '@components/Selector';
+import { City, District, useAddPetMutation, IAddedPet, useGetUserInfoQuery } from '@/app/redux/services/api';
+import toast from 'react-hot-toast';
 
 interface IPageProps{
     params: {
@@ -95,7 +96,46 @@ export interface IVaccination{
 function Modal() {
     const [ petType, setPetType ] = useState({id: 0, type: "Кошка"});
     const [ bloodType, setBloodType ] = useState(0);
+    const [name, setName] = useState('');
+    const [breed, setBreed] = useState('');
+    const [birthday, setBirthday] = useState('');
+    const [weight, setWeight] = useState(0)
 
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setName(e.target.value);
+    };
+    const handleBreedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setBreed(e.target.value);
+    };
+    const handleBirthdayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setBirthday(e.target.value);
+    };
+    const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setWeight(parseInt(e.target.value,  10));
+    };
+
+    const [addPetInfo, { isLoading }] = useAddPetMutation();
+
+    const handleSave = async () => {
+        const petInfo: IAddedPet = {
+            name,
+            description: breed,
+            petTypeId: petType.id,
+            bloodTypeId: bloodType,
+            birthday,
+            weight
+        };
+
+        try {
+            await addPetInfo(petInfo).unwrap();
+            console.log(petInfo);
+            toast.success('Питомец добавлен успешно!')
+        } catch (error) {
+            console.error('Ошибка добавления питомца:', error);
+            toast.error('Ошибка добавления питомца. Пожалуйста, попробуйте снова.')
+        }
+    };
+    
     const [vaccinations, setVaccinations] = useState<IVaccination[]>([]);
 
     const addVaccination = () => {
@@ -130,17 +170,18 @@ function Modal() {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Кличка</label>
-                        <input type="text" className="input" placeholder="Умка"/>
+                        <input type="text" className="input" placeholder="Умка" value={name} onChange={handleNameChange}/>
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Порода</label>
-                        <input type="text" className="input" placeholder="Чихуахуа"/>
+                        <input type="text" className="input" placeholder="Самая лучшая порода" value={breed} onChange={handleBreedChange}/>
+                        {/* <BreedTypeSelector petType={petType} value={breed} onChange={(v) => setBreed(v)}/> */}
                     </div>
                 </div>
                 <div className={styles.rightContainerModal}>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Дата рождения</label>
-                        <input required type="date" className="input"/>
+                        <input required type="date" className="input" value={birthday} onChange={handleBirthdayChange}/>
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Группа крови</label>
@@ -148,7 +189,7 @@ function Modal() {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Вес (кг)</label>
-                        <input type="number" className="input" placeholder="0"/>
+                        <input type="number" className="input" placeholder="0" value={weight} onChange={handleWeightChange}/>
                     </div>
                 </div>
             </div>
@@ -184,7 +225,7 @@ function Modal() {
                 ))}
             </div>
             <button className={cn("linkPink", styles.pinkLinkButton)} onClick={addVaccination}>Добавить прививки</button>
-            <button className={cn("button", styles.modalButton)} type='submit'>Создать заявку</button>
+            <button className={cn("button", styles.modalButton)} type='submit' onClick={handleSave}>Добавить питомца</button>
         </form>
     )
 }

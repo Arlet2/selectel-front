@@ -54,7 +54,7 @@ export const DistrictSelector = ({city, value, onChange}: DistrictSelectorProps)
 }
 
 interface PetTypeSelectorProps {
-  value?: api.PetType
+  value?: Partial<api.PetType>
   onChange: (v: api.PetType) => void
 }
 
@@ -80,13 +80,13 @@ export const PetTypeSelector = ({value, onChange}: PetTypeSelectorProps) => {
 }
 
 interface BloodTypeSelectorProps {
-  petType?: api.PetType
+  petType?: Partial<api.PetType>
   value?: number
   onChange: (v: number) => void
 }
 
 export const BloodTypeSelector = ({petType, value, onChange}: BloodTypeSelectorProps) => {
-  const { data, isLoading } = api.useGetBloodTypesQuery(petType ? petType.type : 'Кошка');
+  const { data, isLoading } = api.useGetBloodTypesQuery(petType?.type || 'Кошка');
 
   if (data && !value) {
     onChange(data[0].id)
@@ -95,6 +95,37 @@ export const BloodTypeSelector = ({petType, value, onChange}: BloodTypeSelectorP
   return (
     <select className="input" value={String(value)} onChange={(e) => onChange(Number(e.target.value))}>
       {data && data.map((v, i) => <option value={String(v.id)} key={i}>{v.bloodType == "default" ? "Не важна" : v.bloodType}</option>)}
+    </select>
+  )
+}
+
+interface BreedSelectorProps {
+  petType?: Partial<api.PetType>
+  value?: string
+  onChange: (v: string) => void
+}
+
+export const BreedTypeSelector = ({value, onChange}: BreedSelectorProps) => {
+  const { data, isLoading } = api.useGetBreedTypesQuery();
+
+  if (data){
+    console.log(data);
+  }
+
+  if (data && !value) {
+    onChange(data[0].breed)
+  }
+  
+  return (
+    <select className="input" value={value} onChange={(e) => {
+      if (data) {
+        let v = data.find(v => v.id == Number(e.target.value));
+        if (v) {
+          onChange(v.breed)
+        }
+      }
+    }}>
+      {data && data.map((v, i) => <option value={v.id} key={i}>{v.breed}</option>)}
     </select>
   )
 }
