@@ -211,8 +211,7 @@ export const api = createApi({
     }),
     getUserInfo: builder.query<IUser, string>({
       query: (login) => ({
-        url: `users/`,
-        params: { login }
+        url: `users/${login}`,
       }),
       providesTags: ['UserInfo'],
     }),
