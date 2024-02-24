@@ -187,6 +187,9 @@ export default function Page({ params: { login } }: IPageProps){
     const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(login);
     const { data: petsInfo, isLoading: isPetsInfoLoading } = useGetPetsForUserQuery(login);
 
+    let fullName = `${name || ''} ${surname || ''} ${lastName || ''}`
+    if (fullName.trim().length == 0) fullName= "Имя не указано"
+
     useEffect(() => {
         if (!isUserInfoLoading && userInfo) {
             setPhone(userInfo.phone);
@@ -232,7 +235,7 @@ export default function Page({ params: { login } }: IPageProps){
                     <div className={styles.avatar}>
                         <Image className={styles.avatarIcon} src={accountIcon} alt='Account icon'/>
                     </div>
-                    <h2 className='subtitle'>{(name || surname || lastName) ? `${surname} ${name} ${lastName}` : 'Имя Фамилия'}</h2>
+                    <h2 className='subtitle'>{fullName}</h2>
                     <div className={styles.counter}>{count} донаций</div>
                     <Link className={cn('linkPink', !isPersonLogged && styles.displayNone)} href={`/account/${login}/settings`}>Редактировать</Link>
                     <div className={cn('linkBlue', !isPersonLogged && styles.displayNone)} onClick={logout}>Выход</div>

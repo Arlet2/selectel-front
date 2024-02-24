@@ -54,7 +54,6 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
-  width: 200px;
   gap: 30px;
   padding-top: 20px;
 }
@@ -68,6 +67,7 @@
 
 .petName {
   font-weight: bold;
+  text-align: left;
 }
 
 .petDetails {

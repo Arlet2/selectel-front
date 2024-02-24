@@ -8,7 +8,8 @@ import cn from 'classnames';
 import Link from 'next/link';
 
 export const DonorCard = ({data}: any) => {
-  let name = `${data.owner.name || 'Имя'} ${data.owner.surname || 'Фамилия'} ${data.owner.middleName || ''}`
+  let name = `${data.owner.name || ''} ${data.owner.surname || ''} ${data.owner.middleName || ''}`
+  if (name.trim().length == 0) name = "Имя не указано"
 
   return (
     <div className={styles.card}>
