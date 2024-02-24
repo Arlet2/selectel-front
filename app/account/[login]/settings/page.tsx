@@ -65,8 +65,8 @@ export default function Page({ params: { login } }: IPageProps) {
     const [showPhone, setShowPhone] = useState(false);
     const [vk, setVk] = useState('');
     const [tg, setTg] = useState('');
-    const [city, setCity] = useState({id: 0, city: ''});
-    const [district, setDistrict] = useState({id: 0, district: ''});
+    const [city, setCity] = useState();
+    const [district, setDistrict] = useState();
 
     const updateEndDate = (newEndDate: string) => {
         if (newEndDate >= startDate) {
@@ -193,13 +193,13 @@ export default function Page({ params: { login } }: IPageProps) {
                     <div className={styles.bottomContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Город</label>
-                            <CitySelector value={city} onChange={() => setCity}/>
+                            <CitySelector value={city} onChange={(v) => setCity(v)}/>
                         </div>
                     </div>
                     <div className={styles.bottomContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Район</label>
-                            <DistrictSelector value={district} city={city} onChange={() => setDistrict}/>
+                            <DistrictSelector value={district} city={city} onChange={(v) => setDistrict(v)}/>
                         </div>
                     </div>
                     <div className='dividerThin'></div>
