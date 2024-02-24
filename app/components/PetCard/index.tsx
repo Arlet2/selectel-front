@@ -33,6 +33,18 @@ function formatAge(age: number | undefined) {
     }
 }
 
+function getFullYears(dateString: string) {
+    const birthDate = new Date(dateString);
+    const currentDate = new Date();
+    const fullYears = currentDate.getFullYear() - birthDate.getFullYear();
+    const m = currentDate.getMonth() - birthDate.getMonth();
+    if (m <  0 || (m ===  0 && currentDate.getDate() < birthDate.getDate())) {
+        return fullYears -  1;
+    }
+    return fullYears;
+}
+
+
 function ShowMoreModal({ pet, vaccinations }: ShowMoreModalProps) {
     return (
         <form className={styles.modal}>
@@ -54,7 +66,7 @@ function ShowMoreModal({ pet, vaccinations }: ShowMoreModalProps) {
             </div>
             <div className={styles.infoContainer}>
                 <p>Дата рождения</p>
-                <p className='semibold'>{pet.birthday}</p>
+                <p className='semibold'>{convertDateFormat(pet.birthday)}</p>
             </div>
             <div className={styles.infoContainer}>
                 <p>Группа крови</p>
@@ -123,7 +135,7 @@ export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) =>
             {!isPersonOwner && (
                 <div className={styles.petInfo}>
                     <p>{pet.petType.breed}</p>
-                    <p>{convertDateFormat(pet.birthday)}</p>
+                    <p>{formatAge(getFullYears(pet.birthday))}</p>
                 </div>
             )}
             <div className={styles.buttonContainer}>
