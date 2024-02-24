@@ -16,9 +16,6 @@ export default function Applications() {
   const [city, setCity] = useState<api.City | undefined>();
   const [district, setDistrict] = useState<api.District | undefined>();
 
-  console.log(petType)
-  console.log("АЛЁ", bloodType ? bloodType : undefined)
-
   const { data } = api.useGetDonorRequestsQuery({
     me: isMe,
     blood_type_id: bloodType ? bloodType : undefined,
