@@ -72,6 +72,8 @@ export default function Page({ params: { login } }: IPageProps) {
             setShowEmail(userInfo.emailVisibility);
             setShowPhone(userInfo.phoneVisibility);
             setEmail(userInfo.email);
+            setCity({ id: userInfo.location.id, city: userInfo.location.city })
+            setDistrict(userInfo.location)
         }
     }, [isUserInfoLoading, userInfo]);
 
@@ -101,7 +103,7 @@ export default function Page({ params: { login } }: IPageProps) {
         try {
             await updateUserInfo(userInfo).unwrap();
             console.log(userInfo);
-            window.location.reload();
+            // window.location.reload();
             toast('Информация обновлена успешно!')
         } catch (error) {
             console.error('Ошибка обновления информации:', error);
