@@ -32,7 +32,7 @@ function Modal({onClose}: any) {
     const [name, setName] = useState('');
     const [breed, setBreed] = useState('');
     const [birthday, setBirthday] = useState('');
-    const [weight, setWeight] = useState(0)
+    const [weight, setWeight] = useState<number | undefined>()
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
@@ -44,13 +44,19 @@ function Modal({onClose}: any) {
         setBirthday(e.target.value);
     };
     const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setWeight(parseInt(e.target.value,  10));
+        if (e.target.value.trim().length > 0) {
+            setWeight(Number(e.target.value));
+        } else {
+            setWeight(undefined)
+        }
     };
 
     const [addPetInfo, { isLoading }] = useAddPetMutation();
 
     const handleSave = async (e: any) => {
         e.preventDefault()
+
+        if (!weight) return;
         
         const petInfo: IAddedPet = {
             name,
@@ -105,7 +111,7 @@ function Modal({onClose}: any) {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Кличка</label>
-                        <input type="text" className="input" placeholder="Умка" value={name} onChange={handleNameChange}/>
+                        <input required type="text" className="input" placeholder="Умка" value={name} onChange={handleNameChange}/>
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Порода</label>
@@ -124,7 +130,7 @@ function Modal({onClose}: any) {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Вес (кг)</label>
-                        <input type="number" className="input" placeholder="0" value={weight} onChange={handleWeightChange}/>
+                        <input required type="number" step="any" className="input" placeholder="0" value={weight} onChange={handleWeightChange}/>
                     </div>
                 </div>
             </div>
