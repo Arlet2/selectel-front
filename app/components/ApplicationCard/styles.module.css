@@ -88,6 +88,8 @@
   flex-flow: row nowrap;
   gap: 16px;
   padding: 0 8px;
+  justify-content: space-between;
+  width: 400px;
 }
 
 .infoLabel {
@@ -96,7 +98,7 @@
 
 .message {
   margin-bottom: 16px;
-  width: 300px;
+  width: 400px;
 }
 
 .stretcher {

@@ -152,11 +152,17 @@ function RespondModal({data, onClose}: any) {
               </div>}
               {userData.vkUserName && <div className={styles.infoRow}>
                 <div className={styles.infoLabel}>VK</div>
-                <div className={styles.infoValue}>{userData.vkUserName}</div>
+                <a href={`https://${userData.vkUserName}`} target="_blank" rel="noopener noreferrer">
+                  {userData.vkUserName}
+                </a>
               </div>}
               {userData.tgUserName && <div className={styles.infoRow}>
                 <div className={styles.infoLabel}>Telegram</div>
-                <div className={styles.infoValue}>{userData.tgUserName}</div>
+                <div className={styles.infoValue}>
+                <a href={`tg://resolve?domain=${userData.tgUserName}`} target="_blank" rel="noopener noreferrer">
+                  {userData.tgUserName}
+                </a>
+              </div>
               </div>}
             </div>}
             <button onClick={() => onClose()} className={cn("button", styles.modalButton)} type='submit'>ОК</button>

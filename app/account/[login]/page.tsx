@@ -291,11 +291,19 @@ export default function Page({ params: { login } }: IPageProps){
                     <div className={styles.socialMediaHeader}>Социальные сети</div>
                     <div className={styles.contactContainer}>
                         <p>Вконтакте</p>
-                        <p className='semibold'>{vk ? vk : 'не указано'}</p>
+                        {vk ? <a className='semibold' href={`https://${vk}`} target="_blank" rel="noopener noreferrer">
+                            {vk}
+                        </a> : (
+                            <p className='semibold'>не указано</p>
+                        )}
                     </div>
                     <div className={styles.contactContainer}>
                         <p>Телеграм</p>
-                        <p className='semibold'>{tg ? tg : 'не указано'}</p>
+                        {tg ? <a className='semibold' href={`tg://resolve?domain=${tg}`} target="_blank" rel="noopener noreferrer">
+                            {tg}
+                        </a> : (
+                            <p className='semibold'>не указано</p>
+                        )}
                     </div>
                     {unavailableDates && unavailableDates.endDate !== null && unavailableDates.startDate !== null && <div className={cn(styles.contactContainer, styles.unavailableContainer)}>
                         <p className={styles.pinkHeaderContact}>Даты недоступности</p>
