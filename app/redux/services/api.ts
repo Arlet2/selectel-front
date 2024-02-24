@@ -99,6 +99,7 @@ export const api = createApi({
       return headers
     },
   }),
+  tagTypes: ['DonorRequest'],
   endpoints: (builder) => ({
     /* в дженерике первым аргументом передается тип, который мы получаем, вторым аргументом - тип, который передается в кверю*/
     getCities: builder.query<City[], void>({
@@ -126,21 +127,24 @@ export const api = createApi({
       query: (params) => ({
         url: `donor_requests/`,
         params
-      })
+      }),
+      providesTags: ['DonorRequest'],
     }),
     addDonorRequest: builder.mutation<void, DonorRequest>({
       query: (body) => ({
         url: `donor_requests/`,
         method: 'POST',
         body,
-      })
+      }),
+      invalidatesTags: ['DonorRequest'],
     }),
     changeDonorRequest: builder.mutation<void, DonorRequest>({
       query: (body) => ({
         url: `donor_requests/${body.id || 0}`,
         method: 'PATCH',
         body,
-      })
+      }),
+      invalidatesTags: ['DonorRequest'],
     }),
     getUserInfo: builder.query<IUser, string>({
       query: (login) => ({
@@ -169,7 +173,7 @@ export const {
   useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery,
   useAddDonorRequestMutation, useGetDonorRequestsQuery,
   useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
-  useChangeDonorRequestMutation, useGetBreedTypesQuery
+  useChangeDonorRequestMutation, useGetBreedTypesQuery,
 } = api
 
 async function postData(url: string, data: object): Promise<object> {
