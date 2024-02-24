@@ -31,7 +31,7 @@ function VkRedirectInner() {
   return (<>
     <title>Перенаправление - petdonor.ru</title>
     <main className={styles.main}>
-      алё гараж
+      Перенаправление...
     </main>
   </>);
 }
