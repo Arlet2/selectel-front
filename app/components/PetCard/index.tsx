@@ -36,57 +36,57 @@ function formatAge(age: number | undefined) {
 
 function ShowMoreModal({ pet, vaccinations }: ShowMoreModalProps) {
     
-    return (
-        <form className={styles.modal}>
-            <h1>Подробнее о питомце</h1>
-            <div className={cn(styles.avatar, styles.avatarPet)}>
-                <Image src={dog} alt='Avatar icon'/>
-            </div>
-            <div className={styles.infoContainer}>
-                <p>Тип животного</p>
-                <p className='semibold'>{pet.type}</p>
-            </div>
-            <div className={styles.infoContainer}>
-                <p>Кличка</p>
-                <p className='semibold'>{pet.name}</p>
-            </div>
-            <div className={styles.infoContainer}>
-                <p>Порода</p>
-                <p className='semibold'>{pet.breed}</p>
-            </div>
-            <div className={styles.infoContainer}>
-                <p>Дата рождения</p>
-                <p className='semibold'>{pet.birthday}</p>
-            </div>
-            <div className={styles.infoContainer}>
-                <p>Группа крови</p>
-                <p className='semibold'>{pet.bloodType}</p>
-            </div>
-            <div className={styles.infoContainer}>
-                <p>Вес (кг)</p>
-                <p className='semibold'>{pet.weight}</p>
-            </div>
-            {vaccinations.length > 0 && <div className={styles.blueHeader}>Прививки</div>}
-            <div className={styles.vaccinationsScroll}>
-                {vaccinations.map((vaccination, index) => {
-                    return (
-                        <div className={styles.vaccinationList} key={index}>
-                            <p className={styles.vaccinationNumber}>#{index+1}</p>
-                            <div className={styles.vaccinationItem}>
-                                <div className={styles.infoContainer}>
-                                    <p>Название</p>
-                                    <p className='semibold'>{vaccination.name}</p>
-                                </div>
-                                <div className={styles.infoContainer}>
-                                    <p>Дата вакцинации</p>
-                                    <p className='semibold'>{vaccination.date}</p>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
-        </form>
+    return (<div></div>
+        // <form className={styles.modal}>
+        //     <h1>Подробнее о питомце</h1>
+        //     <div className={cn(styles.avatar, styles.avatarPet)}>
+        //         <Image src={dog} alt='Avatar icon'/>
+        //     </div>
+        //     <div className={styles.infoContainer}>
+        //         <p>Тип животного</p>
+        //         <p className='semibold'>{pet.type}</p>
+        //     </div>
+        //     <div className={styles.infoContainer}>
+        //         <p>Кличка</p>
+        //         <p className='semibold'>{pet.name}</p>
+        //     </div>
+        //     <div className={styles.infoContainer}>
+        //         <p>Порода</p>
+        //         <p className='semibold'>{pet.breed}</p>
+        //     </div>
+        //     <div className={styles.infoContainer}>
+        //         <p>Дата рождения</p>
+        //         <p className='semibold'>{pet.birthday}</p>
+        //     </div>
+        //     <div className={styles.infoContainer}>
+        //         <p>Группа крови</p>
+        //         <p className='semibold'>{pet.bloodType}</p>
+        //     </div>
+        //     <div className={styles.infoContainer}>
+        //         <p>Вес (кг)</p>
+        //         <p className='semibold'>{pet.weight}</p>
+        //     </div>
+        //     {vaccinations.length > 0 && <div className={styles.blueHeader}>Прививки</div>}
+        //     <div className={styles.vaccinationsScroll}>
+        //         {vaccinations.map((vaccination, index) => {
+        //             return (
+        //                 <div className={styles.vaccinationList} key={index}>
+        //                     <p className={styles.vaccinationNumber}>#{index+1}</p>
+        //                     <div className={styles.vaccinationItem}>
+        //                         <div className={styles.infoContainer}>
+        //                             <p>Название</p>
+        //                             <p className='semibold'>{vaccination.name}</p>
+        //                         </div>
+        //                         <div className={styles.infoContainer}>
+        //                             <p>Дата вакцинации</p>
+        //                             <p className='semibold'>{vaccination.date}</p>
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //             )
+        //         })}
+        //     </div>
+        // </form>
     )
 }
 
