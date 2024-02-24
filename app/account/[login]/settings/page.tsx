@@ -201,7 +201,7 @@ export default function Page({ params: { login } }: IPageProps) {
                             />
                         </div>
                     </div>
-                    <Link href={`account/${login}`}>
+                    <Link href={`/account/${login}`}>
                         <button className={cn(styles.submit, 'submitButton')} type='submit'>Сохранить</button>
                     </Link> 
                 </form>
