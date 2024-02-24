@@ -18,7 +18,7 @@ function Modal() {
 
     const [ addDonorRequest, result ] = api.useAddDonorRequestMutation()
 
-    function submit(e) {
+    function submit(e: any) {
         e.preventDefault()
 
         addDonorRequest({
@@ -54,7 +54,7 @@ function Modal() {
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Количество крови (мл)</label>
-                <input required type="number" className="input" placeholder="0" value={bloodAmountMl} onChange={e => setBloodAmountMl(e.target.value) }/>
+                <input required type="number" className="input" placeholder="0" value={bloodAmountMl} onChange={e => setBloodAmountMl(Number(e.target.value)) }/>
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Дата окончания поиска</label>

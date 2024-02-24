@@ -11,27 +11,27 @@ interface ISomeType {
     name: string;
 }
 
-interface City {
+export interface City {
   id: number;
   city: string;
 }
 
-interface District {
+export interface District {
   id: number;
   district: string;
 }
 
-interface PetType {
+export interface PetType {
   id: number;
   type: string;
 }
 
-interface BloodType {
+export interface BloodType {
   id: number;
   bloodType: string;
 }
 
-interface DonorRequests {
+export interface DonorRequest {
   description: string;
   vetAddress: string;
   petTypeID: number;

@@ -9,45 +9,66 @@ export const CitySelector = ({value, onChange}: CitySelectorProps) => {
   const { data, isLoading } = api.useGetCitiesQuery();
   
   return (
-    <select className="input" value={value.id} onChange={(e) => onChange(data.find(v => v.id == Number(e.target.value)))}>
+    <select className="input" value={value.id} onChange={(e) => {
+      if (data) {
+        let v = data.find(v => v.id == Number(e.target.value));
+        if (v) {
+          onChange(v)
+        }
+      }
+    }}>
       {data && data.map((v, i) => <option value={v.id} key={i}>{v.city}</option>)}
     </select>
   )
 }
 
 interface DistrictSelectorProps {
-  city: string
-  value: number
-  onChange: (v: number) => void
+  city: api.City
+  value: api.District
+  onChange: (v: api.District) => void
 }
 
 export const DistrictSelector = ({city, value, onChange}: DistrictSelectorProps) => {
   const { data, isLoading } = api.useGetDistrictsQuery(city.city);
 
   return (
-    <select className="input" value={value.id} onChange={(e) => onChange(data.find(v => v.id == Number(e.target.value)))}>
+    <select className="input" value={value.id} onChange={(e) => {
+      if (data) {
+        let v = data.find(v => v.id == Number(e.target.value));
+        if (v) {
+          onChange(v)
+        }
+      }
+    }}>
       {data && data.map((v, i) => <option value={v.id} key={i}>{v.district || "Не важен"}</option>)}
     </select>
   )
 }
 
 interface PetTypeSelectorProps {
-  value: PetType
-  onChange: (v: PetType) => void
+  value: api.PetType
+  onChange: (v: api.PetType) => void
 }
 
 export const PetTypeSelector = ({value, onChange}: PetTypeSelectorProps) => {
   const { data, isLoading } = api.useGetPetTypesQuery();
   
   return (
-    <select className="input" value={value.id} onChange={(e) => onChange(data.find(v => v.id == Number(e.target.value)))}>
+    <select className="input" value={value.id} onChange={(e) => {
+      if (data) {
+        let v = data.find(v => v.id == Number(e.target.value));
+        if (v) {
+          onChange(v)
+        }
+      }
+    }}>
       {data && data.map((v, i) => <option value={v.id} key={i}>{v.type}</option>)}
     </select>
   )
 }
 
 interface BloodTypeSelectorProps {
-  petType: PetType
+  petType: api.PetType
   value: number
   onChange: (v: number) => void
 }
