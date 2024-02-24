@@ -1,11 +1,10 @@
 'use client'
 import styles from './styles.module.css';
 import avatarIcon from '@icons/avatar.svg';
-import accountIcon from '@icons/person.svg';
 import deleteIcon from '@icons/delete.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { PetCard } from '@/app/components/PetCard';
 import * as api from '@/app/redux/services/api';
@@ -13,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { PetTypeSelector, BloodTypeSelector, BreedTypeSelector } from '@components/Selector';
 import { useAddPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets, useAddVaccinationMutation, useGetUnavailableDatesQuery, IUnavailableDatesForUser, IUnavailableDates } from '@/app/redux/services/api';
 import toast from 'react-hot-toast';
+import { convertDateFormat } from '@/app/utils/convertDate';
 
 interface IPageProps{
     params: {
@@ -177,14 +177,6 @@ function Modal({onClose}: any) {
             <button className={cn("button", styles.modalButton)} type='submit'>Добавить питомца</button>
         </form>
     )
-}
-
-export function convertDateFormat(dateString: string) {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.getMonth() +  1; // Месяцы начинаются с  0
-    const year = date.getFullYear();
-    return `${day}.${month <  10 ? '0' + month : month}.${year}`;
 }
 
 export default function Page({ params: { login } }: IPageProps){

@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { IGetVaccination, IUserPets, IVaccination, useDeletePetMutation, useGetVaccinationsQuery } from '@/app/redux/services/api';
 import toast from 'react-hot-toast';
-import { convertDateFormat } from '@/app/account/[login]/page';
+import { convertDateFormat } from '@/app/utils/convertDate';
 
 interface IPetCardProps {
     pet: IUserPets;
