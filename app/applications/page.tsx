@@ -2,6 +2,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationCard } from "@components/ApplicationCard"
+import { CitySelector, DistrictSelector, PetTypeSelector, BloodTypeSelector } from '@components/Selector';
 import styles from "./page.module.css";
 import cn from 'classnames';
 import { useState } from 'react';
@@ -9,7 +10,22 @@ import * as api from '@/app/redux/services/api';
 
 export default function Applications() {
   const [ isMe, setIsMe ] = useState(true)
-  const { data } = api.useGetDonorRequestsQuery({ me: isMe });
+
+  const [ petType, setPetType ] = useState<api.PetType | undefined>();
+  const [ bloodType, setBloodType ] = useState<number | undefined>();
+  const [city, setCity] = useState<api.City | undefined>();
+  const [district, setDistrict] = useState<api.District | undefined>();
+
+  console.log(petType)
+  console.log("АЛЁ", bloodType ? bloodType : undefined)
+
+  const { data } = api.useGetDonorRequestsQuery({
+    me: isMe,
+    blood_type_id: bloodType ? bloodType : undefined,
+    pet_type_id: petType ? petType.id : undefined,
+    city: city ? city.city : undefined,
+    location_id: district ? district.id : undefined
+  });
 
   return (<>
     <title>Заявки на донацию - petdonor.ru</title>
@@ -23,35 +39,19 @@ export default function Applications() {
       <div className={styles.filters}>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Тип животного</label>
-            <select className="input">
-                <option>Любой</option>
-                <option>Кошка</option>
-                <option>Собака</option>
-            </select>
+            <PetTypeSelector optional value={petType} onChange={(v) => {setPetType(v); setBloodType(null)}}/>
         </div>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Группа крови</label>
-            <select className="input">
-                <option>Любая</option>
-                <option>112312</option>
-                <option>5643tdca</option>
-            </select>
+            <BloodTypeSelector optional petType={petType} value={bloodType} onChange={(v) => setBloodType(v)}/>
         </div>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Город</label>
-            <select className="input">
-                <option>Любой</option>
-                <option>Санкт-Петербург</option>
-                <option>Москва</option>
-            </select>
+            <CitySelector optional value={city} onChange={(v) => {setCity(v); setDistrict(null)}}/>
         </div>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Район</label>
-            <select className="input">
-                <option>Любой</option>
-                <option>Санкт-Петербург</option>
-                <option>Москва</option>
-            </select>
+            <DistrictSelector optional value={district} city={city} onChange={(v) => setDistrict(v)}/>
         </div>
       </div>
       <div className={styles.grid}>

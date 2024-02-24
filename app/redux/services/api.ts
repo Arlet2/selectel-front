@@ -82,7 +82,11 @@ export interface IAddedPet{
 }
 
 export interface GetDonorRequest {
-   me: boolean
+  me: boolean
+  blood_type_id?: number
+  pet_type_id?: number
+  location_id?: number
+  city?: text
 }
 
 export interface IUserPets {
