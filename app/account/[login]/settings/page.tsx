@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { use, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Tooltip from '@mui/material/Tooltip';
@@ -12,6 +12,7 @@ import vkIcon from '@icons/vk.svg';
 import dogImage from '@images/dog.png';
 import styles from './styles.module.css';
 import cn from 'classnames';
+import { IUser, useUpdateUserInfoMutation } from '@/app/redux/services/api';
 
 const {
     CitySelect,
@@ -52,9 +53,17 @@ function Modal() {
 
 export default function Page({ params: { login } }: IPageProps) {
     const [ modalVisible, setModalVisible ] = useState(false)
-    const [ state, setState ] = useState();
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [middleName, setMiddleName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [showEmail, setShowEmail] = useState(false);
+    const [showPhone, setShowPhone] = useState(false);
+    const [vk, setVk] = useState('');
+    const [tg, setTg] = useState('');
 
     const updateEndDate = (newEndDate: string) => {
         if (newEndDate >= startDate) {
@@ -62,6 +71,53 @@ export default function Page({ params: { login } }: IPageProps) {
         } else {
             alert('Конец периода не может быть раньше начала периода.');
         }
+    };
+
+    const [updateUserInfo, { isLoading }] = useUpdateUserInfoMutation();
+
+    const handleSave = async () => {
+        const userInfo: Partial<IUser> = {
+            email,
+            phone,
+            emailVisibility: showEmail,
+            phoneVisibility: showPhone,
+            surname,
+            name,
+            middleName,
+            tgUserName: tg,
+            vkUserName: vk,
+        };
+        console.log(userInfo);
+
+        try {
+            await updateUserInfo(userInfo).unwrap();
+            alert('Информация обновлена успешно!');
+        } catch (error) {
+            console.error('Ошибка обновления информации:', error);
+            alert('Ошибка обновления информации. Пожалуйста, попробуйте снова.');
+        }
+    };
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+    };
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setName(e.target.value);
+    };
+    const handleSurnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSurname(e.target.value);
+    };
+    const handleMiddlenameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMiddleName(e.target.value);
+    };
+    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPhone(e.target.value);
+    };
+    const handleVkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setVk(e.target.value);
+    };
+    const handleTgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTg(e.target.value);
     };
 
     return (<>
@@ -80,19 +136,19 @@ export default function Page({ params: { login } }: IPageProps) {
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Почта</label>
-                            <input className='input' type='email' placeholder='mymail@mail.ru'/>
+                            <input className='input' type='email' placeholder='mymail@mail.ru' value={email} onChange={handleEmailChange}/>
                         </div>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Номер телефона</label>
-                            <input className='input' type='tel' placeholder='+7-(9xx)-xxx-xx-xx'/>
+                            <input className='input' type='tel' placeholder='+7-(9xx)-xxx-xx-xx' value={phone} onChange={handlePhoneChange}/>
                         </div>
                     </div>
                     <div className={styles.checkboxContainer}>
-                        <input className={styles.checkbox} type='checkbox'/>
+                        <input className={styles.checkbox} type='checkbox' checked={showEmail} onChange={() => setShowEmail(!showEmail)}/>
                         <label className={styles.labelCheckbox}>Показывать почту в профиле</label>
                     </div>
                     <div className={styles.checkboxContainer}>
-                        <input className={styles.checkbox} type='checkbox'/>
+                        <input className={styles.checkbox} type='checkbox' checked={showPhone} onChange={() => setShowPhone(!showPhone)}/>
                         <label className={styles.labelCheckbox}>Показывать телефон в профиле</label>
                     </div>
                     <button
@@ -117,60 +173,41 @@ export default function Page({ params: { login } }: IPageProps) {
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Имя</label>
-                            <input className='input' type='text' placeholder='Иван'/>
+                            <input className='input' type='text' placeholder='Иван' value={name} onChange={handleNameChange}/>
                         </div>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Фамилия</label>
-                            <input className='input' type='text' placeholder='Иванов'/>
+                            <input className='input' type='text' placeholder='Иванов' value={surname} onChange={handleSurnameChange}/>
                         </div>
                     </div>
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Отчество</label>
-                            <input className='input' type='email' placeholder='Иванович'/>
+                            <input className='input' type='email' placeholder='Иванович' value={middleName} onChange={handleMiddlenameChange}/>
                         </div>
-                    </div>
-                    <div className={styles.checkboxContainer}>
-                        <input className={styles.checkbox} type='checkbox'/>
-                        <label className={styles.labelCheckbox}>Отчество отсутствует</label>
                     </div>
                     <div className='dividerThin'></div>
                     <div className={styles.bottomContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Регион</label>
-                            <StateSelect
-                                countryid={COUNTRY_ID}
-                                onChange={(e: any) => {
-                                    setState(e.id);
-                                }}
-                                placeHolder="Выберите из списка"
-                            />
+                            
                         </div>
                     </div>
                     <div className={styles.bottomContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Город</label>
-                            <CitySelect 
-                                className={styles.select}
-                                countryid={182}
-                                stateid={state}
-                                placeholder="Выберите из списка"
-                            />
+
                         </div>
                     </div>
                     <div className='dividerThin'></div>
                     <label className={styles.label}>Социальные сети</label>
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>
-                            <input className='input' type='text' placeholder='Телеграм'/>
+                            <input className='input' type='text' placeholder='Телеграм' value={tg} onChange={handleTgChange}/>
                         </div>
                         <div className={styles.inputContainer}>
-                            <input className='input' type='text' placeholder='Ссылка на ВКонтакте'/>
+                            <input className='input' type='text' placeholder='Ссылка на ВКонтакте' value={vk} onChange={handleVkChange}/>
                         </div>
-                    </div>
-                    <div className={styles.checkboxContainer}>
-                        <input className={styles.checkbox} type='checkbox'/>
-                        <label className={styles.labelCheckbox}>Показывать соц. сети в профиле</label>
                     </div>
                     <div className='dividerThin'></div>
                     <div className={styles.labelContainer}>
@@ -202,7 +239,7 @@ export default function Page({ params: { login } }: IPageProps) {
                         </div>
                     </div>
                     <Link href={`/account/${login}`}>
-                        <button className={cn(styles.submit, 'submitButton')} type='submit'>Сохранить</button>
+                        <button className={cn(styles.submit, 'submitButton')} type='submit' onClick={handleSave} disabled={isLoading}>Сохранить</button>
                     </Link> 
                 </form>
             </div>

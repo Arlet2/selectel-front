@@ -40,6 +40,29 @@ export interface DonorRequest {
   availableUntil: string;
 }
 
+export interface IUser {
+  id: number,
+  login: string,
+  email: string,
+  phone: string,
+  surname: string,
+  name: string,
+  middleName: string,
+  created: string,
+  lastActive: string,
+  location: {
+    id: number,
+    city: string,
+    district: string
+  },
+  avatar: string,
+  vkUserName: string,
+  tgUserName: string,
+  vkUserId: string,
+  emailVisibility: boolean,
+  phoneVisibility: boolean
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -80,13 +103,27 @@ export const api = createApi({
         url: `donor_requests/`,
         method: 'POST',
         body,
+      })
+    }),
+    getUserInfo: builder.query<BloodType[], string>({
+      query: (petType) => ({
+        url: `pets/blood_types`,
+        params: { typeName: petType }
+      })
+    }),
+    updateUserInfo: builder.mutation<void, Partial<IUser>>({
+        query: (body) => ({
+          url: `users/`,
+          method: 'PATCH',
+          body,
+        }),
       }),
     }),
-  }),
-})
+  })
 
 /* хуки, которые потом используем в компонентах, генерируются автоматически */
-export const { useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery, useAddDonorRequestMutation } = api
+export const { useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery, useAddDonorRequestMutation, useUpdateUserInfoMutation } = api
+
 
 async function postData(url: string, data: object): Promise<object> {
   let headers: Record<string, string> = {
