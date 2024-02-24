@@ -6,11 +6,6 @@ const API_URL = 'https://api.petdonor.ru/back/api/v1/';
 
 /* api для запросов, типы и какие объекты будут приходить с бекенда нужно описать после обсуждения контракта */
 
-interface ISomeType {
-    id: number;
-    name: string;
-}
-
 export interface City {
   id: number;
   city: string;
@@ -63,6 +58,18 @@ export interface IUser {
   phoneVisibility: boolean
 }
 
+export interface IUpdateUser {
+  phone: string;
+  surname: string;
+  name: string;
+  lastName: string;
+  locationId: number,
+  vkUserName: string,
+  tgUserName: string,
+  emailVisibility: boolean,
+  phoneVisibility: boolean
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -104,13 +111,13 @@ export const api = createApi({
         body,
       })
     }),
-    getUserInfo: builder.query<BloodType[], string>({
-      query: (petType) => ({
-        url: `pets/blood_types`,
-        params: { typeName: petType }
+    getUserInfo: builder.query<IUser, string>({
+      query: (login) => ({
+        url: `users/`,
+        params: { login }
       })
     }),
-    updateUserInfo: builder.mutation<void, Partial<IUser>>({
+    updateUserInfo: builder.mutation<void, Partial<IUpdateUser>>({
         query: (body) => ({
           url: `users/`,
           method: 'PATCH',
@@ -121,7 +128,7 @@ export const api = createApi({
   })
 
 /* хуки, которые потом используем в компонентах, генерируются автоматически */
-export const { useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery, useAddDonorRequestMutation, useUpdateUserInfoMutation } = api
+export const { useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery, useAddDonorRequestMutation, useUpdateUserInfoMutation, useGetUserInfoQuery } = api
 
 
 async function postData(url: string, data: object): Promise<object> {

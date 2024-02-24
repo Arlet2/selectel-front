@@ -1,33 +1,24 @@
 'use client'
 
-import { use, useState } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import Link from 'next/link';
 import Image from 'next/image';
 import Tooltip from '@mui/material/Tooltip';
 import QuestionIcon from '@mui/icons-material/QuestionMark';
 import IconButton from '@mui/material/IconButton';
-import arrowIcon from '@icons/arrow.svg';
 import avatarIcon from '@icons/avatar.svg';
-import vkIcon from '@icons/vk.svg';
 import dogImage from '@images/dog.png';
 import styles from './styles.module.css';
 import cn from 'classnames';
-import { IUser, useUpdateUserInfoMutation } from '@/app/redux/services/api';
+import { IUpdateUser, useUpdateUserInfoMutation, City, District, useGetUserInfoQuery } from '@/app/redux/services/api';
 import { CitySelector, DistrictSelector } from '@/app/components/Selector';
-
-const {
-    CitySelect,
-    CountrySelect,
-    StateSelect,
-} = require('react-country-state-city');
 
 interface IPageProps{
     params: {
         login: string;
     }
 }
-
-const COUNTRY_ID = 182;
 
 function Modal() {
     return (
@@ -58,52 +49,66 @@ export default function Page({ params: { login } }: IPageProps) {
     const [endDate, setEndDate] = useState('');
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
-    const [middleName, setMiddleName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [showEmail, setShowEmail] = useState(false);
     const [showPhone, setShowPhone] = useState(false);
     const [vk, setVk] = useState('');
     const [tg, setTg] = useState('');
-    const [city, setCity] = useState();
-    const [district, setDistrict] = useState();
+    const [city, setCity] = useState<City>();
+    const [district, setDistrict] = useState<District>();
+
+    const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(login);
+    
+    useEffect(() => {
+        if (!isUserInfoLoading && userInfo) {
+            setPhone(userInfo.phone);
+            setName(userInfo.name);
+            setSurname(userInfo.surname);
+            setLastName(userInfo.middleName);
+            setVk(userInfo.vkUserName);
+            setTg(userInfo.tgUserName);
+            setShowEmail(userInfo.emailVisibility);
+            setShowPhone(userInfo.phoneVisibility);
+            setEmail(userInfo.email);
+        }
+    }, [isUserInfoLoading, userInfo]);
 
     const updateEndDate = (newEndDate: string) => {
         if (newEndDate >= startDate) {
             setEndDate(newEndDate);
         } else {
-            alert('Конец периода не может быть раньше начала периода.');
+            toast("Конец периода не может быть раньше начала периода.")
         }
     };
 
     const [updateUserInfo, { isLoading }] = useUpdateUserInfoMutation();
 
     const handleSave = async () => {
-        const userInfo: Partial<IUser> = {
-            email,
+        const userInfo: Partial<IUpdateUser> = {
             phone,
-            emailVisibility: showEmail,
-            phoneVisibility: showPhone,
             surname,
             name,
-            middleName,
+            lastName,
+            locationId: district?.id,
+            emailVisibility: showEmail,
+            phoneVisibility: showPhone,
             tgUserName: tg,
             vkUserName: vk,
         };
-        console.log(userInfo);
 
         try {
             await updateUserInfo(userInfo).unwrap();
-            alert('Информация обновлена успешно!');
+            console.log(userInfo);
+            window.location.reload();
+            toast('Информация обновлена успешно!')
         } catch (error) {
             console.error('Ошибка обновления информации:', error);
-            alert('Ошибка обновления информации. Пожалуйста, попробуйте снова.');
+            toast('Ошибка обновления информации. Пожалуйста, попробуйте снова.')
         }
     };
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
     };
@@ -111,7 +116,7 @@ export default function Page({ params: { login } }: IPageProps) {
         setSurname(e.target.value);
     };
     const handleMiddlenameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setMiddleName(e.target.value);
+        setLastName(e.target.value);
     };
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPhone(e.target.value);
@@ -139,7 +144,7 @@ export default function Page({ params: { login } }: IPageProps) {
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Почта</label>
-                            <input className='input' type='email' placeholder='mymail@mail.ru' value={email} onChange={handleEmailChange}/>
+                            <input className='input' type='email' placeholder='mymail@mail.ru' value={email} disabled/>
                         </div>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Номер телефона</label>
@@ -186,7 +191,7 @@ export default function Page({ params: { login } }: IPageProps) {
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Отчество</label>
-                            <input className='input' type='email' placeholder='Иванович' value={middleName} onChange={handleMiddlenameChange}/>
+                            <input className='input' type='email' placeholder='Иванович' value={lastName} onChange={handleMiddlenameChange}/>
                         </div>
                     </div>
                     <div className='dividerThin'></div>
@@ -241,9 +246,7 @@ export default function Page({ params: { login } }: IPageProps) {
                             />
                         </div>
                     </div>
-                    <Link href={`/account/${login}`}>
-                        <button className={cn(styles.submit, 'submitButton')} type='submit' onClick={handleSave} disabled={isLoading}>Сохранить</button>
-                    </Link> 
+                    <button className={cn(styles.submit, 'submitButton')} type='submit' onClick={handleSave} disabled={isLoading}>Сохранить</button>
                 </form>
             </div>
             <div className={styles.backgroundContainer}>
