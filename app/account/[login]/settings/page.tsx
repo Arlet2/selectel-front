@@ -225,11 +225,11 @@ export default function Page({ params: { login } }: IPageProps) {
                     </div>
                     <div className={styles.checkboxContainer}>
                         <input className={styles.checkbox} type='checkbox' checked={showEmail} onChange={() => setShowEmail(!showEmail)}/>
-                        <label className={styles.labelCheckbox} onClick={() => setShowEmail(!showEmail)}>Показывать почту в профиле</label>
+                        <label className={styles.labelCheckbox} onClick={() => setShowEmail(!showEmail)}>Не показывать почту в профиле</label>
                     </div>
                     <div className={styles.checkboxContainer}>
                         <input className={styles.checkbox} type='checkbox' checked={showPhone} onChange={() => setShowPhone(!showPhone)}/>
-                        <label className={styles.labelCheckbox} onClick={() => setShowPhone(!showPhone)}>Показывать телефон в профиле</label>
+                        <label className={styles.labelCheckbox} onClick={() => setShowPhone(!showPhone)}>Не показывать телефон в профиле</label>
                     </div>
                     <button
                         type='button'
