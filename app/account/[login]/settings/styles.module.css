@@ -224,5 +224,12 @@
 }
 
 .questionMark {
-    height: 30%;
+
+}
+
+.questionMarkBackground{
+    margin-left: 10px;
+    height: 35px;    
+    width: 35px;
+    border: 1px solid var(--border-color);
 }
