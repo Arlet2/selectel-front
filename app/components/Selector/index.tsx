@@ -52,9 +52,13 @@ interface PetTypeSelectorProps {
 
 export const PetTypeSelector = ({value, onChange}: PetTypeSelectorProps) => {
   const { data, isLoading } = api.useGetPetTypesQuery();
+
+  if (data && !value) {
+    onChange(data[0])
+  }
   
   return (
-    <select className="input" value={value.id} onChange={(e) => {
+    <select className="input" value={value && value.id} onChange={(e) => {
       if (data) {
         let v = data.find(v => v.id == Number(e.target.value));
         if (v) {
@@ -74,7 +78,12 @@ interface BloodTypeSelectorProps {
 }
 
 export const BloodTypeSelector = ({petType, value, onChange}: BloodTypeSelectorProps) => {
-  const { data, isLoading } = api.useGetBloodTypesQuery(petType.type);
+  let pettype = petType || 'Кошка';
+  const { data, isLoading } = api.useGetBloodTypesQuery(pettype.type);
+
+  if (data && !value) {
+    onChange(data[0].id)
+  }
   
   return (
     <select className="input" value={String(value)} onChange={(e) => onChange(Number(e.target.value))}>

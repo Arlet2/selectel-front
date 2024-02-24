@@ -71,7 +71,6 @@ export const api = createApi({
       let accessToken = localStorage.getItem("accessToken");
 
       if (accessToken) {
-        console.log(accessToken)
         headers.set('authorization', `Bearer ${accessToken}`)
       }
 
@@ -139,10 +138,17 @@ async function postData(url: string, data: object): Promise<object> {
     method: "POST",
     body: JSON.stringify(data)
   });
+  try {
   const body = await response.json();
   if (!response.ok)
     throw body.error;
   return body;
+  } catch (e) {
+    if (e instanceof SyntaxError) {
+      return {}
+    }
+    throw e;
+  }
 }
 
 export async function register(credentials: IRegisterCredentials): Promise<IApiToken> {

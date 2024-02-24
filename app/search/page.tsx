@@ -11,8 +11,8 @@ function Modal() {
     const router = useRouter();
     const [ description, setDescription ] = useState("");
     const [ vetAddress, setVetAddress ] = useState("");
-    const [ petType, setPetType ] = useState({id: 0, type: "Кошка"});
-    const [ bloodType, setBloodType ] = useState(0);
+    const [ petType, setPetType ] = useState();
+    const [ bloodType, setBloodType ] = useState();
     const [ bloodAmountMl, setBloodAmountMl ] = useState(0);
     const [ availableUntil, setAvailableUntil ] = useState("");
 
