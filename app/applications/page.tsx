@@ -4,18 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { ApplicationCard } from "@components/ApplicationCard"
 import styles from "./page.module.css";
 import cn from 'classnames';
+import { useState } from 'react';
 import * as api from '@/app/redux/services/api';
 
 export default function Applications() {
-  const { data } = api.useGetDonorRequestsQuery({ me: true });
+  const [ isMe, setIsMe ] = useState(true)
+  const { data } = api.useGetDonorRequestsQuery({ me: isMe });
 
   return (<>
     <title>Заявки на донацию - petdonor.ru</title>
     <main className={styles.main}>
       <h1 className='header'>Заявки на донацию</h1>
       <div className={styles.selector}>
-        <div className={cn(styles.selected, styles.selectorItem)}>Мои заявки</div>
-        <div className={styles.selectorItem}>Все заявки</div>
+        <div className={cn(isMe && styles.selected, styles.selectorItem)} onClick={() => setIsMe(true)}>Мои заявки</div>
+        <div className={cn(!isMe && styles.selected, styles.selectorItem)} onClick={() => setIsMe(false)}>Все заявки</div>
       </div>
       <h2 className={styles.filtersHeader}>Фильтры</h2>
       <div className={styles.filters}>
@@ -53,7 +55,7 @@ export default function Applications() {
         </div>
       </div>
       <div className={styles.grid}>
-        {data && data.map((v, i) => <ApplicationCard key={i} data={v}/>)}
+        {data && data.map((v, i) => <ApplicationCard key={i} isMe={isMe} data={v}/>)}
       </div>
     </main>
   </>);
