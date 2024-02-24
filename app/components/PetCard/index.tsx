@@ -4,18 +4,19 @@ import cat from '@images/catAvatar.png';
 import Image from 'next/image';
 import cn from 'classnames';
 import { useState } from 'react';
-import { IPet, IVaccination } from '@/app/account/[login]/page';
-import { IUserPets } from '@/app/redux/services/api';
+import { IVaccination } from '@/app/account/[login]/page';
+import { IUserPets, useDeletePetMutation } from '@/app/redux/services/api';
+import toast from 'react-hot-toast';
 
 interface IPetCardProps {
     pet: IUserPets;
     isPersonOwner?: boolean;
 }
 
-// interface ShowMoreModalProps {
-//     pet: IPet;
-//     vaccinations: IVaccination[];
-// }
+interface ShowMoreModalProps {
+    pet: IUserPets;
+    vaccinations: IVaccination[];
+}
 
 function formatAge(age: number | undefined) {
     if (!age) return `0 лет`;
@@ -107,8 +108,16 @@ const myVaccinations: IVaccination[] = [
 export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) => {
     const [ modalVisible, setModalVisible ] = useState(false);
 
-    const handleDelete = () => {
-        
+    const [deletePet, {isLoading}] = useDeletePetMutation();
+
+    const handleDelete = async () => {
+        try {
+            await deletePet(pet.id).unwrap();
+
+        } catch (error) {
+            console.error('Ошибка удаления питомца:', error);
+            toast.error('Ошибка удаления питомца. Пожалуйста, попробуйте снова.')
+        }
     }
 
     return (
@@ -128,7 +137,7 @@ export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) =>
             <div className={styles.buttonContainer}>
                 <button className={cn('linkBlue', styles.button, isPersonOwner && styles.displayNone )} onClick={() => setModalVisible(true)}>Подробнее</button>
                 <button className={cn('linkPink', styles.button, !isPersonOwner && styles.displayNone )}>Редактировать</button>
-                <button className={cn('linkBlue', styles.button, !isPersonOwner && styles.displayNone )}>Удалить</button>
+                <button className={cn('linkBlue', styles.button, !isPersonOwner && styles.displayNone )} onClick={handleDelete}>Удалить</button>
             </div>
         </div>
     )

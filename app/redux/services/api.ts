@@ -191,6 +191,12 @@ export const api = createApi({
     getPetsForUser: builder.query<IUserPets[], string>({
       query: (login) => `users/${login}/pets`
     }),
+    deletePet: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `pets/${id}`,
+        method: 'DELETE',
+      })
+    }),
   }),
 })
 
@@ -199,7 +205,7 @@ export const {
   useAddDonorRequestMutation, useGetDonorRequestsQuery,
   useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
-  useDeleteDonorRequestMutation, useGetPetsForUserQuery
+  useDeleteDonorRequestMutation, useGetPetsForUserQuery, useDeletePetMutation
 } = api
 
 async function postData(url: string, data: object): Promise<object> {

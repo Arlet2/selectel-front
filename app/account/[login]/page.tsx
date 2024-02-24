@@ -5,7 +5,7 @@ import accountIcon from '@icons/person.svg';
 import deleteIcon from '@icons/delete.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import cn from 'classnames';
 import { PetCard } from '@/app/components/PetCard';
 import * as api from '@/app/redux/services/api';
@@ -19,73 +19,6 @@ interface IPageProps{
         login: string;
     }
 }
-
-export interface IPet {
-    type: 'cat' | 'dog';
-    name: string;
-    breed?: string;
-    age?: number;
-    birthday?: string;
-    weight?: number;
-    bloodType?: string;
-}
-
-const myPets: IPet[] = [
-    {
-        type: 'cat',
-        name: 'Белла',
-        breed: 'Сиамский',
-        age: 5,
-        birthday: '2000-04-02',
-        weight: 45,
-        bloodType: '+1'
-    },
-    {
-        type: 'dog',
-        name: 'Тузик',
-        breed: 'Бульдог',
-        age: 45,
-        birthday: '2000-04-02',
-        weight: 45,
-        bloodType: '+1'
-    },
-    {
-        type: 'cat',
-        name: 'Ума',
-        breed: 'Сфинкс',
-        age: 1,
-        birthday: '2000-04-02',
-        weight: 45,
-        bloodType: '+1'
-    },
-    {
-        type: 'cat',
-        name: 'Белла',
-        breed: 'Вислоухий',        
-        age: 0.5,        
-        birthday: '2000-04-02',
-        weight: 45,
-        bloodType: '+1'
-    },
-    {
-        type: 'dog',
-        name: 'Тузик',
-        breed: 'Такса',
-        age: 23,
-        birthday: '2000-04-02',
-        weight: 45,
-        bloodType: '+1'
-    },
-    {
-        type: 'cat',
-        name: 'Ума',
-        breed: 'Сфинкс',
-        age: 5,
-        birthday: '2000-04-02',
-        weight: 45,
-        bloodType: '+1'
-    }
-]
 
 export interface IVaccination{
     name: string;
@@ -128,7 +61,7 @@ function Modal() {
 
         try {
             await addPetInfo(petInfo).unwrap();
-            toast.success('Питомец добавлен успешно!');
+            window.location.reload();
         } catch (error) {
             console.error('Ошибка добавления питомца:', error);
             toast.error('Ошибка добавления питомца. Пожалуйста, попробуйте снова.')
@@ -234,7 +167,6 @@ export default function Page({ params: { login } }: IPageProps){
     const [ pets, setPets ] = useState<IUserPets[]>([]);
     const [ modalVisible, setModalVisible ] = useState(false)
     const [count, setCount] = useState(5);
-    const [ isAnyPets, setIsAnyPets ] = useState(true);
     const router = useRouter();
 
     const [name, setName] = useState('');
@@ -251,7 +183,7 @@ export default function Page({ params: { login } }: IPageProps){
 
     const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(login);
     const { data: petsInfo, isLoading: isPetsInfoLoading } = useGetPetsForUserQuery(login);
-    
+
     useEffect(() => {
         if (!isUserInfoLoading && userInfo) {
             setPhone(userInfo.phone);
@@ -269,7 +201,6 @@ export default function Page({ params: { login } }: IPageProps){
     useEffect(() => {
         if (!isPetsInfoLoading && petsInfo) {
             setPets(petsInfo);
-            console.log(petsInfo);
         }
     }, [isPetsInfoLoading, petsInfo]);
 
@@ -292,7 +223,7 @@ export default function Page({ params: { login } }: IPageProps){
                 <div className='divider'></div>
                 <div className={styles.userContainer}>
                     <div className={styles.avatar}>
-                        <Image src={accountIcon} alt='Account icon'/>
+                        <Image className={styles.avatarIcon} src={accountIcon} alt='Account icon'/>
                     </div>
                     <h2 className='subtitle'>{(name || surname || lastName) ? `${surname} ${name} ${lastName}` : 'Имя Фамилия'}</h2>
                     <div className={styles.counter}>{count} донаций</div>
@@ -300,7 +231,7 @@ export default function Page({ params: { login } }: IPageProps){
                     <div className={cn('linkBlue', !isPersonLogged && styles.displayNone)} onClick={logout}>Выход</div>
                 </div>
             </div>
-            <div className={cn(styles.rightContainer, isAnyPets ? '' : styles.empty)}>
+            <div className={cn(styles.rightContainer, pets.length > 0 ? '' : styles.empty)}>
                 <div className={styles.contactInformation}>
                     <h2 className={styles.title}>Контактная информация</h2>
                     <div className={styles.contactContainer}>
@@ -325,9 +256,9 @@ export default function Page({ params: { login } }: IPageProps){
                         <p className='semibold'>{tg ? tg : 'не указано'}</p>
                     </div>
                 </div>
-                <div className={cn(styles.petsContainer, isAnyPets ? '' : styles.empty)}>
+                <div className={cn(styles.petsContainer, pets.length > 0 ? '' : styles.empty)}>
                     <h2 className={styles.title}>Питомцы</h2>
-                    {isAnyPets ? (
+                    {pets.length > 0 ? (
                         <div className={styles.petContainer}>
                             {pets.map((pet, key) => {
                                 return <PetCard key={key} pet={pet} isPersonOwner={isPersonLogged}/>
