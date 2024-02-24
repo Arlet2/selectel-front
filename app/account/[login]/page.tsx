@@ -292,7 +292,7 @@ export default function Page({ params: { login } }: IPageProps){
                         <p>Телеграм</p>
                         <p className='semibold'>{tg ? tg : 'не указано'}</p>
                     </div>
-                    {unavailableDates && <div className={cn(styles.contactContainer, styles.unavailableContainer)}>
+                    {unavailableDates && unavailableDates.endDate !== null && unavailableDates.startDate !== null && <div className={cn(styles.contactContainer, styles.unavailableContainer)}>
                         <p className={styles.pinkHeaderContact}>Даты недоступности</p>
                         <p className='semibold'>с {convertDateFormat(unavailableDates.startDate)} по {convertDateFormat(unavailableDates.endDate)}</p>
                     </div>}
