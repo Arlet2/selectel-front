@@ -40,8 +40,8 @@ export default function Home() {
               </div>
               <div className={styles.stepContainerLower}>
                 <div className={styles.content}>
-                  <p className={cn(styles.description, styles.selfRightAlign, styles.rightAlign)}>Подайте запрос на поиск донора, указав необходимые детали: причина, место, объем крови и срок</p>
-                  <h2 className={cn(styles.blueTitle, styles.rightAlign)}>поиск донора</h2>
+                  <p className={cn(styles.description, styles.selfRightAlign, styles.rightAlign)}>Используйте удобные фильтры для поиска актуальных запросов на донорство по городу и типу животного</p>
+                  <h2 className={cn(styles.blueTitle, styles.rightAlign)}>фильтры поиска</h2>
                 </div>
                 <div className={styles.blueNumber}>4</div>
               </div>
