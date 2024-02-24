@@ -5,12 +5,13 @@ import accountIcon from '@icons/person.svg';
 import deleteIcon from '@icons/delete.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { PetCard } from '@/app/components/PetCard';
 import * as api from '@/app/redux/services/api';
 import { useRouter } from 'next/navigation';
 import { PetTypeSelector, BloodTypeSelector } from '@components/Selector';
+import { City, District, useGetUserInfoQuery } from '@/app/redux/services/api';
 
 interface IPageProps{
     params: {
@@ -192,9 +193,37 @@ export default function Page({ params: { login } }: IPageProps){
     const isPersonLogged = api.getLogin() === login;
     const [ pets, setPets ] = useState(myPets);
     const [ modalVisible, setModalVisible ] = useState(false)
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(5);
     const [ isAnyPets, setIsAnyPets ] = useState(true);
     const router = useRouter();
+
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [showEmail, setShowEmail] = useState(false);
+    const [showPhone, setShowPhone] = useState(false);
+    const [vk, setVk] = useState('');
+    const [tg, setTg] = useState('');
+    const [city, setCity] = useState<City>();
+    const [district, setDistrict] = useState<District>();
+
+    const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(login);
+    
+    useEffect(() => {
+        if (!isUserInfoLoading && userInfo) {
+            setPhone(userInfo.phone);
+            setName(userInfo.name);
+            setSurname(userInfo.surname);
+            setLastName(userInfo.middleName);
+            setVk(userInfo.vkUserName);
+            setTg(userInfo.tgUserName);
+            setShowEmail(userInfo.emailVisibility);
+            setShowPhone(userInfo.phoneVisibility);
+            setEmail(userInfo.email);
+        }
+    }, [isUserInfoLoading, userInfo]);
 
     function logout() {
         api.logout()
@@ -217,7 +246,7 @@ export default function Page({ params: { login } }: IPageProps){
                     <div className={styles.avatar}>
                         <Image src={accountIcon} alt='Account icon'/>
                     </div>
-                    <h2 className='subtitle'>Вероника Собачкина</h2>
+                    <h2 className='subtitle'>{(name || surname || lastName) ? `${surname} ${name} ${lastName}` : 'Имя Фамилия'}</h2>
                     <div className={styles.counter}>{count} донаций</div>
                     <Link className={cn('linkPink', !isPersonLogged && styles.displayNone)} href={`/account/${login}/settings`}>Редактировать</Link>
                     <div className={cn('linkBlue', !isPersonLogged && styles.displayNone)} onClick={logout}>Выход</div>
@@ -228,24 +257,24 @@ export default function Page({ params: { login } }: IPageProps){
                     <h2 className={styles.title}>Контактная информация</h2>
                     <div className={styles.contactContainer}>
                         <p>Город</p>
-                        <p className='semibold'>Санкт-Петербург</p>
+                        <p className='semibold'>{city ? city.city : 'Город не указан'}</p>
                     </div>
                     <div className={styles.contactContainer}>
                         <p>Почта</p>
-                        <p className='semibold'>test@mail.com</p>
+                        <p className='semibold'>{email ? email : 'Почта не указана'}</p>
                     </div>
                     <div className={styles.contactContainer}>
                         <p>Номер телефона</p>
-                        <p className='semibold'>+7-(913)-887-33-63</p>
+                        <p className='semibold'>{phone ? phone : 'Телефон не указан'}</p>
                     </div>
                     <div className={styles.socialMediaHeader}>Социальные сети</div>
                     <div className={styles.contactContainer}>
                         <p>Вконтакте</p>
-                        <p className='semibold'>vk.com/iwishyoujoy</p>
+                        <p className='semibold'>{vk ? vk : 'не указано'}</p>
                     </div>
                     <div className={styles.contactContainer}>
                         <p>Телеграм</p>
-                        <p className='semibold'>@iwishyoujoy</p>
+                        <p className='semibold'>{tg ? tg : 'не указано'}</p>
                     </div>
                 </div>
                 <div className={cn(styles.petsContainer, isAnyPets ? '' : styles.empty)}>

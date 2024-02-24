@@ -81,7 +81,7 @@ export default function Page({ params: { login } }: IPageProps) {
         if (newEndDate >= startDate) {
             setEndDate(newEndDate);
         } else {
-            toast("Конец периода не может быть раньше начала периода.")
+            toast.error("Конец периода не может быть раньше начала периода.")
         }
     };
 
@@ -103,11 +103,11 @@ export default function Page({ params: { login } }: IPageProps) {
         try {
             await updateUserInfo(userInfo).unwrap();
             console.log(userInfo);
-            // window.location.reload();
-            toast('Информация обновлена успешно!')
+            window.location.reload();
+            toast.success('Информация обновлена успешно!')
         } catch (error) {
             console.error('Ошибка обновления информации:', error);
-            toast('Ошибка обновления информации. Пожалуйста, попробуйте снова.')
+            toast.error('Ошибка обновления информации. Пожалуйста, попробуйте снова.')
         }
     };
 
