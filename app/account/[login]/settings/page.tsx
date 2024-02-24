@@ -119,7 +119,6 @@ export default function Page({ params: { login } }: IPageProps) {
         if (!isUnavailableDatesLoading && unavailableDatesInfo){
             setStartDate(unavailableDatesInfo.startDate);
             setEndDate(unavailableDatesInfo.endDate);
-            console.log(unavailableDatesInfo);
         }
     }, [unavailableDatesInfo, isUnavailableDatesLoading]);
 

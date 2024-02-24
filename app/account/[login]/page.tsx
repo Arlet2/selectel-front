@@ -20,7 +20,7 @@ interface IPageProps{
     }
 }
 
-export interface IVaccination{
+export interface IVaccinationArrayItem{
     name: string;
     date: string;
     [key: string]: string;
@@ -33,7 +33,7 @@ function Modal({onClose}: any) {
     const [breed, setBreed] = useState('');
     const [birthday, setBirthday] = useState('');
     const [weight, setWeight] = useState<number | undefined>()
-    const [vaccinations, setVaccinations] = useState<IVaccination[]>([]);
+    const [vaccinations, setVaccinations] = useState<IVaccinationArrayItem[]>([]);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
@@ -75,11 +75,9 @@ function Modal({onClose}: any) {
             if ('data' in result) {
                 const { id } = result.data;
                 idPet = id;
-                console.log(id);
             }
             vaccinations.map(async (item) => {
                 await addVaccinationMutation({id: idPet, vaccination: {name: item.name, vaccinationDate: item.date}});
-                console.log({id: idPet, vaccination: {name: item.name, vaccinationDate: item.date}});
                 toast.success('Вакцинация успешно добавлена.');
             })
             toast.success('Питомец успешно добавлен.')

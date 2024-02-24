@@ -130,6 +130,14 @@ export interface IVaccinationReturn{
   }
 }
 
+export interface IGetVaccination{
+  id: number;
+  pet: IUserPets;
+  name: string,
+  vaccinationDate: string,
+  description?: string,
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -283,6 +291,9 @@ export const api = createApi({
         }
       }
     }),
+    getVaccinations: builder.query<IGetVaccination[], number>({
+      query: (id) => `pets/${id}/vaccinations`,
+    }),
   }),
 })
 
@@ -293,7 +304,7 @@ export const {
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
   useDeleteDonorRequestMutation, useDeletePetMutation, useAddUnavailableDatesMutation, useGetUnavailableDatesQuery,
   useGetPetsForUserQuery, useGetPetsQuery, useChangePasswordMutation, useAddVaccinationMutation,
-  useAddAvatarMutation,
+  useAddAvatarMutation, useGetVaccinationsQuery
 } = api
 
 async function postData(url: string, data: object): Promise<object> {

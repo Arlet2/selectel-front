@@ -3,9 +3,8 @@ import dog from '@images/dogAvatar.png';
 import cat from '@images/catAvatar.png';
 import Image from 'next/image';
 import cn from 'classnames';
-import { useState } from 'react';
-import { IVaccination } from '@/app/account/[login]/page';
-import { IUserPets, useDeletePetMutation } from '@/app/redux/services/api';
+import { useEffect, useState } from 'react';
+import { IGetVaccination, IUserPets, IVaccination, useDeletePetMutation, useGetVaccinationsQuery } from '@/app/redux/services/api';
 import toast from 'react-hot-toast';
 
 interface IPetCardProps {
@@ -33,82 +32,75 @@ function formatAge(age: number | undefined) {
     }
 }
 
-
 function ShowMoreModal({ pet, vaccinations }: ShowMoreModalProps) {
     
-    return (<div></div>
-        // <form className={styles.modal}>
-        //     <h1>Подробнее о питомце</h1>
-        //     <div className={cn(styles.avatar, styles.avatarPet)}>
-        //         <Image src={dog} alt='Avatar icon'/>
-        //     </div>
-        //     <div className={styles.infoContainer}>
-        //         <p>Тип животного</p>
-        //         <p className='semibold'>{pet.type}</p>
-        //     </div>
-        //     <div className={styles.infoContainer}>
-        //         <p>Кличка</p>
-        //         <p className='semibold'>{pet.name}</p>
-        //     </div>
-        //     <div className={styles.infoContainer}>
-        //         <p>Порода</p>
-        //         <p className='semibold'>{pet.breed}</p>
-        //     </div>
-        //     <div className={styles.infoContainer}>
-        //         <p>Дата рождения</p>
-        //         <p className='semibold'>{pet.birthday}</p>
-        //     </div>
-        //     <div className={styles.infoContainer}>
-        //         <p>Группа крови</p>
-        //         <p className='semibold'>{pet.bloodType}</p>
-        //     </div>
-        //     <div className={styles.infoContainer}>
-        //         <p>Вес (кг)</p>
-        //         <p className='semibold'>{pet.weight}</p>
-        //     </div>
-        //     {vaccinations.length > 0 && <div className={styles.blueHeader}>Прививки</div>}
-        //     <div className={styles.vaccinationsScroll}>
-        //         {vaccinations.map((vaccination, index) => {
-        //             return (
-        //                 <div className={styles.vaccinationList} key={index}>
-        //                     <p className={styles.vaccinationNumber}>#{index+1}</p>
-        //                     <div className={styles.vaccinationItem}>
-        //                         <div className={styles.infoContainer}>
-        //                             <p>Название</p>
-        //                             <p className='semibold'>{vaccination.name}</p>
-        //                         </div>
-        //                         <div className={styles.infoContainer}>
-        //                             <p>Дата вакцинации</p>
-        //                             <p className='semibold'>{vaccination.date}</p>
-        //                         </div>
-        //                     </div>
-        //                 </div>
-        //             )
-        //         })}
-        //     </div>
-        // </form>
+    return (
+        <form className={styles.modal}>
+            <h1>Подробнее о питомце</h1>
+            <div className={cn(styles.avatar, styles.avatarPet)}>
+                <Image src={dog} alt='Avatar icon'/>
+            </div>
+            <div className={styles.infoContainer}>
+                <p>Тип животного</p>
+                <p className='semibold'>{pet.petType.type}</p>
+            </div>
+            <div className={styles.infoContainer}>
+                <p>Кличка</p>
+                <p className='semibold'>{pet.name}</p>
+            </div>
+            <div className={styles.infoContainer}>
+                <p>Порода</p>
+                <p className='semibold'>{pet.petType.breed}</p>
+            </div>
+            <div className={styles.infoContainer}>
+                <p>Дата рождения</p>
+                <p className='semibold'>{pet.birthday}</p>
+            </div>
+            <div className={styles.infoContainer}>
+                <p>Группа крови</p>
+                <p className='semibold'>{pet.bloodType.bloodType}</p>
+            </div>
+            <div className={styles.infoContainer}>
+                <p>Вес (кг)</p>
+                <p className='semibold'>{pet.weight}</p>
+            </div>
+            {vaccinations.length > 0 && <div className={styles.blueHeader}>Прививки</div>}
+            <div className={styles.vaccinationsScroll}>
+                {vaccinations.map((vaccination, index) => {
+                    return (
+                        <div className={styles.vaccinationList} key={index}>
+                            <p className={styles.vaccinationNumber}>#{index+1}</p>
+                            <div className={styles.vaccinationItem}>
+                                <div className={styles.infoContainer}>
+                                    <p>Название</p>
+                                    <p className='semibold'>{vaccination.name}</p>
+                                </div>
+                                <div className={styles.infoContainer}>
+                                    <p>Дата вакцинации</p>
+                                    <p className='semibold'>{vaccination.vaccinationDate}</p>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+        </form>
     )
 }
 
-const myVaccinations: IVaccination[] = [
-    {
-        name: 'Прививка от кори',
-        date: '2024-05-03'
-    },
-    {
-        name: 'Прививка от кори',
-        date: '2024-05-03'
-    },
-    {
-        name: 'Прививка от кори',
-        date: '2024-05-03'
-    }
-]
-
 export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) => {
-    const [ modalVisible, setModalVisible ] = useState(false);
-
+    const [ vaccinations, setVaccinations ] = useState<IGetVaccination[]>([]);
+    const [ shareModalVisible, setShareModalVisible ] = useState(false);
+    const {data: vaccinationsFromQuery, isLoading: isVaccinationsFromQueryLoading} = useGetVaccinationsQuery(pet.id);
     const [deletePet, {isLoading}] = useDeletePetMutation();
+    console.log(pet);
+
+    useEffect(() => {
+        if (!isVaccinationsFromQueryLoading && vaccinationsFromQuery){
+            setVaccinations(vaccinationsFromQuery);
+            console.log(vaccinations);
+        }
+    },[isVaccinationsFromQueryLoading, vaccinationsFromQuery]);
 
     const handleDelete = async () => {
         try {
@@ -122,8 +114,8 @@ export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) =>
 
     return (
         <div className={styles.container}>
-            {/* { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> } */}
-            {/* { modalVisible && <ShowMoreModal pet={pet} vaccinations={myVaccinations}/> } */}
+            { shareModalVisible && <div className={styles.darkness} onClick={() => setShareModalVisible(false)}/> }
+            { shareModalVisible && <ShowMoreModal pet={pet} vaccinations={vaccinations}/> }
             <div className={styles.avatar}>
                 <Image src={pet.petType.type === 'cat' ? cat : dog} alt='Pet photo'/>
             </div>
@@ -135,7 +127,7 @@ export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) =>
                 </div>
             )}
             <div className={styles.buttonContainer}>
-                <button className={cn('linkBlue', styles.button, isPersonOwner && styles.displayNone )} onClick={() => setModalVisible(true)}>Подробнее</button>
+                <button className={cn('linkBlue', styles.button, isPersonOwner && styles.displayNone )} onClick={() => setShareModalVisible(true)}>Подробнее</button>
                 <button className={cn('linkPink', styles.button, !isPersonOwner && styles.displayNone )}>Редактировать</button>
                 <button className={cn('linkBlue', styles.button, !isPersonOwner && styles.displayNone )} onClick={handleDelete}>Удалить</button>
             </div>
