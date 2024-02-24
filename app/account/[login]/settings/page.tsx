@@ -11,7 +11,7 @@ import avatarIcon from '@icons/avatar.svg';
 import dogImage from '@images/dog.png';
 import styles from './styles.module.css';
 import cn from 'classnames';
-import { IUpdateUser, useUpdateUserInfoMutation, City, District, useGetUserInfoQuery } from '@/app/redux/services/api';
+import { IUpdateUser, useUpdateUserInfoMutation, City, District, useGetUserInfoQuery, useGetUnavailableDatesQuery, useAddUnavailableDatesMutation, IUnavailableDates, useUpdateUnavailableDatesMutation } from '@/app/redux/services/api';
 import { CitySelector, DistrictSelector } from '@/app/components/Selector';
 
 interface IPageProps{
@@ -60,6 +60,10 @@ export default function Page({ params: { login } }: IPageProps) {
     const [district, setDistrict] = useState<District>();
 
     const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(login);
+    const { data: unavailableDatesInfo, isLoading: isUnavailableDatesLoading } = useGetUnavailableDatesQuery();
+    const [updateUserInfo, { isLoading }] = useUpdateUserInfoMutation();
+    const [addUnavailableDates] = useAddUnavailableDatesMutation();
+    const [updateUnavailableDates] = useUpdateUnavailableDatesMutation();
     
     useEffect(() => {
         if (!isUserInfoLoading && userInfo) {
@@ -79,6 +83,13 @@ export default function Page({ params: { login } }: IPageProps) {
         }
     }, [isUserInfoLoading, userInfo]);
 
+    useEffect(() => {
+        if (!isUnavailableDatesLoading && unavailableDatesInfo){
+            setStartDate(unavailableDatesInfo.startDate);
+            setEndDate(unavailableDatesInfo.endDate);
+        }
+    }, [unavailableDatesInfo, isUnavailableDatesLoading]);
+
     const updateEndDate = (newEndDate: string) => {
         if (newEndDate >= startDate) {
             setEndDate(newEndDate);
@@ -86,8 +97,6 @@ export default function Page({ params: { login } }: IPageProps) {
             toast.error("Конец периода не может быть раньше начала периода.")
         }
     };
-
-    const [updateUserInfo, { isLoading }] = useUpdateUserInfoMutation();
 
     const handleSave = async () => {
         const userInfo: Partial<IUpdateUser> = {
@@ -103,9 +112,26 @@ export default function Page({ params: { login } }: IPageProps) {
             vkUserName: vk,
         };
 
+        const unavailableDatesFromUser: IUnavailableDates = {
+            startDate,
+            endDate
+        }
+
         try {
             await updateUserInfo(userInfo).unwrap();
-            console.log(userInfo);
+            try {
+                if (unavailableDatesInfo){
+                    await updateUnavailableDates(unavailableDatesFromUser).unwrap();
+                }
+                else {
+                    await addUnavailableDates(unavailableDatesFromUser).unwrap();
+                }
+                toast.success('Информация дат недоступности обновлена!')
+            }
+            catch (error) {
+                console.error('Ошибка обновления дат недоступности:', error);
+                toast.error('Ошибка обновления дат недоступности. Пожалуйста, попробуйте снова.')
+            }
             window.location.reload();
             toast.success('Информация обновлена успешно!')
         } catch (error) {

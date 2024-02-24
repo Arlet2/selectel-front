@@ -103,6 +103,11 @@ export interface IUserPets {
   weight: number
 }
 
+export interface IUnavailableDates{
+  startDate: string;
+  endDate: string;
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -200,7 +205,24 @@ export const api = createApi({
         method: 'DELETE',
       })
     }),
-  }),
+    updateUnavailableDates: builder.mutation<void, IUnavailableDates>({
+      query: (body) => ({
+        url: `users/unavailable_dates/`,
+        method: 'PATCH',
+        body,
+      }),
+    }),
+    addUnavailableDates: builder.mutation<void, IUnavailableDates>({
+      query: (body) => ({
+        url: `users/unavailable_dates/`,
+        method: 'POST',
+        body,
+      })
+    }),
+    getUnavailableDates: builder.query<IUnavailableDates, void>({
+      query: () => `users/unavailable_dates/`
+    }),
+  })
 })
 
 export const {
@@ -208,7 +230,7 @@ export const {
   useAddDonorRequestMutation, useGetDonorRequestsQuery,
   useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
-  useDeleteDonorRequestMutation, useGetPetsForUserQuery, useDeletePetMutation
+  useDeleteDonorRequestMutation, useGetPetsForUserQuery, useDeletePetMutation, useAddUnavailableDatesMutation, useUpdateUnavailableDatesMutation, useGetUnavailableDatesQuery
 } = api
 
 async function postData(url: string, data: object): Promise<object> {
