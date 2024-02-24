@@ -88,6 +88,8 @@ export interface GetDonorRequest {
   pet_type_id?: number
   location_id?: number
   city?: string
+  date_before?: string
+  date_after?: string
 }
 
 export interface IUserPets {
