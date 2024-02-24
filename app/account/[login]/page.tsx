@@ -27,8 +27,8 @@ export interface IVaccinationArrayItem{
 }
 
 function Modal({onClose}: any) {
-    const [ petType, setPetType ] = useState({id: 1, type: "Кошка"});
-    const [ bloodType, setBloodType ] = useState(11);
+    const [ petType, setPetType ] = useState<any>();
+    const [ bloodType, setBloodType ] = useState<any>();
     const [name, setName] = useState('');
     const [breed, setBreed] = useState<any>();
     const [birthday, setBirthday] = useState('');
@@ -52,6 +52,9 @@ function Modal({onClose}: any) {
         }
     };
 
+    console.log("BREED ID", breed && breed.id)
+    console.log("BLOOD ID", bloodType && bloodType)
+
     const [addPetInfo, { isLoading }] = useAddPetMutation();
     const [addVaccinationMutation] = useAddVaccinationMutation();
 
@@ -59,7 +62,7 @@ function Modal({onClose}: any) {
         e.preventDefault()
 
         if (!weight) return;
-        
+
         const petInfo: IAddedPet = {
             name,
             description: "Нет описания",
@@ -68,6 +71,8 @@ function Modal({onClose}: any) {
             birthday,
             weight
         };
+
+        console.log("ADDING", petInfo)
 
         try {
             const result: any = await addPetInfo(petInfo);
@@ -116,7 +121,7 @@ function Modal({onClose}: any) {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Тип животного</label>
-                        <PetTypeSelector value={petType} onChange={(v) => setPetType(v as api.PetType)}/>
+                        <PetTypeSelector value={petType} onChange={(v) => { setPetType(v as api.PetType); setBloodType(undefined); setBreed(undefined) }}/>
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Кличка</label>

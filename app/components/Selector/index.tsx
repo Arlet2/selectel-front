@@ -77,18 +77,18 @@ export const PetTypeSelector = ({value, onChange, optional}: PetTypeSelectorProp
   }
   
   return (
-    <select className="input" value={value ? value.id : -1} onChange={(e) => {
-      if (e.target.value == "-1") {
+    <select className="input" value={value ? (value.type || value.typeName) : "null"} onChange={(e) => {
+      if (e.target.value == "null") {
         onChange(undefined)
       } else if (data) {
-        let v = data.find(v => v.id == Number(e.target.value));
+        let v = data.find(v => v.type == e.target.value || v.typeName == e.target.value);
         if (v) {
           onChange(v)
         }
       }
     }}>
-      {optional && <option value={-1}>Любой</option>}
-      {data && data.map((v, i) => <option value={v.id} key={i}>{v.type}</option>)}
+      {optional && <option value={"null"}>Любой</option>}
+      {data && data.map((v, i) => <option value={v.typeName || v.type} key={i}>{v.type}</option>)}
     </select>
   )
 }
@@ -103,7 +103,11 @@ interface BloodTypeSelectorProps {
 export const BloodTypeSelector = ({petType, value, onChange, optional}: BloodTypeSelectorProps) => {
   const { data, isLoading } = api.useGetBloodTypesQuery(petType?.type || 'Кошка');
 
-  if (data && !value && petType && !optional) onChange(data[0].id)
+  if (data && !value && petType && !optional) {
+    if (data[0].typeName == petType.type) {
+      onChange(data[0].id)
+    }
+  }
   if (!petType && value) onChange(undefined);
   
   return (
@@ -123,8 +127,12 @@ interface BreedSelectorProps {
 export const BreedTypeSelector = ({petType, value, onChange}: BreedSelectorProps) => {
   const { data, isLoading } = api.useGetBreedTypesQuery(petType && petType.type ? petType.type : 'Кошка');
 
-  if (data && !value && petType) {
-    onChange(data[1])
+  if (data && petType && (!value || value.type != petType.type)) {
+    console.log("ass my ass", data[1], petType)
+    if (data[1].type == petType.type) {
+          console.log("changed to ", data[1])
+      onChange(data[1])
+    }
   }
   
   if (!petType && value) onChange(undefined);

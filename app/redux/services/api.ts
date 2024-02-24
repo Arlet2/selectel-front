@@ -74,6 +74,7 @@ export interface IUpdateUser {
 }
 
 export interface IAddedPet{
+  id?: number,
   petTypeId: number,
   bloodTypeId: number,
   name: string,
@@ -231,6 +232,14 @@ export const api = createApi({
       }),
       invalidatesTags: ['Pet'],
     }),
+    editPet: builder.mutation<void, IAddedPet>({
+      query: (body) => ({
+        url: `pets/${body.id}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Pet'],
+    }),
     getPets: builder.query<IUserPets[], object>({
       query: (params) => ({
         url: `pets/`,
@@ -282,9 +291,6 @@ export const api = createApi({
         return {
           url: `users/avatar`,
           method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data;'
-          },
           body: bodyFormData,
           formData: true
         }
@@ -303,7 +309,7 @@ export const {
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
   useDeleteDonorRequestMutation, useDeletePetMutation, useAddUnavailableDatesMutation, useGetUnavailableDatesQuery,
   useGetPetsForUserQuery, useGetPetsQuery, useChangePasswordMutation, useAddVaccinationMutation,
-  useAddAvatarMutation, useGetVaccinationsQuery
+  useAddAvatarMutation, useGetVaccinationsQuery, useEditPetMutation
 } = api
 
 async function postData(url: string, data: object): Promise<object> {

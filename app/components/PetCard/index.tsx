@@ -3,10 +3,13 @@ import dog from '@images/dogAvatar.png';
 import cat from '@images/catAvatar.png';
 import Image from 'next/image';
 import cn from 'classnames';
+import avatarIcon from '@icons/avatar.svg';
 import { useEffect, useState } from 'react';
 import { IGetVaccination, IUserPets, IVaccination, useDeletePetMutation, useGetVaccinationsQuery } from '@/app/redux/services/api';
 import toast from 'react-hot-toast';
-import { convertDateFormat } from '@/app/utils/convertDate';
+import { convertDateFormat } from '@/app/account/[login]/page';
+import { useEditPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets, useAddVaccinationMutation, useGetUnavailableDatesQuery, IUnavailableDatesForUser, IUnavailableDates } from '@/app/redux/services/api';
+import { PetTypeSelector, BloodTypeSelector, BreedTypeSelector } from '@components/Selector';
 
 interface IPetCardProps {
     pet: IUserPets;
@@ -103,6 +106,7 @@ function ShowMoreModal({ pet, vaccinations }: ShowMoreModalProps) {
 export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) => {
     const [ vaccinations, setVaccinations ] = useState<IGetVaccination[]>([]);
     const [ shareModalVisible, setShareModalVisible ] = useState(false);
+    const [ editModalVisible, setEditModalVisible ] = useState(false);
     const {data: vaccinationsFromQuery, isLoading: isVaccinationsFromQueryLoading} = useGetVaccinationsQuery(pet.id);
     const [deletePet, {isLoading}] = useDeletePetMutation();
 
@@ -126,6 +130,8 @@ export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) =>
         <div className={styles.container}>
             { shareModalVisible && <div className={styles.darkness} onClick={() => setShareModalVisible(false)}/> }
             { shareModalVisible && <ShowMoreModal pet={pet} vaccinations={vaccinations}/> }
+            { editModalVisible && <div className={styles.darkness} onClick={() => setEditModalVisible(false)}/> }
+            { editModalVisible && <EditModal pet={pet} vaccinations={vaccinations} onClose={() => setEditModalVisible(false)}/> }
             <div className={styles.avatar}>
                 <Image src={pet.petType.type === 'cat' ? cat : dog} alt='Pet photo'/>
             </div>
@@ -138,9 +144,165 @@ export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) =>
             )}
             <div className={styles.buttonContainer}>
                 <button className={cn('linkBlue', styles.button, isPersonOwner && styles.displayNone )} onClick={() => setShareModalVisible(true)}>Подробнее</button>
-                <button className={cn('linkPink', styles.button, !isPersonOwner && styles.displayNone )}>Редактировать</button>
+                <button className={cn('linkPink', styles.button, !isPersonOwner && styles.displayNone )} onClick={() => setEditModalVisible(true)}>Редактировать</button>
                 <button className={cn('linkBlue', styles.button, !isPersonOwner && styles.displayNone )} onClick={handleDelete}>Удалить</button>
             </div>
         </div>
+    )
+}
+
+function EditModal({onClose, pet, vaccinations: vaccinationsInit}: any) {
+    const [ petType, setPetType ] = useState(pet.petType);
+    const [ bloodType, setBloodType ] = useState(pet.bloodType);
+    const [name, setName] = useState(pet.name);
+    const [breed, setBreed] = useState<any>(pet.petType);
+    const [birthday, setBirthday] = useState(pet.birthday);
+    const [weight, setWeight] = useState<number | undefined>(pet.weight)
+    const [vaccinations, setVaccinations] = useState<IVaccinationArrayItem[]>(vaccinationsInit);
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setName(e.target.value);
+    };
+    const handleBreedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setBreed(e.target.value);
+    };
+    const handleBirthdayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setBirthday(e.target.value);
+    };
+    const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value.trim().length > 0) {
+            setWeight(Number(e.target.value));
+        } else {
+            setWeight(undefined)
+        }
+    };
+
+    const [editPetInfo, { isLoading }] = useEditPetMutation();
+    const [addVaccinationMutation] = useAddVaccinationMutation();
+
+    const handleSave = async (e: any) => {
+        e.preventDefault()
+
+        if (!weight) return;
+        
+        const petInfo: IAddedPet = {
+            id: pet.id,
+            name,
+            description: "Нет описания",
+            petTypeId: breed.id,
+            bloodTypeId: bloodType.id,
+            birthday,
+            weight
+        };
+
+        console.log("NEW PET breed", breed)
+
+        try {
+            const result: any = await editPetInfo(petInfo);
+            let idPet = 1;
+            if ('data' in result) {
+                const { id } = result.data;
+                idPet = id;
+            }
+            // vaccinations.map(async (item) => {
+            //     await addVaccinationMutation({id: idPet, vaccination: {name: item.name, vaccinationDate: item.date}});
+            //     toast.success('Вакцинация успешно добавлена.');
+            // })
+            toast.success('Питомец успешно добавлен.')
+            onClose()
+        } catch (error) {
+            console.error('Ошибка добавления питомца:', error);
+            toast.error('Ошибка добавления питомца. Пожалуйста, попробуйте снова.')
+        }
+    };
+    
+    const addVaccination = () => {
+        setVaccinations([...vaccinations, { name: '', date: '' }]);
+    };
+
+    const updateVaccination = (index: number, field: string, value: string) => {
+        const newVaccinations = [...vaccinations];
+        newVaccinations[index][field] = value;
+        setVaccinations(newVaccinations);
+    };
+
+    const handleDeleteVaccination = (index: number) => {
+        const updatedVaccinations = vaccinations.filter((_, i) => i !== index);
+        setVaccinations(updatedVaccinations);
+    }
+
+    return (
+        <form className={cn(styles.modal, styles.widemodal)}onSubmit={handleSave}>
+            <h1>Редактирование питомца</h1>
+            <div className={styles.inputContainerModal}>
+                <div className={styles.leftContainerModal}>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Аватар</label>
+                        <button className={cn(styles.avatar, styles.avatarPet)}>
+                            <Image src={avatarIcon} alt='Avatar icon'/>
+                        </button>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Тип животного</label>
+                        <PetTypeSelector value={petType} onChange={(v) => setPetType(v as api.PetType)}/>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Кличка</label>
+                        <input required type="text" className="input" placeholder="Умка" value={name} onChange={handleNameChange}/>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Порода</label>
+                        <BreedTypeSelector petType={petType} value={breed} onChange={(v) => setBreed(v)}/>
+                    </div>
+                </div>
+                <div className={styles.rightContainerModal}>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Дата рождения</label>
+                        <input required type="date" className="input" value={birthday} onChange={handleBirthdayChange}/>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Группа крови</label>
+                        <BloodTypeSelector petType={petType} value={bloodType} onChange={(v) => setBloodType(v as number)}/>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <label className={styles.label}>Вес (кг)</label>
+                        <input required type="number" step="any" className="input" placeholder="0" value={weight} onChange={handleWeightChange}/>
+                    </div>
+                </div>
+            </div>
+            {vaccinations.length > 0 && <div className={styles.pinkHeader}>Прививки</div>}
+            <div className={vaccinations.length > 0 ? styles.vaccinationList : styles.displayNone}>
+                {vaccinations.map((vaccination, index) => (
+                    <div key={index} className={styles.vaccinationContainer}>
+                        <div className={styles.inputContainer}>
+                            <label className={styles.label}>Название прививки #{index + 1}</label>
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="Название прививки"
+                                value={vaccination.name}
+                                onChange={(e) => updateVaccination(index, 'name', e.target.value)}
+                            />
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <div className={styles.containerWithDelete}>
+                                <label className={styles.label}>Дата вакцинации</label>
+                                <button className={styles.deleteButton} onClick={() => handleDeleteVaccination(index)}>
+                                    <Image className={styles.deleteIcon} src={deleteIcon} alt='Delete button'/>
+                                </button>
+                            </div>
+                            <input
+                                type="date"
+                                className="input"
+                                value={vaccination.date}
+                                onChange={(e) => updateVaccination(index, 'date', e.target.value)}
+                            />
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <button className={cn("linkPink", styles.pinkLinkButton)} onClick={(e) => { e.preventDefault(); addVaccination(); }}>Добавить прививки</button>
+            <button className={cn("button", styles.modalButton)} type='submit'>Сохранить питомца</button>
+        </form>
     )
 }

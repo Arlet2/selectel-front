@@ -84,6 +84,10 @@
     z-index: 200;
 }
 
+.widemodal {
+    width: 600px;
+}
+
 .modal h1 {
     font-size: var(--font-size-l);
     font-weight: bold;
@@ -165,4 +169,122 @@
     align-items: flex-start;
     justify-content: flex-start;
     row-gap: 20px;
+}
+
+.inputContainerModal{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: self-end;
+    justify-content: center;
+    column-gap: 30px;
+}
+
+.leftContainerModal, .rightContainerModal{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    row-gap: 10px;
+}
+
+.contactInformation{
+    margin-top: 100px;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 20px;
+    width: 470px;
+}
+
+.contactContainer{
+    width: 450px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pinkLinkButton{
+    border: none;
+    margin-bottom: -15px;
+}
+
+.vaccinationContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 30px;
+}
+
+.vaccinationList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 200px;
+}
+
+.displayNone{
+    display: none;
+}
+
+.pinkHeader{
+    margin-top: 10px;
+    color: var(--blue-color);
+    align-self: center;
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-m);
+}
+
+.pinkHeaderContact{
+    font-weight: var(--font-weight-m);
+}
+
+.unavailableContainer{
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.deleteButton{
+    justify-self: flex-start;
+    border: none;
+}
+
+.deleteIcon{
+    height: 20px;
+    width: 20px;
+}
+
+.containerWithDelete{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title{
+    font-size: var(--font-size-ml);
+    font-weight: var(--font-weight-m);
+    margin-bottom: 10px;
+}
+
+.socialMediaHeader{
+    margin-top: 10px;
+    font-size: var(--font-size-l);
+    font-weight: var(--font-weight-m);
+}
+
+.avatarPet{
+    height: 100px;
+    width: 100px;
 }

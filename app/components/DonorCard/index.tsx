@@ -17,7 +17,7 @@ export const DonorCard = ({data}: any) => {
         <Image src={dogAvatar} alt='Pet icon' className={styles.avatar}/>
       </div>
       <h1 className='subtitle'>{data.name}</h1>
-      <p className={styles.city}>{data.petType.type} - Группа крови: {data.bloodType.bloodType}</p>
+      <p className={styles.city}>{data.petType.type} - Группа крови: {data.bloodType.bloodType == 'default' ? 'Не важна' : data.bloodType.bloodType}</p>
       <div className={styles.petInfo}>
         <img src={data.owner.avatar} alt='Avatar icon' className={styles.avatarPet}/>
         <div className={styles.petTextInfo}>
