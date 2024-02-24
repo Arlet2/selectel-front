@@ -15,13 +15,17 @@ export default function Applications() {
   const [ bloodType, setBloodType ] = useState<number | undefined>();
   const [city, setCity] = useState<api.City | undefined>();
   const [district, setDistrict] = useState<api.District | undefined>();
+  const [dateBefore, setDateBefore] = useState("");
+  const [dateAfter, setDateAfter] = useState("");
 
   const { data } = api.useGetDonorRequestsQuery({
     me: isMe,
     blood_type_id: bloodType ? bloodType : undefined,
     pet_type_id: petType ? petType.id : undefined,
     city: city ? city.city : undefined,
-    location_id: district ? district.id : undefined
+    location_id: district ? district.id : undefined,
+    date_before: dateBefore.trim().length > 0 ? dateBefore : "1970-01-01",
+    date_after: dateAfter.trim().length > 0 ? dateAfter : "9999-01-01",
   });
 
   return (<>
@@ -49,6 +53,14 @@ export default function Applications() {
         <div className={styles.inputContainer}>
             <label className={styles.label}>Район</label>
             <DistrictSelector optional value={district} city={city} onChange={(v) => setDistrict(v)}/>
+        </div>
+        <div className={styles.inputContainer}>
+            <label className={styles.label}>Начальная дата</label>
+            <input type="date" className="input" value={dateAfter} onChange={(e) => setDateAfter(e.target.value)}/>
+        </div>
+        <div className={styles.inputContainer}>
+            <label className={styles.label}>Конечная дата</label>
+            <input type="date" className="input" value={dateBefore} onChange={(e) => setDateBefore(e.target.value)}/>
         </div>
       </div>
       <div className={styles.grid}>
