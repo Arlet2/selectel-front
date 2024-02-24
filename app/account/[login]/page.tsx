@@ -18,34 +18,50 @@ interface IPageProps{
 }
 
 interface IPet {
-    type: 'cat' | 'dog',
-    name: string
+    type: 'cat' | 'dog';
+    name: string;
+    breed?: string;
+    age?: number;
 }
 
 const pets: IPet[] = [
     {
         type: 'cat',
-        name: 'Белла'
+        name: 'Белла',
+        breed: 'Сиамский',
+        age: 5
     },
     {
         type: 'dog',
-        name: 'Тузик'
+        name: 'Тузик',
+        breed: 'Бульдог',
+        age: 45
     },
     {
         type: 'cat',
-        name: 'Ума'
+        name: 'Ума',
+        breed: 'Сфинкс',
+        age: 1
+
     },
     {
         type: 'cat',
-        name: 'Белла'
+        name: 'Белла',
+        breed: 'Вислоухий',        
+        age: 0.5
     },
     {
         type: 'dog',
-        name: 'Тузик'
+        name: 'Тузик',
+        breed: 'Такса',
+        age: 23
+
     },
     {
         type: 'cat',
-        name: 'Ума'
+        name: 'Ума',
+        breed: 'Сфинкс',
+        age: 5
     }
 ]
 
@@ -156,6 +172,7 @@ function Modal() {
 }
 
 export default function Page({ params: { login } }: IPageProps){
+    const [ isPersonLogged, setIsPersonLogged ] = useState(false); // заменить на что-то адекватное, чтобы из списка можно было попасть в профиль донора
     const [ modalVisible, setModalVisible ] = useState(false)
     const [count, setCount] = useState(0);
     const [ isAnyPets, setIsAnyPets ] = useState(true);
@@ -175,7 +192,7 @@ export default function Page({ params: { login } }: IPageProps){
             { modalVisible && <Modal/> }
             <div className={styles.leftContainer}>
                 <h1 className='header'>
-                    Личный кабинет
+                    {isPersonLogged ? 'Личный кабинет' : 'Профиль донора'}
                 </h1>
                 <div className='divider'></div>
                 <div className={styles.userContainer}>
@@ -184,24 +201,49 @@ export default function Page({ params: { login } }: IPageProps){
                     </div>
                     <h2 className='subtitle'>Вероника Собачкина</h2>
                     <div className={styles.counter}>{count} донаций</div>
-                    <Link className='linkPink' href={`/account/${login}/settings`}>Редактировать</Link>
-                    <div className='linkBlue' onClick={logout}>Выход</div>
+                    <Link className={cn('linkPink', !isPersonLogged && styles.displayNone)} href={`/account/${login}/settings`}>Редактировать</Link>
+                    <div className={cn('linkBlue', !isPersonLogged && styles.displayNone)} onClick={logout}>Выход</div>
                 </div>
             </div>
             <div className={cn(styles.rightContainer, isAnyPets ? '' : styles.empty)}>
-            {isAnyPets ? (
-                <div className={styles.petContainer}>
-                    {pets.map((pet, key) => {
-                        return <PetCard key={key} type={pet.type} name={pet.name}/>
-                    })}
+                <div className={styles.contactInformation}>
+                    <h2 className={styles.title}>Контактная информация</h2>
+                    <div className={styles.contactContainer}>
+                        <p>Город</p>
+                        <p className='semibold'>Санкт-Петербург</p>
+                    </div>
+                    <div className={styles.contactContainer}>
+                        <p>Почта</p>
+                        <p className='semibold'>test@mail.com</p>
+                    </div>
+                    <div className={styles.contactContainer}>
+                        <p>Номер телефона</p>
+                        <p className='semibold'>+7-(913)-887-33-63</p>
+                    </div>
+                    <div className={styles.socialMediaHeader}>Социальные сети</div>
+                    <div className={styles.contactContainer}>
+                        <p>Вконтакте</p>
+                        <p className='semibold'>vk.com/iwishyoujoy</p>
+                    </div>
+                    <div className={styles.contactContainer}>
+                        <p>Телеграм</p>
+                        <p className='semibold'>@iwishyoujoy</p>
+                    </div>
                 </div>
-            ) : (
-                <div className={styles.placeholer}>У вас пока нет питомцев</div>
-            )}
-                <button className={cn('button', styles.button)} onClick={() => setModalVisible(true)}>Добавить питомца</button>
+                <div className={cn(styles.petsContainer, isAnyPets ? '' : styles.empty)}>
+                    <h2 className={styles.title}>Питомцы</h2>
+                    {isAnyPets ? (
+                        <div className={styles.petContainer}>
+                            {pets.map((pet, key) => {
+                                return <PetCard key={key} type={pet.type} name={pet.name} isPersonOwner={isPersonLogged} breed={pet.breed} age={pet.age}/>
+                            })}
+                        </div>
+                    ) : (
+                        <div className={styles.placeholer}>У вас пока нет питомцев</div>
+                    )}
+                </div>
+                <button className={cn('button', styles.button, !isPersonLogged && styles.displayNone)} onClick={() => setModalVisible(true)}>Добавить питомца</button>
             </div>
-            
-            
         </div>
     </>)
 }

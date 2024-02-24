@@ -25,6 +25,7 @@
 }
 
 .button{
+    margin-left: 190px;
     width: 260px;
     height: 52px;
 }
@@ -47,16 +48,25 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
     row-gap: 30px;
 }
 
+.petsContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 700px;
+}
+
 .petContainer{
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     column-gap: 20px;
     row-gap: 20px;
     width: 700px;
@@ -149,8 +159,23 @@
     row-gap: 10px;
 }
 
-.rightContainerModal{
-    height: 100%;
+.contactInformation{
+    margin-top: 100px;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 20px;
+    width: 470px;
+}
+
+.contactContainer{
+    width: 350px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .pinkLinkButton{
@@ -206,4 +231,16 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+}
+
+.title{
+    font-size: var(--font-size-ml);
+    font-weight: var(--font-weight-m);
+    margin-bottom: 10px;
+}
+
+.socialMediaHeader{
+    margin-top: 10px;
+    font-size: var(--font-size-l);
+    font-weight: var(--font-weight-m);
 }

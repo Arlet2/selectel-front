@@ -29,6 +29,7 @@
   --font-family: "IBM Plex Sans", Sans;
   --font-size-xl: 48px;
   --font-weight-xl: 800;
+  --font-size-ml: 36px;
   --font-size-l: 20px;
   --font-size-m: 16px;
   --font-weight-m: 600;
@@ -360,4 +361,12 @@ button {
 
 .stdropdown-tools{
   margin-top: 4px;
+}
+
+.bold{
+  font-weight: 600;
+}
+
+.semibold{
+  font-weight: 500;
 }
