@@ -310,7 +310,7 @@ export default function Page({ params: { login } }: IPageProps){
                     {pets.length > 0 ? (
                         <div className={styles.petContainer}>
                             {pets.map((pet, key) => {
-                                return <PetCard key={key} pet={pet} isPersonOwner={false}/>
+                                return <PetCard key={key} pet={pet} isPersonOwner={isPersonLogged}/>
                             })}
                         </div>
                     ) : (

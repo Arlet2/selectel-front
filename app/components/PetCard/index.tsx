@@ -33,7 +33,6 @@ function formatAge(age: number | undefined) {
 }
 
 function ShowMoreModal({ pet, vaccinations }: ShowMoreModalProps) {
-    
     return (
         <form className={styles.modal}>
             <h1>Подробнее о питомце</h1>
