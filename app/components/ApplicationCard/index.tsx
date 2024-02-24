@@ -52,7 +52,7 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
   )
 }
 
-function EditModal({data}) {
+function EditModal({data}: any) {
     const [ description, setDescription ] = useState(data.description);
     const [ vetAddress, setVetAddress ] = useState(data.vetAddress);
     const [ petType, setPetType ] = useState<api.PetType | undefined>(data.petType);
