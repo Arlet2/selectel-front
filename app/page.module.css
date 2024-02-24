@@ -1,6 +1,6 @@
 /* стили для главной страницы */
 
-.main{
+.main {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -22,7 +22,7 @@
     font-size: 60px;
 }
 
-.container{
+.container {
     margin: 50px 0;
     display: flex;
     flex-direction: column;
@@ -31,7 +31,7 @@
     row-gap: 80px;
 }
 
-.textContainer{
+.textContainer {
     width: 850px;
     display: flex;
     flex-direction: column;
@@ -40,7 +40,7 @@
     row-gap: 30px;
 }
 
-.listContainer{
+.listContainer {
     width: 800px;
     display: flex;
     flex-direction: column;
@@ -49,11 +49,11 @@
     row-gap: 15px;
 }
 
-.buttonContainer{
+.buttonContainer {
     align-self: center;
 }
 
-.button{
+.button {
     height: 52px;
     width: 350px;
 }
@@ -86,18 +86,19 @@
     margin-bottom: 16px;
 }
 
-.inputContainer{
+.inputContainer {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     row-gap: 10px;
 }
 
-.inputContainer input, .inputContainer select {
+.inputContainer input,
+.inputContainer select {
     width: 100%;
 }
 
-.label{
+.label {
     font-size: var(--font-size-m);
 }
 
@@ -105,4 +106,96 @@
     height: 52px;
     width: 350px;
     margin-top: 15px;
+}
+
+.allStepsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 1100px;
+    gap: 20px;
+}
+
+.stepContainerLower {
+    display: flex;
+    align-items: last baseline;
+    width: 500px;
+    gap: 20px;
+}
+
+.stepContainerUpper {
+    display: flex;
+    align-items: start;
+    width: 500px;
+    gap: 20px;
+}
+
+.blueNumber {
+    font-size: 200px;
+    font-weight: bold;
+    color: var(--blue-color);
+}
+
+.pinkNumber {
+    font-size: 200px;
+    line-height: 150px;
+    font-weight: bold;
+    color: var(--main-color-contrast);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+.pinkTitle {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+    color: var(--main-color-contrast);
+}
+
+.blueTitle {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+    color: var(--blue-color);
+}
+
+.description {
+    font-size: 16px;
+    font-weight: 300;
+    width: 300px;
+}
+
+.rightAlign {
+    text-align: end;
+}
+
+.selfRightAlign {
+    align-self: self-end;
+}
+
+.textDefault {
+    width: 800px;
+    font-size: 18px;
+}
+
+.subtitle {
+    margin-top: 50px;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.textAccent {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--blue-color);
+    text-align: center;
+    width: 1100px;
+    font-family: var(--font-family-contrast);
+    margin-top: 50px;
+    margin-bottom: 100px;
 }
