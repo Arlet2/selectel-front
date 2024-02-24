@@ -137,12 +137,11 @@
     display: flex;
     flex-direction: row;
     align-items: self-end;
-    justify-content: flex-end;
-    column-gap: 20px;
+    justify-content: center;
+    column-gap: 30px;
 }
 
 .leftContainerModal, .rightContainerModal{
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -160,27 +159,51 @@
 }
 
 .vaccinationContainer{
+    width: 100%;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    column-gap: 20px;
+    align-items: center;
+    justify-content: center;
+    column-gap: 30px;
 }
 
 .vaccinationList {
-    padding: 16px;
-    border: solid 1px var(--border-color);
-    border-radius: var(--border-radius);
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     row-gap: 10px;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     max-height: 200px;
 }
 
 .displayNone{
     display: none;
+}
+
+.pinkHeader{
+    margin-top: 10px;
+    color: var(--blue-color);
+    align-self: center;
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-m);
+}
+
+.deleteButton{
+    justify-self: flex-start;
+    border: none;
+}
+
+.deleteIcon{
+    height: 20px;
+    width: 20px;
+}
+
+.containerWithDelete{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }

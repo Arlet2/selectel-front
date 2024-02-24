@@ -1,7 +1,8 @@
 'use client'
 import styles from './styles.module.css';
 import avatarIcon from '@icons/avatar.svg';
-import accountIcon from '@icons/person.svg'
+import accountIcon from '@icons/person.svg';
+import deleteIcon from '@icons/delete.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -57,17 +58,21 @@ interface IVaccination{
 function Modal() {
     const [vaccinations, setVaccinations] = useState<IVaccination[]>([]);
 
-    // Функция для добавления новой группы полей для прививки
     const addVaccination = () => {
         setVaccinations([...vaccinations, { name: '', date: '' }]);
     };
 
-    // Функция для обновления данных прививки по индексу
     const updateVaccination = (index: number, field: string, value: string) => {
         const newVaccinations = [...vaccinations];
         newVaccinations[index][field] = value;
         setVaccinations(newVaccinations);
     };
+
+    const handleDeleteVaccination = (index: number) => {
+        const updatedVaccinations = vaccinations.filter((_, i) => i !== index);
+        setVaccinations(updatedVaccinations);
+    }
+
     return (
         <form className={styles.modal}>
             <h1>Добавление питомца</h1>
@@ -92,7 +97,7 @@ function Modal() {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Порода</label>
-                        <input type="number" className="input" placeholder="Самая красивая в мире"/>
+                        <input type="text" className="input" placeholder="Чихуахуа"/>
                     </div>
                 </div>
                 <div className={styles.rightContainerModal}>
@@ -113,6 +118,7 @@ function Modal() {
                     </div>
                 </div>
             </div>
+            {vaccinations.length > 0 && <div className={styles.pinkHeader}>Прививки</div>}
             <div className={vaccinations.length > 0 ? styles.vaccinationList : styles.displayNone}>
                 {vaccinations.map((vaccination, index) => (
                     <div key={index} className={styles.vaccinationContainer}>
@@ -127,7 +133,12 @@ function Modal() {
                             />
                         </div>
                         <div className={styles.inputContainer}>
-                            <label className={styles.label}>Дата вакцинации</label>
+                            <div className={styles.containerWithDelete}>
+                                <label className={styles.label}>Дата вакцинации</label>
+                                <button className={styles.deleteButton} onClick={() => handleDeleteVaccination(index)}>
+                                    <Image className={styles.deleteIcon} src={deleteIcon} alt='Delete button'/>
+                                </button>
+                            </div>
                             <input
                                 type="date"
                                 className="input"
