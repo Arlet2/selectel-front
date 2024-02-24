@@ -12,6 +12,7 @@ interface ApplicationCardProps {
 
 export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
   const [ modalVisible, setModalVisible ] = useState(false)
+  const [ respondModalVisible, setRespondModalVisible ] = useState(false)
   const [ deleteDonorRequest ] = api.useDeleteDonorRequestMutation()
 
   function handleDelete() {
@@ -22,6 +23,8 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
     <div className={styles.card}>
       { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> }
       { modalVisible && <EditModal data={data}/> }
+      { respondModalVisible && <div className={styles.darkness} onClick={() => setRespondModal(false)}/> }
+      { respondModalVisible && <RespondModal data={data}/> }
       <div className={styles.row}>
         <div className={styles.label}>Тип животного</div>
         <div className={styles.value}>{data.petType.type}</div>
@@ -52,7 +55,7 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
       </div>
       {isMe && <div className={cn("linkBlue", styles.button)} onClick={() => setModalVisible(true)}>Редактировать</div>}
       {isMe && <div className={cn("linkPink", styles.button)} onClick={() => handleDelete()}>Удалить</div>}
-      {!isMe && <div className={cn("linkBlue", styles.button)}>Откликнуться</div>}
+      {!isMe && <div className={cn("linkBlue", styles.button)} onClick={() => setRespondModalVisible(true)}>Откликнуться</div>}
     </div> 
   )
 }
@@ -117,3 +120,16 @@ function EditModal({data}: any) {
         </form>
     )
 }
+
+
+function RespondModal({data}: any) {
+    return (
+        <div className={styles.modal}>
+            <h1>Откликнуться на заявку</h1>
+            хаю хай с вами ивангай
+            <button className={cn("button", styles.modalButton)} type='submit'>ОК</button>
+        </div>
+    )
+}
+
+

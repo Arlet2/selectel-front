@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { CitySelector, DistrictSelector, PetTypeSelector, BloodTypeSelector } from '@components/Selector';
 import * as api from '@/app/redux/services/api';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 function Modal() {
     const router = useRouter();
@@ -23,16 +24,20 @@ function Modal() {
 
         if (!petType || !bloodType) return;
 
-        addDonorRequest({
-            description,
-            vetAddress,
-            petTypeID: petType.id,
-            bloodTypeID: bloodType,
-            bloodAmountMl,
-            availableUntil
-        })
+        try {
+            addDonorRequest({
+                description,
+                vetAddress,
+                petTypeID: petType.id,
+                bloodTypeID: bloodType.id,
+                bloodAmountMl,
+                availableUntil
+            })
 
-        router.push(`/applications`);
+            router.push(`/applications`);
+        } catch (e) {
+            toast.error(e as string);
+        }
     }
 
     return (
