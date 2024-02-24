@@ -8,7 +8,7 @@ import * as api from '@/app/redux/services/api';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-function Modal() {
+function Modal({onClose}: any) {
     const router = useRouter();
     const [ description, setDescription ] = useState("");
     const [ vetAddress, setVetAddress ] = useState("");
@@ -35,6 +35,7 @@ function Modal() {
             })
 
             router.push(`/applications`);
+            onClose()
         } catch (e) {
             toast.error(e as string);
         }
@@ -85,7 +86,7 @@ export default function Page() {
         <title>Поиск донора - petdonor.ru</title>
         <div className={styles.container}>
             { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> }
-            { modalVisible && <Modal/> }
+            { modalVisible && <Modal onClose={() => setModalVisible(false)}/> }
             <div className={styles.textContainer}>
                 <h1 className='header'>Поиск донора</h1>
                 <div className='divider'></div>

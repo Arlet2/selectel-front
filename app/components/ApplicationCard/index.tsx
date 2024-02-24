@@ -22,7 +22,7 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
   return (
     <div className={styles.card}>
       { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> }
-      { modalVisible && <EditModal data={data}/> }
+      { modalVisible && <EditModal data={data} onClose={() => setModalVisible(false)}/> }
       { respondModalVisible && <div className={styles.darkness} onClick={() => setRespondModalVisible(false)}/> }
       { respondModalVisible && <RespondModal onClose={() => setRespondModalVisible(false)} data={data}/> }
       <div className={styles.row}>
@@ -61,7 +61,7 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
   )
 }
 
-function EditModal({data}: any) {
+function EditModal({data, onClose}: any) {
     const [ description, setDescription ] = useState(data.description);
     const [ vetAddress, setVetAddress ] = useState(data.vetAddress);
     const [ petType, setPetType ] = useState<api.PetType | undefined>(data.petType);
@@ -86,6 +86,7 @@ function EditModal({data}: any) {
               bloodAmountMl,
               availableUntil
           })
+          onClose()
         })()
     }
 

@@ -15,8 +15,8 @@ export default function Applications() {
   const [district, setDistrict] = useState<api.District | undefined>();
 
   const { data } = api.useGetPetsQuery({
-    bloodTypeId: bloodType ? bloodType : undefined,
-    petTypeId: petType ? petType.id : undefined,
+    bloodTypeId: bloodType ? bloodType.id : undefined,
+    petType: petType ? petType.type : undefined,
     city: city ? city.city : undefined,
     locationId: district ? district.id : undefined,
   })

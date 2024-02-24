@@ -147,7 +147,7 @@ export const BloodTypeSelector = ({petType, value, onChange, optional}: BloodTyp
   
   return (
     <select className="input" value={value ? value.id : -1} onChange={(e) => {
-      if (e.target.value == "-1") {
+      if (e.target.value == "null") {
         onChange(undefined)
       } else if (data) {
         let v = data.find(v => v.id == Number(e.target.value));
@@ -157,7 +157,7 @@ export const BloodTypeSelector = ({petType, value, onChange, optional}: BloodTyp
       }
     }}>
       {optional && <option value={"null"}>Любой</option>}
-      {data && data.map((v, i) => <option value={v.id} key={i}>{v.bloodType}</option>)}
+      {data && data.map((v, i) => <option value={v.id} key={i}>{v.bloodType == 'default' ? 'Не важна' : v.bloodType}</option>)}
     </select>
   )
 }
