@@ -10,6 +10,7 @@ import cn from 'classnames';
 import { PetCard } from '@/app/components/PetCard';
 import * as api from '@/app/redux/services/api';
 import { useRouter } from 'next/navigation';
+import { PetTypeSelector, BloodTypeSelector } from '@components/Selector';
 
 interface IPageProps{
     params: {
@@ -72,6 +73,9 @@ interface IVaccination{
 }
 
 function Modal() {
+    const [ petType, setPetType ] = useState("Кошка");
+    const [ bloodType, setBloodType ] = useState(0);
+
     const [vaccinations, setVaccinations] = useState<IVaccination[]>([]);
 
     const addVaccination = () => {
@@ -102,10 +106,7 @@ function Modal() {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Тип животного</label>
-                        <select className="input">
-                            <option>Кошка</option>
-                            <option>Собака</option>
-                        </select>
+                        <PetTypeSelector value={petType} onChange={(v) => setPetType(v)}/>
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Кличка</label>
@@ -123,10 +124,7 @@ function Modal() {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Группа крови</label>
-                        <select className="input">
-                            <option>1+</option>
-                            <option>2-</option>
-                        </select>
+                        <BloodTypeSelector petType={petType} value={bloodType} onChange={(v) => setBloodType(v)}/>
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Вес (кг)</label>
