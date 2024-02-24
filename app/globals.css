@@ -173,8 +173,8 @@ button {
   border: var(--border);
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  justify-self: center;
+  align-items: center;
+  justify-content: flex-start;
   padding: 5px 15px;
 }
 
