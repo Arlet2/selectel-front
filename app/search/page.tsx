@@ -14,7 +14,7 @@ function Modal() {
     const [ vetAddress, setVetAddress ] = useState("");
     const [ petType, setPetType ] = useState<api.PetType | undefined>();
     const [ bloodType, setBloodType ] = useState<number | undefined>();
-    const [ bloodAmountMl, setBloodAmountMl ] = useState(0);
+    const [ bloodAmountMl, setBloodAmountMl ] = useState<number | undefined>();
     const [ availableUntil, setAvailableUntil ] = useState("");
 
     const [ addDonorRequest, result ] = api.useAddDonorRequestMutation()
@@ -22,7 +22,7 @@ function Modal() {
     function submit(e: any) {
         e.preventDefault()
 
-        if (!petType || !bloodType) return;
+        if (!petType || !bloodType || !bloodAmountMl) return;
 
         try {
             addDonorRequest({
@@ -61,7 +61,13 @@ function Modal() {
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Количество крови (мл)</label>
-                <input required type="number" className="input" placeholder="0" value={bloodAmountMl} onChange={e => setBloodAmountMl(Number(e.target.value)) }/>
+                <input required type="number" className="input" placeholder="0" value={bloodAmountMl} onChange={e => {
+                    if (e.target.value.trim().length > 0) {
+                        setBloodAmountMl(Number(e.target.value))
+                    } else {
+                        setBloodAmountMl(undefined) 
+                    }
+                }}/>
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Дата окончания поиска</label>
