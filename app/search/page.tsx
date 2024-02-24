@@ -11,8 +11,8 @@ function Modal() {
     const router = useRouter();
     const [ description, setDescription ] = useState("");
     const [ vetAddress, setVetAddress ] = useState("");
-    const [ petType, setPetType ] = useState();
-    const [ bloodType, setBloodType ] = useState();
+    const [ petType, setPetType ] = useState<api.PetType | undefined>();
+    const [ bloodType, setBloodType ] = useState<number | undefined>();
     const [ bloodAmountMl, setBloodAmountMl ] = useState(0);
     const [ availableUntil, setAvailableUntil ] = useState("");
 
@@ -20,6 +20,8 @@ function Modal() {
 
     function submit(e: any) {
         e.preventDefault()
+
+        if (!petType || !bloodType) return;
 
         addDonorRequest({
             description,

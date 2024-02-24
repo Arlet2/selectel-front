@@ -1,15 +1,19 @@
 import * as api from '@/app/redux/services/api';
 
 interface CitySelectorProps {
-  value: api.City
+  value?: api.City
   onChange: (v: api.City) => void
 }
 
 export const CitySelector = ({value, onChange}: CitySelectorProps) => {
   const { data, isLoading } = api.useGetCitiesQuery();
+
+  if (data && !value) {
+    onChange(data[0])
+  }
   
   return (
-    <select className="input" value={value.id} onChange={(e) => {
+    <select className="input" value={value && value.id} onChange={(e) => {
       if (data) {
         let v = data.find(v => v.id == Number(e.target.value));
         if (v) {
@@ -23,16 +27,20 @@ export const CitySelector = ({value, onChange}: CitySelectorProps) => {
 }
 
 interface DistrictSelectorProps {
-  city: api.City
-  value: api.District
+  city?: api.City
+  value?: api.District
   onChange: (v: api.District) => void
 }
 
 export const DistrictSelector = ({city, value, onChange}: DistrictSelectorProps) => {
-  const { data, isLoading } = api.useGetDistrictsQuery(city.city);
+  const { data, isLoading } = api.useGetDistrictsQuery(city ? city.city : 'Санкт-Петербург');
+
+  if (data && !value) {
+    onChange(data[0])
+  }
 
   return (
-    <select className="input" value={value.id} onChange={(e) => {
+    <select className="input" value={value && value.id} onChange={(e) => {
       if (data) {
         let v = data.find(v => v.id == Number(e.target.value));
         if (v) {
@@ -46,7 +54,7 @@ export const DistrictSelector = ({city, value, onChange}: DistrictSelectorProps)
 }
 
 interface PetTypeSelectorProps {
-  value: api.PetType
+  value?: api.PetType
   onChange: (v: api.PetType) => void
 }
 
@@ -72,14 +80,13 @@ export const PetTypeSelector = ({value, onChange}: PetTypeSelectorProps) => {
 }
 
 interface BloodTypeSelectorProps {
-  petType: api.PetType
-  value: number
+  petType?: api.PetType
+  value?: number
   onChange: (v: number) => void
 }
 
 export const BloodTypeSelector = ({petType, value, onChange}: BloodTypeSelectorProps) => {
-  let pettype = petType || 'Кошка';
-  const { data, isLoading } = api.useGetBloodTypesQuery(pettype.type);
+  const { data, isLoading } = api.useGetBloodTypesQuery(petType ? petType.type : 'Кошка');
 
   if (data && !value) {
     onChange(data[0].id)
