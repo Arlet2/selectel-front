@@ -117,7 +117,7 @@ export const BloodTypeSelector = ({petType, value, onChange, optional}: BloodTyp
 interface BreedSelectorProps {
   petType?: Partial<api.PetType>
   value?: api.PetType
-  onChange: (v: api.PetType) => void
+  onChange: (v: api.PetType | undefined) => void
 }
 
 export const BreedTypeSelector = ({petType, value, onChange}: BreedSelectorProps) => {
