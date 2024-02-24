@@ -155,7 +155,7 @@ export const api = createApi({
           body,
         }),
       }),
-    addPet: builder.mutation<void, IPet>({
+    addPet: builder.mutation<void, IAddedPet>({
       query: (body) => ({
         url: `users/`,
         method: 'POST',
