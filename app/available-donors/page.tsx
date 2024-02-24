@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Applications() {
   const [ petType, setPetType ] = useState<api.PetType | undefined>();
-  const [ bloodType, setBloodType ] = useState<number | undefined>();
+  const [ bloodType, setBloodType ] = useState<any>();
   const [city, setCity] = useState<api.City | undefined>();
   const [district, setDistrict] = useState<api.District | undefined>();
 
@@ -33,7 +33,7 @@ export default function Applications() {
         </div>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Группа крови</label>
-            <BloodTypeSelector optional petType={petType} value={bloodType} onChange={(v) => setBloodType(v)}/>
+            <BloodTypeSelector optional petType={petType} value={bloodType as any} onChange={(v: any) => setBloodType(v)}/>
         </div>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Город</label>

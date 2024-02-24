@@ -5,10 +5,10 @@ import Image from 'next/image';
 import cn from 'classnames';
 import avatarIcon from '@icons/avatar.svg';
 import { useEffect, useState } from 'react';
-import { IGetVaccination, IUserPets, IVaccination, useDeletePetMutation, useGetVaccinationsQuery } from '@/app/redux/services/api';
+import { IGetVaccination, IVaccination, useDeletePetMutation, useGetVaccinationsQuery } from '@/app/redux/services/api';
 import toast from 'react-hot-toast';
-import { convertDateFormat } from '@/app/account/[login]/page';
-import { useEditPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets, useAddVaccinationMutation, useGetUnavailableDatesQuery, IUnavailableDatesForUser, IUnavailableDates } from '@/app/redux/services/api';
+import { convertDateFormat } from '@/app/utils/convertDate';
+import { useEditPetMutation, IAddedPet, useGetUserInfoQuery, useGetPetsForUserQuery, IUserPets, useAddVaccinationMutation, useGetUnavailableDatesQuery, IUnavailableDates } from '@/app/redux/services/api';
 import { PetTypeSelector, BloodTypeSelector, BreedTypeSelector } from '@components/Selector';
 
 interface IPetCardProps {
@@ -158,7 +158,7 @@ function EditModal({onClose, pet, vaccinations: vaccinationsInit}: any) {
     const [breed, setBreed] = useState<any>(pet.petType);
     const [birthday, setBirthday] = useState(pet.birthday);
     const [weight, setWeight] = useState<number | undefined>(pet.weight)
-    const [vaccinations, setVaccinations] = useState<IVaccinationArrayItem[]>(vaccinationsInit);
+    const [vaccinations, setVaccinations] = useState<any>(vaccinationsInit);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
@@ -227,7 +227,7 @@ function EditModal({onClose, pet, vaccinations: vaccinationsInit}: any) {
     };
 
     const handleDeleteVaccination = (index: number) => {
-        const updatedVaccinations = vaccinations.filter((_, i) => i !== index);
+        const updatedVaccinations = vaccinations.filter((_: any, i: any) => i !== index);
         setVaccinations(updatedVaccinations);
     }
 
@@ -244,7 +244,7 @@ function EditModal({onClose, pet, vaccinations: vaccinationsInit}: any) {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Тип животного</label>
-                        <PetTypeSelector value={petType} onChange={(v) => {setPetType(v as api.PetType); setBloodType(undefined); setBreed(undefined)}}/>
+                        <PetTypeSelector value={petType} onChange={(v) => {setPetType(v as any); setBloodType(undefined); setBreed(undefined)}}/>
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Кличка</label>
@@ -262,7 +262,7 @@ function EditModal({onClose, pet, vaccinations: vaccinationsInit}: any) {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Группа крови</label>
-                        <BloodTypeSelector petType={petType} value={bloodType} onChange={(v) => setBloodType(v as number)}/>
+                        <BloodTypeSelector petType={petType} value={bloodType} onChange={(v: any) => setBloodType(v as number)}/>
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Вес (кг)</label>

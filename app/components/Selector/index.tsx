@@ -77,18 +77,18 @@ export const PetTypeSelector = ({value, onChange, optional}: PetTypeSelectorProp
   }
   
   return (
-    <select className="input" value={value ? (value.type || value.typeName) : "null"} onChange={(e) => {
+    <select className="input" value={value ? (value.type || (value as any).typeName) : "null"} onChange={(e) => {
       if (e.target.value == "null") {
         onChange(undefined)
       } else if (data) {
-        let v = data.find(v => v.type == e.target.value || v.typeName == e.target.value);
+        let v = data.find(v => v.type == e.target.value || (v as any).typeName == e.target.value);
         if (v) {
           onChange(v)
         }
       }
     }}>
       {optional && <option value={"null"}>Любой</option>}
-      {data && data.map((v, i) => <option value={v.typeName || v.type} key={i}>{v.type}</option>)}
+      {data && data.map((v, i) => <option value={(v as any).typeName || v.type} key={i}>{v.type}</option>)}
     </select>
   )
 }
@@ -133,11 +133,11 @@ interface BloodTypeSelectorProps {
 // }
 
 
-export const BloodTypeSelector = ({petType, value, onChange, optional}: BloodSelectorProps) => {
+export const BloodTypeSelector = ({petType, value, onChange, optional}: BloodTypeSelectorProps) => {
   const { data, isLoading } = api.useGetBloodTypesQuery(petType && petType.type ? petType.type : 'Кошка');
 
-  if (data && petType && !optional && (!value || value.typeName != petType.type)) {
-    if (data[0].typeName == petType.type) {
+  if (data && petType && !optional && (!value || (value as any).typeName != petType.type)) {
+    if ((data[0] as any).typeName == petType.type) {
         console.log("FUCKING ", data[0]);
       onChange(data[0])
     }

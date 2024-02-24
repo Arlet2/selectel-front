@@ -65,7 +65,7 @@ function EditModal({data}: any) {
     const [ description, setDescription ] = useState(data.description);
     const [ vetAddress, setVetAddress ] = useState(data.vetAddress);
     const [ petType, setPetType ] = useState<api.PetType | undefined>(data.petType);
-    const [ bloodType, setBloodType ] = useState<number | undefined>(data.bloodType);
+    const [ bloodType, setBloodType ] = useState<any>(data.bloodType);
     const [ bloodAmountMl, setBloodAmountMl ] = useState(data.bloodAmountMl);
     const [ availableUntil, setAvailableUntil ] = useState(data.availableUntil);
 
@@ -102,7 +102,7 @@ function EditModal({data}: any) {
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Группа крови</label>
-                <BloodTypeSelector petType={petType} value={bloodType} onChange={(v) => setBloodType(v)}/>
+                <BloodTypeSelector petType={petType} value={bloodType} onChange={(v: any) => setBloodType(v)}/>
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Адрес вет. клиники</label>

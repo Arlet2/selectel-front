@@ -13,7 +13,7 @@ function Modal() {
     const [ description, setDescription ] = useState("");
     const [ vetAddress, setVetAddress ] = useState("");
     const [ petType, setPetType ] = useState<api.PetType | undefined>();
-    const [ bloodType, setBloodType ] = useState<number | undefined>();
+    const [ bloodType, setBloodType ] = useState<any | undefined>();
     const [ bloodAmountMl, setBloodAmountMl ] = useState<number | undefined>();
     const [ availableUntil, setAvailableUntil ] = useState("");
 
@@ -29,7 +29,7 @@ function Modal() {
                 description,
                 vetAddress,
                 petTypeID: petType.id,
-                bloodTypeID: bloodType,
+                bloodTypeID: bloodType.id,
                 bloodAmountMl,
                 availableUntil
             })

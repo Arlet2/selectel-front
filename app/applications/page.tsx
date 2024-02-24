@@ -12,7 +12,7 @@ export default function Applications() {
   const [ isMe, setIsMe ] = useState(true)
 
   const [ petType, setPetType ] = useState<api.PetType | undefined>();
-  const [ bloodType, setBloodType ] = useState<number | undefined>();
+  const [ bloodType, setBloodType ] = useState<any | undefined>();
   const [city, setCity] = useState<api.City | undefined>();
   const [district, setDistrict] = useState<api.District | undefined>();
   const [dateBefore, setDateBefore] = useState("");
@@ -20,7 +20,7 @@ export default function Applications() {
 
   const { data } = api.useGetDonorRequestsQuery({
     me: isMe,
-    blood_type_id: bloodType ? bloodType : undefined,
+    blood_type_id: bloodType ? bloodType.id : undefined,
     pet_type_id: petType ? petType.id : undefined,
     city: city ? city.city : undefined,
     location_id: district ? district.id : undefined,
@@ -44,7 +44,7 @@ export default function Applications() {
         </div>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Группа крови</label>
-            <BloodTypeSelector optional petType={petType} value={bloodType} onChange={(v) => setBloodType(v)}/>
+            <BloodTypeSelector optional petType={petType} value={bloodType as any} onChange={(v: any) => setBloodType(v)}/>
         </div>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Город</label>

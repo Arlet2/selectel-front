@@ -139,7 +139,7 @@ function Modal({onClose}: any) {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Группа крови</label>
-                        <BloodTypeSelector petType={petType} value={bloodType} onChange={(v) => setBloodType(v as number)}/>
+                        <BloodTypeSelector petType={petType} value={bloodType} onChange={(v: any) => setBloodType(v as number)}/>
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Вес (кг)</label>
