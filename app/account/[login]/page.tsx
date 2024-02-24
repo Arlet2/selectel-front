@@ -249,7 +249,7 @@ export default function Page({ params: { login } }: IPageProps){
                 <div className='divider'></div>
                 <div className={styles.userContainer}>
                     <div className={styles.avatar}>
-                        <Image className={styles.avatarIcon} src={accountIcon} alt='Account icon'/>
+                        <img className={styles.avatarIcon} src={userInfo && userInfo.avatar} alt='Account icon'/>
                     </div>
                     <h2 className='subtitle'>{fullName}</h2>
                     <div className={styles.counter}>{count} донаций</div>

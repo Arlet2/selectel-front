@@ -85,6 +85,7 @@ export default function Page({ params: { login } }: IPageProps) {
     const [tg, setTg] = useState('');
     const [city, setCity] = useState<City>();
     const [district, setDistrict] = useState<District>();
+    const [avatarSrc, setAvatarSrc] = useState<any>();
 
     const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery(login);
     const { data: unavailableDatesInfo, isLoading: isUnavailableDatesLoading } = useGetUnavailableDatesQuery();
@@ -106,6 +107,7 @@ export default function Page({ params: { login } }: IPageProps) {
             setShowEmail(userInfo.emailVisibility);
             setShowPhone(userInfo.phoneVisibility);
             setEmail(userInfo.email);
+            setAvatarSrc(userInfo.avatar);
             if (userInfo.location) {
                 setCity({ id: userInfo.location.id, city: userInfo.location.city })
                 setDistrict(userInfo.location)
@@ -192,6 +194,14 @@ export default function Page({ params: { login } }: IPageProps) {
         setTg(e.target.value);
     };
 
+    function onImageChange(e: any) {
+        let reader = new FileReader();
+        reader.onload = (ee: any) => {
+            setAvatarSrc(ee.target.result);
+        }
+        reader.readAsDataURL(e.target.files[0]);
+    }
+
     return (<>
         <title>Настройки профиля - petdonor.ru</title>
         <div className={styles.container}>
@@ -239,9 +249,10 @@ export default function Page({ params: { login } }: IPageProps) {
                             <label className={styles.label}>Аватар</label>
                             <label htmlFor={avatarId}>
                                 <button className={styles.avatar}>
-                                    <Image src={avatarIcon} alt='Avatar icon'/>
+                                    {!avatarSrc && <Image src={avatarIcon} alt='Avatar icon'/>}
+                                    {avatarSrc && <img src={avatarSrc}/>}
                                 </button>
-                                <input className={styles.fileInput} type="file" id={avatarId} accept=".jpg, .jpeg, .png" ref={imageRef} />
+                                <input className={styles.fileInput} type="file" id={avatarId} accept=".jpg, .jpeg, .png" ref={imageRef} onChange={onImageChange} />
                             </label>
                         </div>
                     </div>
