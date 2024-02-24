@@ -195,8 +195,6 @@ function EditModal({onClose, pet, vaccinations: vaccinationsInit}: any) {
             weight
         };
 
-        console.log("NEW PET breed", breed)
-
         try {
             const result: any = await editPetInfo(petInfo);
             let idPet = 1;

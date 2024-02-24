@@ -105,12 +105,9 @@ interface BloodTypeSelectorProps {
 
 //   // if (data && !value && petType && !optional) {
 //   //   if (data[0].typeName == petType.type) {
-//   //     console.log("SUCK MY DICK", data[0])
 //   //     onChange(data[0].id)
 //   //   }
 //   // }
-
-//   console.log("suck my dick", value, petType)
 
 //   // if (data && petType && !optional && (!value || value.type != petType.type)) {
 //   //   if (data[1].type == petType.type) {
@@ -138,7 +135,6 @@ export const BloodTypeSelector = ({petType, value, onChange, optional}: BloodTyp
 
   if (data && petType && !optional && (!value || (value as any).typeName != petType.type)) {
     if ((data[0] as any).typeName == petType.type) {
-        console.log("FUCKING ", data[0]);
       onChange(data[0])
     }
   }

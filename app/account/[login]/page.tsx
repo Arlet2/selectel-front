@@ -52,9 +52,6 @@ function Modal({onClose}: any) {
         }
     };
 
-    console.log("BREED ID", breed && breed.id)
-    console.log("BLOOD ID", bloodType && bloodType)
-
     const [addPetInfo, { isLoading }] = useAddPetMutation();
     const [addVaccinationMutation] = useAddVaccinationMutation();
 
@@ -71,8 +68,6 @@ function Modal({onClose}: any) {
             birthday,
             weight
         };
-
-        console.log("ADDING", petInfo)
 
         try {
             const result: any = await addPetInfo(petInfo);
