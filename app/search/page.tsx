@@ -3,17 +3,19 @@
 import { useState } from "react";
 import styles from './styles.module.css';
 import cn from 'classnames';
+import { CitySelector, DistrictSelector, PetTypeSelector } from '@components/Selector';
 
 function Modal() {
+    const [ petType, setPetType ] = useState("Санкт-Петербург");
+    const [ city, setCity ] = useState("Санкт-Петербург");
+    const [ district, setDistrict ] = useState(0);
+
     return (
         <form className={styles.modal}>
             <h1>Данные для поиска</h1>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Тип животного</label>
-                <select className="input">
-                    <option>Кошка</option>
-                    <option>Собака</option>
-                </select>
+                <PetTypeSelector value={petType} onChange={(v) => setPetType(v)}/>
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Группа крови</label>
@@ -24,17 +26,11 @@ function Modal() {
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Город</label>
-                <select className="input">
-                    <option>Санкт-Петербург</option>
-                    <option>Москва</option>
-                </select>
+                <CitySelector value={city} onChange={(v) => setCity(v)}/>
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Район</label>
-                <select className="input">
-                    <option>Шушары</option>
-                    <option>Нижний Тагил</option>
-                </select>
+                <DistrictSelector city={city} value={district} onChange={(v) => setDistrict(v)}/>
             </div>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Количество крови (мл)</label>

@@ -10,6 +10,11 @@ interface ISomeType {
     name: string;
 }
 
+interface District {
+  id: number;
+  district: string;
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -26,8 +31,17 @@ export const api = createApi({
   }),
   endpoints: (builder) => ({
     /* в дженерике первым аргументом передается тип, который мы получаем, вторым аргументом - тип, который передается в кверю*/
-    getSomethingByName: builder.query<string, string>({
-      query: (name) => `something/${name}`,
+    getCities: builder.query<string[], void>({
+      query: () => `location/cities`,
+    }),
+    getDistricts: builder.query<District[], string>({
+      query: (city) => ({
+        url: `location/districts`,
+        params: { city }
+      })
+    }),
+    getPetTypes: builder.query<string[], void>({
+      query: () => `pets/types`,
     }),
     addSomething: builder.mutation<ISomeType, Partial<ISomeType>>({
         query: (body) => ({
@@ -38,6 +52,9 @@ export const api = createApi({
       }),
   }),
 })
+
+/* хуки, которые потом используем в компонентах, генерируются автоматически */
+export const { useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery } = api
 
 async function postData(url: string, data: object): Promise<object> {
   let headers: Record<string, string> = {
@@ -70,6 +87,3 @@ export async function login(credentials: ILoginCredentials): Promise<IApiToken> 
 export async function logout(): Promise<void> {
   await postData("auth/logout", {}) as IApiToken;
 }
-
-/* хуки, которые потом используем в компонентах, генерируются автоматически */
-export const { useGetSomethingByNameQuery } = api
