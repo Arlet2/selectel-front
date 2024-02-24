@@ -91,6 +91,7 @@ export default function Page({ params: { login } }: IPageProps) {
 
     const handleSave = async () => {
         const userInfo: Partial<IUpdateUser> = {
+            email,
             phone,
             surname,
             name,
@@ -125,6 +126,9 @@ export default function Page({ params: { login } }: IPageProps) {
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPhone(e.target.value);
     };
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+    };
     const handleVkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setVk(e.target.value);
     };
@@ -148,7 +152,7 @@ export default function Page({ params: { login } }: IPageProps) {
                     <div className={styles.topContainer}>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Почта</label>
-                            <input className='input' type='email' placeholder='mymail@mail.ru' value={email} disabled/>
+                            <input className='input' type='email' placeholder='mymail@mail.ru' value={email} onChange={handleEmailChange}/>
                         </div>
                         <div className={styles.inputContainer}>
                             <label className={styles.label}>Номер телефона</label>

@@ -61,6 +61,7 @@ export interface IUser {
 }
 
 export interface IUpdateUser {
+  email: string;
   phone: string;
   surname: string;
   name: string;
@@ -86,7 +87,7 @@ export interface GetDonorRequest {
   blood_type_id?: number
   pet_type_id?: number
   location_id?: number
-  city?: text
+  city?: string
 }
 
 export interface IUserPets {
