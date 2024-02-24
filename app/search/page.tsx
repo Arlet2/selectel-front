@@ -6,10 +6,10 @@ import cn from 'classnames';
 import { CitySelector, DistrictSelector, PetTypeSelector, BloodTypeSelector } from '@components/Selector';
 
 function Modal() {
-    const [ petType, setPetType ] = useState("Кошка");
+    const [ petType, setPetType ] = useState({id: 0, type: "Кошка"});
     const [ bloodType, setBloodType ] = useState(0);
 
-    const [ city, setCity ] = useState("Санкт-Петербург");
+    const [ city, setCity ] = useState({id: 0, city: "Санкт-Петербург"});
     const [ district, setDistrict ] = useState(0);
 
     return (

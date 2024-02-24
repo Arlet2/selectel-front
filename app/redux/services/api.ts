@@ -11,9 +11,19 @@ interface ISomeType {
     name: string;
 }
 
+interface City {
+  id: number;
+  city: string;
+}
+
 interface District {
   id: number;
   district: string;
+}
+
+interface PetType {
+  id: number;
+  type: string;
 }
 
 interface BloodType {
@@ -37,7 +47,7 @@ export const api = createApi({
   }),
   endpoints: (builder) => ({
     /* в дженерике первым аргументом передается тип, который мы получаем, вторым аргументом - тип, который передается в кверю*/
-    getCities: builder.query<string[], void>({
+    getCities: builder.query<City[], void>({
       query: () => `location/cities`,
     }),
     getDistricts: builder.query<District[], string>({
@@ -46,7 +56,7 @@ export const api = createApi({
         params: { city }
       })
     }),
-    getPetTypes: builder.query<string[], void>({
+    getPetTypes: builder.query<PetType[], void>({
       query: () => `pets/types`,
     }),
     getBloodTypes: builder.query<BloodType[], string>({

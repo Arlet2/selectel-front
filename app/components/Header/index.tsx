@@ -25,9 +25,9 @@ export const Header = () => {
             </Link>
             <div className={styles.navContainer}>
                 <Link className={cn(styles.headerLink, url === '/' && styles.selected)} href='/'>О проекте</Link>
-                <Link className={cn(styles.headerLink, url === '/search' && styles.selected)} href='/search'>Поиск донора</Link>
-                <Link className={cn(styles.headerLink, url === '/applications' && styles.selected)} href='/applications'>Заявки на донацию</Link>
-                <Link className={cn(styles.headerLink, url === '/available-donors' && styles.selected)} href='/available-donors'>Доступные доноры</Link>
+                {isSigned && <Link className={cn(styles.headerLink, url === '/search' && styles.selected)} href='/search'>Поиск донора</Link>}
+                {isSigned && <Link className={cn(styles.headerLink, url === '/applications' && styles.selected)} href='/applications'>Заявки на донацию</Link>}
+                {isSigned && <Link className={cn(styles.headerLink, url === '/available-donors' && styles.selected)} href='/available-donors'>Доступные доноры</Link>}
             </div>
             <div className={styles.infoContainer}>
                 {!isSigned && <Link href='/signin' className={cn(styles.button, 'button')}>Войти</Link>}

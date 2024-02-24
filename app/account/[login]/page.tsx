@@ -73,7 +73,7 @@ interface IVaccination{
 }
 
 function Modal() {
-    const [ petType, setPetType ] = useState("Кошка");
+    const [ petType, setPetType ] = useState({id: 0, type: "Кошка"});
     const [ bloodType, setBloodType ] = useState(0);
 
     const [vaccinations, setVaccinations] = useState<IVaccination[]>([]);

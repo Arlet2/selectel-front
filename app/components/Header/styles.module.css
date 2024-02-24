@@ -20,10 +20,11 @@
 
 .navContainer{
     display: flex;
+    flex: 1 0 auto;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
     column-gap: 50px;
+    padding: 0 60px;
 }
 
 .headerLink{
