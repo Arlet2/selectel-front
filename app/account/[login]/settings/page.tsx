@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Tooltip from '@mui/material/Tooltip';
+import QuestionIcon from '@mui/icons-material/QuestionMark';
+import IconButton from '@mui/material/IconButton';
 import arrowIcon from '@icons/arrow.svg';
 import avatarIcon from '@icons/avatar.svg';
 import vkIcon from '@icons/vk.svg';
@@ -50,6 +53,16 @@ function Modal() {
 export default function Page({ params: { login } }: IPageProps) {
     const [ modalVisible, setModalVisible ] = useState(false)
     const [ state, setState ] = useState();
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+
+    const updateEndDate = (newEndDate) => {
+        if (newEndDate >= startDate) {
+            setEndDate(newEndDate);
+        } else {
+            alert('Конец периода не может быть раньше начала периода.');
+        }
+    };
 
     return (<>
         <title>Настройки профиля - petdonor.ru</title>
@@ -83,10 +96,10 @@ export default function Page({ params: { login } }: IPageProps) {
                         <label className={styles.labelCheckbox}>Показывать телефон в профиле</label>
                     </div>
                     <button
-                        type='button' // Change the type to 'button' to prevent it from submitting the form
+                        type='button'
                         className={cn('linkPink', styles.linkPink)}
                         onClick={(e) => {
-                            e.preventDefault(); // Prevent the default form submit action
+                            e.preventDefault();
                             setModalVisible(true);
                         }}
                     >
@@ -158,6 +171,35 @@ export default function Page({ params: { login } }: IPageProps) {
                     <div className={styles.checkboxContainer}>
                         <input className={styles.checkbox} type='checkbox'/>
                         <label className={styles.labelCheckbox}>Показывать соц. сети в профиле</label>
+                    </div>
+                    <div className='dividerThin'></div>
+                    <div className={styles.labelContainer}>
+                        <label className={styles.label}><strong>Период недоступности</strong></label>  
+                        <Tooltip title="Если вы будете недоступны (например, уезжаете в отпуск). Добавьте период, когда вас не беспокоить">
+                            <IconButton className={styles.questionMark}>
+                                <QuestionIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </div>
+                    <div className={styles.topContainer}>
+                        <div className={styles.inputContainer}>
+                        <label className={styles.label}>Начало</label>
+                        <input
+                            className='input'
+                            type='date'
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                        />
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <label className={styles.label}>Конец</label>
+                            <input
+                                className='input'
+                                type='date'
+                                value={endDate}
+                                onChange={(e) => updateEndDate(e.target.value)}
+                            />
+                        </div>
                     </div>
                     <Link href={`account/${login}`}>
                         <button className={cn(styles.submit, 'submitButton')} type='submit'>Сохранить</button>
