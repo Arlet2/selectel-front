@@ -39,7 +39,7 @@ export default function Applications() {
       <div className={styles.filters}>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Тип животного</label>
-            <PetTypeSelector optional value={petType} onChange={(v) => {setPetType(v); setBloodType(null)}}/>
+            <PetTypeSelector optional value={petType} onChange={(v) => {setPetType(v); setBloodType(undefined)}}/>
         </div>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Группа крови</label>
@@ -47,7 +47,7 @@ export default function Applications() {
         </div>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Город</label>
-            <CitySelector optional value={city} onChange={(v) => {setCity(v); setDistrict(null)}}/>
+            <CitySelector optional value={city} onChange={(v) => {setCity(v); setDistrict(undefined)}}/>
         </div>
         <div className={styles.inputContainer}>
             <label className={styles.label}>Район</label>
