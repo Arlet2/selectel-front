@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { IGetVaccination, IUserPets, IVaccination, useDeletePetMutation, useGetVaccinationsQuery } from '@/app/redux/services/api';
 import toast from 'react-hot-toast';
+import { convertDateFormat } from '@/app/account/[login]/page';
 
 interface IPetCardProps {
     pet: IUserPets;
@@ -122,7 +123,7 @@ export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) =>
             {!isPersonOwner && (
                 <div className={styles.petInfo}>
                     <p>{pet.petType.breed}</p>
-                    <p>{pet.birthday}</p>
+                    <p>{convertDateFormat(pet.birthday)}</p>
                 </div>
             )}
             <div className={styles.buttonContainer}>

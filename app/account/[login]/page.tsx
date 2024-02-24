@@ -179,7 +179,7 @@ function Modal({onClose}: any) {
     )
 }
 
-function convertDateFormat(dateString: string) {
+export function convertDateFormat(dateString: string) {
     const date = new Date(dateString);
     const day = date.getDate();
     const month = date.getMonth() +  1; // Месяцы начинаются с  0
