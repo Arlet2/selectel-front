@@ -85,6 +85,16 @@ export interface GetDonorRequest {
    me: boolean
 }
 
+export interface IUserPets {
+  owner: IUser,
+  petType: PetType,
+  bloodType: BloodType,
+  name: string,
+  description: string,
+  birthday: string,
+  weight: number
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -173,15 +183,18 @@ export const api = createApi({
         body,
       }),
     }),
+    getPetsForUser: builder.query<IUserPets[], string>({
+      query: (login) => `users/${login}/pets`
+    }),
   }),
-  })
+})
 
 export const {
   useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery,
   useAddDonorRequestMutation, useGetDonorRequestsQuery,
   useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
   useChangeDonorRequestMutation, useGetBreedTypesQuery,
-  useDeleteDonorRequestMutation,
+  useDeleteDonorRequestMutation, useGetPetsForUserQuery
 } = api
 
 async function postData(url: string, data: object): Promise<object> {
