@@ -5,26 +5,28 @@ import styles from "./page.module.css";
 import { Skeleton } from "@components/Skeleton";
 import { useSearchParams } from 'next/navigation';
 import { useEffect, Suspense } from 'react'
+import { vkLogin } from '@/app/redux/services/api';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 function VkRedirectInner() {
+  const router = useRouter();
   const searchParams = useSearchParams()
   const payload = searchParams.get('payload')
 
   useEffect(() => {
     (async () => {
         try {
-            const token = await doLogin({ login, password });
+            const token = await vkLogin(payload || "{}");
             localStorage.setItem("accessToken", token.accessToken);
             localStorage.setItem("refreshToken", token.refreshToken);
-            localStorage.setItem("login", login);
+            localStorage.setItem("login", token.login || "no");
             router.push(`/`);
         } catch (e) {
             toast.error(e as string);
         }
     })()
-  }, [searchParams])
-
-  api.loginVK()
+  }, [router, payload])
 
   return (<>
     <title>Перенаправление - petdonor.ru</title>

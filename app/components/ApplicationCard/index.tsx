@@ -1,8 +1,12 @@
 import styles from './styles.module.css';
+import cn from 'classnames';
 import * as api from '@/app/redux/services/api';
+import { PetTypeSelector, BloodTypeSelector } from '@components/Selector';
+import { useState } from "react"
+import { useRouter } from 'next/navigation';
 
 interface ApplicationCardProps {
-  data: object
+  data: any
   isMe: boolean
 }
 
@@ -67,8 +71,6 @@ function EditModal() {
             bloodAmountMl,
             availableUntil
         })
-
-        router.push(`/applications`);
     }
 
     return (

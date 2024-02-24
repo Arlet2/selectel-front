@@ -10,6 +10,7 @@ export interface IRegisterCredentials {
 }
 
 export interface IApiToken {
+  login?: string;
   accessToken: string;
   refreshToken: string;
 }

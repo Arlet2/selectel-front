@@ -193,7 +193,7 @@ export async function login(credentials: ILoginCredentials): Promise<IApiToken> 
   return await postData("auth/login", credentials) as IApiToken;
 }
 
-export async function loginVK(vkToken: string): Promise<IApiToken> {
+export async function vkLogin(vkToken: string): Promise<IApiToken> {
   return await postData("auth/login", JSON.parse(vkToken)) as IApiToken;
 }
 
