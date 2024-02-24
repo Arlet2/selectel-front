@@ -12,7 +12,9 @@ interface IPetCardProps {
     age?: number;
 }
 
-function formatAge(age) {
+function formatAge(age: number | undefined) {
+    if (!age) return `0 лет`;
+
     const lastDigit = age %  10;
     const lastTwoDigits = age %  100;
 
