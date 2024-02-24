@@ -203,7 +203,7 @@ export async function login(credentials: ILoginCredentials): Promise<IApiToken> 
 }
 
 export async function vkLogin(vkToken: string): Promise<IApiToken> {
-  return await postData("auth/login", JSON.parse(vkToken)) as IApiToken;
+  return await postData("auth/vk_login", JSON.parse(vkToken)) as IApiToken;
 }
 
 export async function logout(): Promise<void> {
