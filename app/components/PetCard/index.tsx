@@ -5,16 +5,17 @@ import Image from 'next/image';
 import cn from 'classnames';
 import { useState } from 'react';
 import { IPet, IVaccination } from '@/app/account/[login]/page';
+import { IUserPets } from '@/app/redux/services/api';
 
 interface IPetCardProps {
-    pet: IPet;
+    pet: IUserPets;
     isPersonOwner?: boolean;
 }
 
-interface ShowMoreModalProps {
-    pet: IPet;
-    vaccinations: IVaccination[];
-}
+// interface ShowMoreModalProps {
+//     pet: IPet;
+//     vaccinations: IVaccination[];
+// }
 
 function formatAge(age: number | undefined) {
     if (!age) return `0 лет`;
@@ -106,18 +107,22 @@ const myVaccinations: IVaccination[] = [
 export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) => {
     const [ modalVisible, setModalVisible ] = useState(false);
 
+    const handleDelete = () => {
+        
+    }
+
     return (
         <div className={styles.container}>
-            { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> }
-            { modalVisible && <ShowMoreModal pet={pet} vaccinations={myVaccinations}/> }
+            {/* { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> } */}
+            {/* { modalVisible && <ShowMoreModal pet={pet} vaccinations={myVaccinations}/> } */}
             <div className={styles.avatar}>
-                <Image src={pet.type === 'cat' ? cat : dog} alt='Pet photo'/>
+                <Image src={pet.petType.type === 'cat' ? cat : dog} alt='Pet photo'/>
             </div>
             <h1 className={styles.name}>{pet.name}</h1>
             {!isPersonOwner && (
                 <div className={styles.petInfo}>
-                    <p>{pet.breed}</p>
-                    <p>{pet.age && formatAge(pet.age)}</p>
+                    <p>{pet.petType.breed}</p>
+                    <p>{pet.birthday}</p>
                 </div>
             )}
             <div className={styles.buttonContainer}>
