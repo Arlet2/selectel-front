@@ -203,7 +203,7 @@ export default function Page({ params: { login } }: IPageProps){
     const { data: petsInfo, isLoading: isPetsInfoLoading } = useGetPetsForUserQuery(login);
     const { data: unavailableDatesInfo, isLoading: isUnavailableDatesLoading } = useGetUnavailableDatesQuery();
 
-    let fullName = `${name || ''} ${surname || ''} ${lastName || ''}`
+    let fullName = `${surname || ''} ${name || ''} ${lastName || ''}`
     if (fullName.trim().length == 0) fullName= "Имя не указано"
 
     useEffect(() => {
