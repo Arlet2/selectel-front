@@ -51,7 +51,7 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
       </div>
       <div className={styles.row}>
         <div className={styles.label}>Актуально до</div>
-        <div className={styles.value}>{data.availableUntil.join("-")}</div>
+        <div className={styles.value}>{data.availableUntil}</div>
       </div>
       <div className={styles.stretcher}></div>
       {isMe && <div className={cn("linkBlue", styles.button)} onClick={() => setModalVisible(true)}>Редактировать</div>}
@@ -67,7 +67,7 @@ function EditModal({data}: any) {
     const [ petType, setPetType ] = useState<api.PetType | undefined>(data.petType);
     const [ bloodType, setBloodType ] = useState<number | undefined>(data.bloodType);
     const [ bloodAmountMl, setBloodAmountMl ] = useState(data.bloodAmountMl);
-    const [ availableUntil, setAvailableUntil ] = useState(data.availableUntil.join("-"));
+    const [ availableUntil, setAvailableUntil ] = useState(data.availableUntil);
 
     const [ changeDonorRequest ] = api.useChangeDonorRequestMutation()
 

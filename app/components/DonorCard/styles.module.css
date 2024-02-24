@@ -26,7 +26,7 @@
 }
 
 .avatar {
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .avatarPet {
@@ -37,6 +37,7 @@
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-s);
   background-color: var(--input-color);
+    object-fit: cover;
 }
 
 .username {
