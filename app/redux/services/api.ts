@@ -27,6 +27,7 @@ export interface BloodType {
 }
 
 export interface DonorRequest {
+  id?: number;
   description: string;
   vetAddress: string;
   petTypeID: number;
@@ -129,6 +130,13 @@ export const api = createApi({
         body,
       })
     }),
+    changeDonorRequest: builder.mutation<void, DonorRequest>({
+      query: (body) => ({
+        url: `donor_requests/${body.id || 0}`,
+        method: 'PATCH',
+        body,
+      })
+    }),
     getUserInfo: builder.query<IUser, string>({
       query: (login) => ({
         url: `users/`,
@@ -155,7 +163,8 @@ export const api = createApi({
 export const {
   useGetCitiesQuery, useGetDistrictsQuery, useGetPetTypesQuery, useGetBloodTypesQuery,
   useAddDonorRequestMutation, useGetDonorRequestsQuery,
-  useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation
+  useUpdateUserInfoMutation, useGetUserInfoQuery, useAddPetMutation,
+  useChangeDonorRequestMutation,
 } = api
 
 async function postData(url: string, data: object): Promise<object> {

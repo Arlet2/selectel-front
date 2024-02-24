@@ -11,8 +11,12 @@ interface ApplicationCardProps {
 }
 
 export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
+  const [ modalVisible, setModalVisible ] = useState(false)
+
   return (
     <div className={styles.card}>
+      { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> }
+      { modalVisible && <EditModal data={data}/> }
       <div className={styles.row}>
         <div className={styles.label}>Тип животного</div>
         <div className={styles.value}>{data.petType.type}</div>
@@ -41,41 +45,45 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
         <div className={styles.label}>Актуально до</div>
         <div className={styles.value}>{data.availableUntil.join("-")}</div>
       </div>
-      {isMe && <div className={styles.button}>Редактировать</div>}
-      {isMe && <div className={styles.button}>Удалить</div>}
-      {!isMe && <div className={styles.button}>Откликнуться</div>}
+      {isMe && <div className={cn("linkBlue", styles.button)} onClick={() => setModalVisible(true)}>Редактировать</div>}
+      {isMe && <div className={cn("linkPink", styles.button)}>Удалить</div>}
+      {!isMe && <div className={cn("linkBlue", styles.button)}>Откликнуться</div>}
     </div> 
   )
 }
 
-function EditModal() {
-    const [ description, setDescription ] = useState("");
-    const [ vetAddress, setVetAddress ] = useState("");
-    const [ petType, setPetType ] = useState<api.PetType | undefined>();
-    const [ bloodType, setBloodType ] = useState<number | undefined>();
-    const [ bloodAmountMl, setBloodAmountMl ] = useState(0);
-    const [ availableUntil, setAvailableUntil ] = useState("");
+function EditModal({data}) {
+    const [ description, setDescription ] = useState(data.description);
+    const [ vetAddress, setVetAddress ] = useState(data.vetAddress);
+    const [ petType, setPetType ] = useState<api.PetType | undefined>(data.petType);
+    const [ bloodType, setBloodType ] = useState<number | undefined>(data.bloodType);
+    const [ bloodAmountMl, setBloodAmountMl ] = useState(data.bloodAmountMl);
+    const [ availableUntil, setAvailableUntil ] = useState(data.availableUntil.join("-"));
 
-    const [ addDonorRequest, result ] = api.useAddDonorRequestMutation()
+    const [ changeDonorRequest ] = api.useChangeDonorRequestMutation()
 
     function submit(e: any) {
         e.preventDefault()
 
         if (!petType || !bloodType) return;
 
-        addDonorRequest({
-            description,
-            vetAddress,
-            petTypeID: petType.id,
-            bloodTypeID: bloodType,
-            bloodAmountMl,
-            availableUntil
-        })
+        (async () => {
+          await changeDonorRequest({
+              id: data.id,
+              description,
+              vetAddress,
+              petTypeID: petType.id,
+              bloodTypeID: bloodType,
+              bloodAmountMl,
+              availableUntil
+          })
+          window.location.reload();
+        })()
     }
 
     return (
         <form className={styles.modal} onSubmit={submit}>
-            <h1>Данные для поиска</h1>
+            <h1>Редактировать заявку</h1>
             <div className={styles.inputContainer}>
                 <label className={styles.label}>Причина </label>
                 <textarea required className="input textarea" placeholder="..." value={description} onChange={e => setDescription(e.target.value)}/>
@@ -100,7 +108,7 @@ function EditModal() {
                 <label className={styles.label}>Дата окончания поиска</label>
                 <input required type="date" className="input" value={availableUntil} onChange={e => setAvailableUntil(e.target.value)}/>
             </div>
-            <button className={cn("button", styles.modalButton)} type='submit'>Создать заявку</button>
+            <button className={cn("button", styles.modalButton)} type='submit'>Сохранить заявку</button>
         </form>
     )
 }
