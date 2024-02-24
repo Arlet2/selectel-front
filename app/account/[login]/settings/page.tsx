@@ -2,7 +2,6 @@
 
 import { useId, useEffect, useState, useRef } from 'react';
 import toast from 'react-hot-toast';
-import Link from 'next/link';
 import Image from 'next/image';
 import Tooltip from '@mui/material/Tooltip';
 import QuestionIcon from '@mui/icons-material/QuestionMark';

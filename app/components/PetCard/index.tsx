@@ -105,12 +105,10 @@ export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) =>
     const [ shareModalVisible, setShareModalVisible ] = useState(false);
     const {data: vaccinationsFromQuery, isLoading: isVaccinationsFromQueryLoading} = useGetVaccinationsQuery(pet.id);
     const [deletePet, {isLoading}] = useDeletePetMutation();
-    console.log(pet);
 
     useEffect(() => {
         if (!isVaccinationsFromQueryLoading && vaccinationsFromQuery){
             setVaccinations(vaccinationsFromQuery);
-            console.log(vaccinations);
         }
     },[isVaccinationsFromQueryLoading, vaccinationsFromQuery]);
 
