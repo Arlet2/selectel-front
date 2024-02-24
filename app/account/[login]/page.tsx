@@ -67,7 +67,7 @@ function Modal({onClose}: any) {
             name,
             description: "Нет описания",
             petTypeId: breed.id,
-            bloodTypeId: bloodType,
+            bloodTypeId: bloodType.id,
             birthday,
             weight
         };

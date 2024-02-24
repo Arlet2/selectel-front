@@ -153,7 +153,7 @@ export const PetCard: React.FC<IPetCardProps> = ({pet, isPersonOwner = true}) =>
 
 function EditModal({onClose, pet, vaccinations: vaccinationsInit}: any) {
     const [ petType, setPetType ] = useState(pet.petType);
-    const [ bloodType, setBloodType ] = useState(pet.bloodType);
+    const [ bloodType, setBloodType ] = useState<any>(pet.bloodType);
     const [name, setName] = useState(pet.name);
     const [breed, setBreed] = useState<any>(pet.petType);
     const [birthday, setBirthday] = useState(pet.birthday);
@@ -244,7 +244,7 @@ function EditModal({onClose, pet, vaccinations: vaccinationsInit}: any) {
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Тип животного</label>
-                        <PetTypeSelector value={petType} onChange={(v) => setPetType(v as api.PetType)}/>
+                        <PetTypeSelector value={petType} onChange={(v) => {setPetType(v as api.PetType); setBloodType(undefined); setBreed(undefined)}}/>
                     </div>
                     <div className={styles.inputContainer}>
                         <label className={styles.label}>Кличка</label>
@@ -270,38 +270,6 @@ function EditModal({onClose, pet, vaccinations: vaccinationsInit}: any) {
                     </div>
                 </div>
             </div>
-            {vaccinations.length > 0 && <div className={styles.pinkHeader}>Прививки</div>}
-            <div className={vaccinations.length > 0 ? styles.vaccinationList : styles.displayNone}>
-                {vaccinations.map((vaccination, index) => (
-                    <div key={index} className={styles.vaccinationContainer}>
-                        <div className={styles.inputContainer}>
-                            <label className={styles.label}>Название прививки #{index + 1}</label>
-                            <input
-                                type="text"
-                                className="input"
-                                placeholder="Название прививки"
-                                value={vaccination.name}
-                                onChange={(e) => updateVaccination(index, 'name', e.target.value)}
-                            />
-                        </div>
-                        <div className={styles.inputContainer}>
-                            <div className={styles.containerWithDelete}>
-                                <label className={styles.label}>Дата вакцинации</label>
-                                <button className={styles.deleteButton} onClick={() => handleDeleteVaccination(index)}>
-                                    <Image className={styles.deleteIcon} src={deleteIcon} alt='Delete button'/>
-                                </button>
-                            </div>
-                            <input
-                                type="date"
-                                className="input"
-                                value={vaccination.date}
-                                onChange={(e) => updateVaccination(index, 'date', e.target.value)}
-                            />
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <button className={cn("linkPink", styles.pinkLinkButton)} onClick={(e) => { e.preventDefault(); addVaccination(); }}>Добавить прививки</button>
             <button className={cn("button", styles.modalButton)} type='submit'>Сохранить питомца</button>
         </form>
     )
