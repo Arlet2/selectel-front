@@ -13,6 +13,7 @@ import dogImage from '@images/dog.png';
 import styles from './styles.module.css';
 import cn from 'classnames';
 import { IUser, useUpdateUserInfoMutation } from '@/app/redux/services/api';
+import { CitySelector, DistrictSelector } from '@/app/components/Selector';
 
 const {
     CitySelect,
@@ -64,6 +65,8 @@ export default function Page({ params: { login } }: IPageProps) {
     const [showPhone, setShowPhone] = useState(false);
     const [vk, setVk] = useState('');
     const [tg, setTg] = useState('');
+    const [city, setCity] = useState({id: 0, city: ''});
+    const [district, setDistrict] = useState({id: 0, district: ''});
 
     const updateEndDate = (newEndDate: string) => {
         if (newEndDate >= startDate) {
@@ -145,11 +148,11 @@ export default function Page({ params: { login } }: IPageProps) {
                     </div>
                     <div className={styles.checkboxContainer}>
                         <input className={styles.checkbox} type='checkbox' checked={showEmail} onChange={() => setShowEmail(!showEmail)}/>
-                        <label className={styles.labelCheckbox}>Показывать почту в профиле</label>
+                        <label className={styles.labelCheckbox} onClick={() => setShowEmail(!showEmail)}>Показывать почту в профиле</label>
                     </div>
                     <div className={styles.checkboxContainer}>
                         <input className={styles.checkbox} type='checkbox' checked={showPhone} onChange={() => setShowPhone(!showPhone)}/>
-                        <label className={styles.labelCheckbox}>Показывать телефон в профиле</label>
+                        <label className={styles.labelCheckbox} onClick={() => setShowPhone(!showPhone)}>Показывать телефон в профиле</label>
                     </div>
                     <button
                         type='button'
@@ -189,14 +192,14 @@ export default function Page({ params: { login } }: IPageProps) {
                     <div className='dividerThin'></div>
                     <div className={styles.bottomContainer}>
                         <div className={styles.inputContainer}>
-                            <label className={styles.label}>Регион</label>
-                            
+                            <label className={styles.label}>Город</label>
+                            <CitySelector value={city} onChange={() => setCity}/>
                         </div>
                     </div>
                     <div className={styles.bottomContainer}>
                         <div className={styles.inputContainer}>
-                            <label className={styles.label}>Город</label>
-
+                            <label className={styles.label}>Район</label>
+                            <DistrictSelector value={district} city={city} onChange={() => setDistrict}/>
                         </div>
                     </div>
                     <div className='dividerThin'></div>
@@ -213,8 +216,8 @@ export default function Page({ params: { login } }: IPageProps) {
                     <div className={styles.labelContainer}>
                         <label className={styles.label}><strong>Период недоступности</strong></label>  
                         <Tooltip title="Если вы будете недоступны (например, уезжаете в отпуск). Добавьте период, когда вас не беспокоить">
-                            <IconButton className={styles.questionMark}>
-                                <QuestionIcon />
+                            <IconButton className={styles.questionMarkBackground}>
+                                <QuestionIcon className={styles.questionMark} />
                             </IconButton>
                         </Tooltip>
                     </div>
