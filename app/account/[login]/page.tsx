@@ -183,7 +183,7 @@ export default function Page({ params: { login } }: IPageProps){
     const isPersonLogged = api.getLogin() === login;
     const [ pets, setPets ] = useState<IUserPets[]>([]);
     const [ modalVisible, setModalVisible ] = useState(false)
-    const [count, setCount] = useState(5);
+    const [count, setCount] = useState(0);
     const router = useRouter();
 
     const [name, setName] = useState('');
