@@ -275,11 +275,11 @@ export default function Page({ params: { login } }: IPageProps){
                         <p>Район</p>
                         <p className='semibold'>{district ? district : 'Район не указан'}</p>
                     </div>
-                    {(showEmail && isPersonLogged) || (email) && <div className={styles.contactContainer}>
+                    {(showEmail && isPersonLogged) || (email && !isPersonLogged) && <div className={styles.contactContainer}>
                         <p>Почта</p>
                         <p className='semibold'>{email ? email : 'Почта не указана'}</p>
                     </div>}
-                    {(showPhone && isPersonLogged) || (phone) && <div className={styles.contactContainer}>
+                    {(showPhone && isPersonLogged) || (phone && !isPersonLogged) && <div className={styles.contactContainer}>
                         <p>Номер телефона</p>
                         <p className='semibold'>{phone ? phone : 'Телефон не указан'}</p>
                     </div>}
