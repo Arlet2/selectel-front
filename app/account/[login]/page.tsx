@@ -30,7 +30,7 @@ function Modal({onClose}: any) {
     const [ petType, setPetType ] = useState({id: 1, type: "Кошка"});
     const [ bloodType, setBloodType ] = useState(11);
     const [name, setName] = useState('');
-    const [breed, setBreed] = useState('');
+    const [breed, setBreed] = useState<any>();
     const [birthday, setBirthday] = useState('');
     const [weight, setWeight] = useState<number | undefined>()
     const [vaccinations, setVaccinations] = useState<IVaccinationArrayItem[]>([]);
@@ -62,8 +62,8 @@ function Modal({onClose}: any) {
         
         const petInfo: IAddedPet = {
             name,
-            description: breed,
-            petTypeId: petType.id,
+            description: "Нет описания",
+            petTypeId: breed.id,
             bloodTypeId: bloodType,
             birthday,
             weight
@@ -310,7 +310,7 @@ export default function Page({ params: { login } }: IPageProps){
                     {pets.length > 0 ? (
                         <div className={styles.petContainer}>
                             {pets.map((pet, key) => {
-                                return <PetCard key={key} pet={pet} isPersonOwner={isPersonLogged}/>
+                                return <PetCard key={key} pet={pet} isPersonOwner={false}/>
                             })}
                         </div>
                     ) : (
