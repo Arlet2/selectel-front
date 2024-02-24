@@ -29,7 +29,7 @@ function Modal() {
                 description,
                 vetAddress,
                 petTypeID: petType.id,
-                bloodTypeID: bloodType.id,
+                bloodTypeID: bloodType,
                 bloodAmountMl,
                 availableUntil
             })

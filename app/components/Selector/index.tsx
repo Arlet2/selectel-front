@@ -2,7 +2,7 @@ import * as api from '@/app/redux/services/api';
 
 interface CitySelectorProps {
   value?: api.City
-  onChange: (v: api.City) => void,
+  onChange: (v: api.City | undefined) => void,
   optional?: boolean
 }
 
@@ -16,7 +16,7 @@ export const CitySelector = ({value, onChange, optional}: CitySelectorProps) => 
   return (
     <select className="input" value={value ? value.id : -1} onChange={(e) => {
       if (e.target.value == "-1")
-        onChange(null)
+        onChange(undefined)
       else if (data) {
         let v = data.find(v => v.id == Number(e.target.value));
         if (v) {
@@ -33,7 +33,7 @@ export const CitySelector = ({value, onChange, optional}: CitySelectorProps) => 
 interface DistrictSelectorProps {
   city?: api.City
   value?: api.District
-  onChange: (v: api.District) => void
+  onChange: (v: api.District | undefined) => void
   optional?: boolean
 }
 
@@ -44,12 +44,12 @@ export const DistrictSelector = ({city, value, onChange, optional}: DistrictSele
     onChange(data[0])
   }
   
-  if (!city && value) onChange(null);
+  if (!city && value) onChange(undefined);
 
   return (
     <select className="input" value={value ? value.id : -1} onChange={(e) => {
       if (e.target.value == "-1") {
-        onChange(null)
+        onChange(undefined)
       } else if (data) {
         let v = data.find(v => v.id == Number(e.target.value));
         if (v) {
@@ -65,7 +65,7 @@ export const DistrictSelector = ({city, value, onChange, optional}: DistrictSele
 
 interface PetTypeSelectorProps {
   value?: Partial<api.PetType>
-  onChange: (v: api.PetType) => void
+  onChange: (v: api.PetType | undefined) => void
   optional?: boolean
 }
 
@@ -79,7 +79,7 @@ export const PetTypeSelector = ({value, onChange, optional}: PetTypeSelectorProp
   return (
     <select className="input" value={value ? value.id : -1} onChange={(e) => {
       if (e.target.value == "-1") {
-        onChange(null)
+        onChange(undefined)
       } else if (data) {
         let v = data.find(v => v.id == Number(e.target.value));
         if (v) {
@@ -96,18 +96,18 @@ export const PetTypeSelector = ({value, onChange, optional}: PetTypeSelectorProp
 interface BloodTypeSelectorProps {
   petType?: Partial<api.PetType>
   value?: number
-  onChange: (v: number) => void
+  onChange: (v: number | undefined) => void
   optional?: boolean
 }
 
 export const BloodTypeSelector = ({petType, value, onChange, optional}: BloodTypeSelectorProps) => {
   const { data, isLoading } = api.useGetBloodTypesQuery(petType?.type || 'Кошка');
 
-  if (data && !value && petType && !optional) onChange(data[0])
-  if (!petType && value) onChange(null);
+  if (data && !value && petType && !optional) onChange(data[0].id)
+  if (!petType && value) onChange(undefined);
   
   return (
-    <select className="input" value={String(value)} onChange={(e) => onChange(e.target.value == "null" ? null : Number(e.target.value))}>
+    <select className="input" value={String(value)} onChange={(e) => onChange(e.target.value == "null" ? undefined: Number(e.target.value))}>
       {(optional || !petType) && <option value={"null"}>Любая</option>}
       {petType && data && data.map((v, i) => <option value={String(v.id)} key={i}>{v.bloodType == "default" ? "Не важна" : v.bloodType}</option>)}
     </select>
@@ -122,10 +122,6 @@ interface BreedSelectorProps {
 
 export const BreedTypeSelector = ({value, onChange}: BreedSelectorProps) => {
   const { data, isLoading } = api.useGetBreedTypesQuery();
-
-  if (data){
-    console.log(data);
-  }
 
   if (data && !value) {
     onChange(data[0].breed)

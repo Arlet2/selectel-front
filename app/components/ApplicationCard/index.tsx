@@ -23,7 +23,7 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
     <div className={styles.card}>
       { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> }
       { modalVisible && <EditModal data={data}/> }
-      { respondModalVisible && <div className={styles.darkness} onClick={() => setRespondModal(false)}/> }
+      { respondModalVisible && <div className={styles.darkness} onClick={() => setRespondModalVisible(false)}/> }
       { respondModalVisible && <RespondModal onClose={() => setRespondModalVisible(false)} data={data}/> }
       <div className={styles.row}>
         <div className={styles.label}>Тип животного</div>
