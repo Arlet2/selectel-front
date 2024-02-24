@@ -24,7 +24,7 @@ export const ApplicationCard = ({data, isMe}: ApplicationCardProps) => {
       { modalVisible && <div className={styles.darkness} onClick={() => setModalVisible(false)}/> }
       { modalVisible && <EditModal data={data}/> }
       { respondModalVisible && <div className={styles.darkness} onClick={() => setRespondModal(false)}/> }
-      { respondModalVisible && <RespondModal data={data}/> }
+      { respondModalVisible && <RespondModal onClose={() => setRespondModalVisible(false)} data={data}/> }
       <div className={styles.row}>
         <div className={styles.label}>Тип животного</div>
         <div className={styles.value}>{data.petType.type}</div>
@@ -122,12 +122,44 @@ function EditModal({data}: any) {
 }
 
 
-function RespondModal({data}: any) {
+function RespondModal({data, onClose}: any) {
+    const { data: userData } = api.useGetUserInfoQuery(data.login)
+
     return (
         <div className={styles.modal}>
             <h1>Откликнуться на заявку</h1>
-            хаю хай с вами ивангай
-            <button className={cn("button", styles.modalButton)} type='submit'>ОК</button>
+            <div className={styles.message}>Можешь связаться с владельцем по одному из следующих контактов:</div>
+            {userData && <div>
+              {userData.name && <div className={styles.infoRow}>
+                <div className={styles.infoLabel}>Имя</div>
+                <div className={styles.infoValue}>{userData.name}</div>
+              </div>}
+              {userData.surname && <div className={styles.infoRow}>
+                <div className={styles.infoLabel}>Фамилия</div>
+                <div className={styles.infoValue}>{userData.surname}</div>
+              </div>}
+              {userData.middleName && <div className={styles.infoRow}>
+                <div className={styles.infoLabel}>Отчество</div>
+                <div className={styles.infoValue}>{userData.middleName}</div>
+              </div>}
+              {userData.email && <div className={styles.infoRow}>
+                <div className={styles.infoLabel}>E-mail</div>
+                <div className={styles.infoValue}>{userData.email}</div>
+              </div>}
+              {userData.phone && <div className={styles.infoRow}>
+                <div className={styles.infoLabel}>Телефон</div>
+                <div className={styles.infoValue}>{userData.phone}</div>
+              </div>}
+              {userData.vkUserName && <div className={styles.infoRow}>
+                <div className={styles.infoLabel}>VK</div>
+                <div className={styles.infoValue}>{userData.vkUserName}</div>
+              </div>}
+              {userData.tgUserName && <div className={styles.infoRow}>
+                <div className={styles.infoLabel}>Telegram</div>
+                <div className={styles.infoValue}>{userData.tgUserName}</div>
+              </div>}
+            </div>}
+            <button onClick={() => onClose()} className={cn("button", styles.modalButton)} type='submit'>ОК</button>
         </div>
     )
 }

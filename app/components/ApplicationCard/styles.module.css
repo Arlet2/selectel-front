@@ -82,3 +82,19 @@
     width: 400px;
     margin-top: 15px;
 }
+
+.infoRow {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 16px;
+  padding: 0 8px;
+}
+
+.infoLabel {
+  color: var(--placeholder-color);
+}
+
+.message {
+  margin-bottom: 16px;
+  width: 300px;
+}
