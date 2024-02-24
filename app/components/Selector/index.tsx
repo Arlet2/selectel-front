@@ -121,7 +121,7 @@ interface BreedSelectorProps {
 }
 
 export const BreedTypeSelector = ({petType, value, onChange}: BreedSelectorProps) => {
-  const { data, isLoading } = api.useGetBreedTypesQuery(petType.type);
+  const { data, isLoading } = api.useGetBreedTypesQuery(petType && petType.type ? petType.type : 'Кошка');
 
   if (data && !value) {
     onChange(data[0].breed)
